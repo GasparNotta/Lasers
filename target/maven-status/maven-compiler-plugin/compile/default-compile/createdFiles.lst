@@ -1,9 +1,7 @@
-laser/MainApp.class
 module-info.class
 laser/VistaDelJuego.class
 laser/SystemInfo.class
 laser/BloqueCristal.class
-laser/App.class
 laser/BloqueEspejo.class
 laser/BloqueVidrio.class
 laser/BloqueMovil.class
