@@ -1,11 +1,13 @@
-package laser.ui;
+package laser;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Stage;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
-
+import java.io.IOException;
 
 /**
  * JavaFX App
@@ -14,13 +16,21 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) {
-        var javaVersion = SystemInfo.javaVersion();
-        var javafxVersion = SystemInfo.javafxVersion();
+        try {
+            // Cargar el archivo FXML
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Ventana.fxml"));
+            Parent root = loader.load();
+            
+            // Configurar la escena y el escenario
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("Mi Aplicación JavaFX");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Manejo adicional del error
+        }
 
-        var label = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
-        var scene = new Scene(new StackPane(label), 640, 480);
-        stage.setScene(scene);
-        stage.show();
     }
 
     public static void main(String[] args) {
