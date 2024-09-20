@@ -1,4 +1,4 @@
-package main.java.ui.controles;
+package laser.ui.controles;
 
 public class ControlDelBloque {
     

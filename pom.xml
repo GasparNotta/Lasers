@@ -57,7 +57,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>laser.App</mainClass>
+                    <mainClass>laser.ui.App</mainClass>
                 </configuration>
             </plugin>
         </plugins>
