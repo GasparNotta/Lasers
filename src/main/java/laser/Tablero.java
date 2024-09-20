@@ -21,7 +21,7 @@ public class Tablero {
                     celdas[i][j] = new Celda(false); // Sin piso
                 } else {
                     celdas[i][j] = new Celda(true); // Con piso
-                    
+                    /* 
                     if (caracter == 'F') {
                         celdas[i][j].setBloque(new BloqueOpacoFijo());
                     } else if (caracter == 'B') {
@@ -33,6 +33,7 @@ public class Tablero {
                     } else if (caracter == 'C') {
                         celdas[i][j].setBloque(new BloqueCristal());
                     }
+                    */
                 }
             }
         }
