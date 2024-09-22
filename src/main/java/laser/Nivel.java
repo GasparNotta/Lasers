@@ -26,6 +26,7 @@ public class Nivel {
         boolean leyendoBloques = true;  // Bandera para separar la primera y segunda sección
 
         while ((linea = reader.readLine()) != null) {
+            
             if (linea.trim().isEmpty()) { 
                 leyendoBloques = false;  // Llegamos a la línea en blanco, ahora leeremos emisores y objetivos
                 continue;
@@ -41,6 +42,25 @@ public class Nivel {
         // Procesar filas y columnas
         this.filas = configuracionBloques.size();  // El número de filas es el número de líneas en la primera sección
         this.columnas = configuracionBloques.get(0).length();  // Las columnas se basan en la longitud de la primera línea
+
+        for (int i = 0; i < configuracionBloques.size(); i++) {
+            System.out.println(i);
+            System.out.println(configuracionBloques.get(i));
+            System.out.println(columnas);
+            String linea_actual = configuracionBloques.get(i);
+        
+            if (linea_actual.length() != columnas) {
+                System.out.println("Error: las columnas no son iguales");
+                
+                // Rellenar la línea hasta que tenga la longitud adecuada
+                while (linea_actual.length() < columnas) {
+                    linea_actual += " ";  // O el carácter que desees
+                }
+        
+                // Actualizar la línea en configuracionBloques
+                configuracionBloques.set(i, linea_actual);
+            }
+        }
     }
 
     public int getFilas() {
