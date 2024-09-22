@@ -1,6 +1,19 @@
 package laser;
 
 public abstract class Bloque {
+    private String tipo; // Ejemplo de atributo para identificar el tipo de bloque
+
+    // Constructor
+    public Bloque(String tipo) {
+        this.tipo = tipo;
+    }
+
+
+
+    // Método para recibir un rayo láser. Este será implementado por cada bloque concreto.
+    public abstract void interactuarConLaser(Laser laser);
+
+
     protected int x;  // Coordenada X
     protected int y;  // Coordenada Y
 
@@ -9,9 +22,7 @@ public abstract class Bloque {
         this.y = y;
     }
 
-    // Método para recibir un rayo láser. Este será implementado por cada bloque concreto.
-    public abstract void interactuarConLaser(Laser laser);
-
+    
     // Getters y setters de las coordenadas
     public int getX() {
         return x;
@@ -27,6 +38,10 @@ public abstract class Bloque {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public String getTipoDeBloque() {
+        return tipo;
     }
 }
 

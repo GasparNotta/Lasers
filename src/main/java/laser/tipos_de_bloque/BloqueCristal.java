@@ -1,6 +1,5 @@
 package laser.tipos_de_bloque;
 
-public class BloqueCristal {
-    
+public class BloqueCristal{
     
 }

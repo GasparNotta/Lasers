@@ -11,6 +11,24 @@ public class Laser {
         this.direccion = direccion;
     }
 
+    
+    public void reflejar() {
+        // Lógica de reflexión
+    }
+
+    public void difractar() {
+        // Lógica de difracción
+    }
+
+    public void refractar() {
+        // Lógica de refracción
+    }
+
+
+
+
+
+
     // Getters y setters de las coordenadas
     public int getX() {
         return x;
