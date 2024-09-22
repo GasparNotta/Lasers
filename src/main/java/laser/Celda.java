@@ -12,7 +12,7 @@ public class Celda {
     public boolean tienePiso() {
         return tienePiso;
     }
-
+ 
     public Bloque getBloque() {
         return bloque;
     }
@@ -23,6 +23,11 @@ public class Celda {
 
     public boolean estaVacia() {
         return tienePiso && bloque == null;
+    }
+
+    @Override
+    public String toString() {
+        return tienePiso ? (bloque != null ? bloque.toString() : ".") : " ";
     }
 }
 

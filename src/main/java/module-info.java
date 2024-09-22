@@ -11,5 +11,6 @@ module laser.ui {
     opens laser.ui to javafx.fxml;
 
     exports laser.ui;
-
+    
 }
+
