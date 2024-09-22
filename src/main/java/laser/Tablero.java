@@ -1,6 +1,8 @@
 package laser;
 
 import java.util.List;
+import laser.tipos_de_bloque.*;
+
 
 public class Tablero {
     private Celda[][] celdas;
@@ -49,6 +51,7 @@ public class Tablero {
                             break;
                         default:
                             // No poner bloque si el carácter es '.'
+                            celdas[i][j] = new Celda(true);
                             break;
                     }
                 }

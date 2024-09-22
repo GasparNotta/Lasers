@@ -29,9 +29,24 @@ public class VistaDelJuego {
 
                 // Configurar el color del rectángulo según el tipo de celda
                 if (celda.tienePiso()) {
+                    if (celda.tipoDeBloque().equals("BloqueOpacoFijo")) {
+                        rect.setFill(Color.DARKGRAY);  // Bloques opacos fijos en gris oscuro
+                    } else if (celda.tipoDeBloque().equals("BloqueOpacoMovil")) {
+                        rect.setFill(Color.GRAY);  // Bloques opacos móviles en gris
+                    } else if (celda.tipoDeBloque().equals("BloqueEspejo")) {
+                        rect.setFill(Color.LIGHTGRAY);  // Bloques espejo en gris claro
+                    } else if (celda.tipoDeBloque().equals("BloqueVidrio")) {
+                        rect.setFill(Color.LIGHTBLUE);  // Bloques vidrio en azul claro
+                    } else if (celda.tipoDeBloque().equals("BloqueCristal")) {
+                        rect.setFill(Color.LIGHTCYAN);  // Bloques cristal en cyan claro
+                    } else {
+                        rect.setFill(Color.LIGHTGRAY);  // Celdas con piso en gris claro
+                    }
+
+
                     rect.setFill(Color.LIGHTGRAY);  // Celdas con piso en gris claro
                 } else {
-                    rect.setFill(Color.DARKGRAY);   // Celdas sin piso en gris oscuro
+                    rect.setFill(Color.WHITESMOKE);   // Celdas sin piso en gris oscuro
                 }
 
                 // Añadir el rectángulo al GridPane en la posición correspondiente
