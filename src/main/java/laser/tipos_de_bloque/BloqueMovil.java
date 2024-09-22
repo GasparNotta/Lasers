@@ -4,7 +4,7 @@ import laser.Bloque;
 
 public class BloqueMovil extends Bloque {
     public BloqueMovil() {
-        super("B"); // Tipo de bloque
+        super("BloqueMovil"); // Tipo de bloque
     }
 
     @Override

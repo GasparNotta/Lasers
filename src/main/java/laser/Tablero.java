@@ -27,27 +27,28 @@ public class Tablero {
                     celdas[i][j] = new Celda(false); // Sin piso
                 } else {
                     celdas[i][j] = new Celda(true);  // Con piso
+                    
                     // Agregar bloque según el carácter
                     switch (caracter) {
                         case 'F':
-                            //celdas[i][j].setBloque(new BloqueOpacoFijo());
-                            celdas[i][j] = new Celda(true);
+                            celdas[i][j].setBloque(new BloqueFijo());
+                            
                             break;
                         case 'B':
-                            //celdas[i][j].setBloque(new BloqueOpacoMovil());
-                            celdas[i][j] = new Celda(true);
+                            celdas[i][j].setBloque(new BloqueMovil());
+                            
                             break;
                         case 'R':
-                            //celdas[i][j].setBloque(new BloqueEspejo());
-                            celdas[i][j] = new Celda(true);
+                            celdas[i][j].setBloque(new BloqueEspejo());
+                            
                             break;
                         case 'G':
-                            //celdas[i][j].setBloque(new BloqueVidrio());
-                            celdas[i][j] = new Celda(true);
+                            celdas[i][j].setBloque(new BloqueVidrio());
+                            
                             break;
                         case 'C':
-                            //celdas[i][j].setBloque(new BloqueCristal());
-                            celdas[i][j] = new Celda(true);
+                            celdas[i][j].setBloque(new BloqueCristal());
+                            
                             break;
                         default:
                             // No poner bloque si el carácter es '.'

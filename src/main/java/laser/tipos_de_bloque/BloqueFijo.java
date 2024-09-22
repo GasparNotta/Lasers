@@ -4,7 +4,7 @@ import laser.Bloque;
 
 public class BloqueFijo extends Bloque {
     public BloqueFijo() {
-        super("F"); // Tipo de bloque
+        super("BloqueFijo"); // Tipo de bloque
     }
 
     @Override

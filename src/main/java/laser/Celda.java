@@ -12,11 +12,6 @@ public class Celda {
     public boolean tienePiso() {
         return tienePiso;
     }
-
-    public String tipoDeBloque() {
-        return bloque != null ? bloque.getClass().getSimpleName() : "";
-
-    }
  
     public Bloque getBloque() {
         return bloque;

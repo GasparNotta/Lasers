@@ -40,7 +40,7 @@ public abstract class Bloque {
         this.y = y;
     }
 
-    public String getTipoDeBloque() {
+    public String tipoDeBloque() {
         return tipo;
     }
 }

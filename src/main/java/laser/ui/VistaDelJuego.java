@@ -26,26 +26,31 @@ public class VistaDelJuego {
 
                 // Crear un rectángulo que representa la celda
                 Rectangle rect = new Rectangle(tamañoCelda, tamañoCelda);
-
+            
                 // Configurar el color del rectángulo según el tipo de celda
-                if (celda.tienePiso()) {
-                    if (celda.tipoDeBloque().equals("BloqueOpacoFijo")) {
-                        rect.setFill(Color.DARKGRAY);  // Bloques opacos fijos en gris oscuro
-                    } else if (celda.tipoDeBloque().equals("BloqueOpacoMovil")) {
-                        rect.setFill(Color.GRAY);  // Bloques opacos móviles en gris
-                    } else if (celda.tipoDeBloque().equals("BloqueEspejo")) {
-                        rect.setFill(Color.LIGHTGRAY);  // Bloques espejo en gris claro
-                    } else if (celda.tipoDeBloque().equals("BloqueVidrio")) {
+                if (celda.tienePiso() && celda.getBloque() != null) {
+                    if (celda.getBloque().tipoDeBloque() == "BloqueFijo") {
+                        
+                        rect.setFill(Color.BLACK);  // Bloques opacos fijos en gris oscuro
+                    } else if (celda.getBloque().tipoDeBloque().equals("BloqueMovil")) {
+                        
+                        rect.setFill(Color.DARKGRAY);  // Bloques opacos móviles en gris
+                    } else if (celda.getBloque().tipoDeBloque().equals("BloqueEspejo")) {
+                        
+                        rect.setFill(Color.LIGHTSKYBLUE);  // Bloques espejo en azul cielo claro
+                    } else if (celda.getBloque().tipoDeBloque().equals("BloqueVidrio")) {
+                        
                         rect.setFill(Color.LIGHTBLUE);  // Bloques vidrio en azul claro
-                    } else if (celda.tipoDeBloque().equals("BloqueCristal")) {
+                    } else if (celda.getBloque().tipoDeBloque().equals("BloqueCristal")) {
+                        
                         rect.setFill(Color.LIGHTCYAN);  // Bloques cristal en cyan claro
                     } else {
+                        
                         rect.setFill(Color.LIGHTGRAY);  // Celdas con piso en gris claro
                     }
-
-
+                } else if (celda.tienePiso() && celda.getBloque() == null) {
                     rect.setFill(Color.LIGHTGRAY);  // Celdas con piso en gris claro
-                } else {
+                }else{
                     rect.setFill(Color.WHITESMOKE);   // Celdas sin piso en gris oscuro
                 }
 
