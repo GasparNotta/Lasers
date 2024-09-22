@@ -1,22 +1,16 @@
 package laser.tipos_de_bloque;
+import laser.Laser;
+import laser.Bloque;
 
-public class BloqueEspejo {
-    // Atributos
-    private boolean reflejaLaser;
-
-    // Constructor
+public class BloqueEspejo extends Bloque {
     public BloqueEspejo() {
-        this.reflejaLaser = true;
-    }
-
-    // Métodos
-    public boolean reflejaLaser() {
-        return reflejaLaser;
+        super("R"); // Tipo de bloque
     }
 
     @Override
-    public String toString() {
-        return "R";
+    public void interactuarConLaser(Laser laser) {
+        // Refleja los rayos láser
+        laser.reflejar();
+        System.out.println("Bloque Espejo: El rayo ha sido reflejado.");
     }
-    
 }
