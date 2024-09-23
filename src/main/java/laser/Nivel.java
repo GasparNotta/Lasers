@@ -7,51 +7,49 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Nivel {
-    private String nombreArchivo;
+    private String nombre_archivo;
     private int filas;
     private int columnas;
-    private List<String> configuracionBloques;  // Guardará la primera parte del archivo (bloques)
-    private List<String> configuracionElementos; // Guardará la segunda parte (emisores y objetivos)
+    private List<String> configuracion_bloques;  // Guardará la primera parte del archivo (bloques)
+    private List<String> configuracion_elementos; // Guardará la segunda parte (emisores y objetivos)
 
     //Constructor
     public Nivel(String nombreArchivo) {
-        this.nombreArchivo = nombreArchivo;
-        this.configuracionBloques = new ArrayList<>();
-        this.configuracionElementos = new ArrayList<>();
+        this.nombre_archivo = nombreArchivo;
+        this.configuracion_bloques = new ArrayList<>();
+        this.configuracion_elementos = new ArrayList<>();
     }
 
     // Método para leer el archivo y procesar filas y columnas
     public void leerArchivo() throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(nombreArchivo));
+        BufferedReader reader = new BufferedReader(new FileReader(nombre_archivo));
         String linea;
-        boolean leyendoBloques = true;  // Bandera para separar la primera y segunda sección
+        boolean leyendo_bloques = true;  // Bandera para separar la primera y segunda sección
 
         while ((linea = reader.readLine()) != null) {
             
             if (linea.trim().isEmpty()) { 
-                leyendoBloques = false;  // Llegamos a la línea en blanco, ahora leeremos emisores y objetivos
+                leyendo_bloques = false; 
                 continue;
             }
-            if (leyendoBloques) {
-                configuracionBloques.add(linea);
+
+            if (leyendo_bloques) {
+                configuracion_bloques.add(linea);
             } else {
-                configuracionElementos.add(linea);
+                configuracion_elementos.add(linea);
             }
         }
         reader.close();
         
         // Procesar filas y columnas
-        this.filas = configuracionBloques.size();  // El número de filas es el número de líneas en la primera sección
-        this.columnas = configuracionBloques.get(0).length();  // Las columnas se basan en la longitud de la primera línea
+        this.filas = configuracion_bloques.size(); 
+        this.columnas = configuracion_bloques.get(0).length();
 
-        for (int i = 0; i < configuracionBloques.size(); i++) {
-            System.out.println(i);
-            System.out.println(configuracionBloques.get(i));
-            System.out.println(columnas);
-            String linea_actual = configuracionBloques.get(i);
+        // Ajustar la longitud de las líneas si alguna quedo de otro formato(se considera sin piso)
+        for (int i = 0; i < configuracion_bloques.size(); i++) {
+            String linea_actual = configuracion_bloques.get(i);
         
             if (linea_actual.length() != columnas) {
-                System.out.println("Error: las columnas no son iguales");
                 
                 // Rellenar la línea hasta que tenga la longitud adecuada
                 while (linea_actual.length() < columnas) {
@@ -59,7 +57,7 @@ public class Nivel {
                 }
         
                 // Actualizar la línea en configuracionBloques
-                configuracionBloques.set(i, linea_actual);
+                configuracion_bloques.set(i, linea_actual);
             }
         }
     }
@@ -73,10 +71,10 @@ public class Nivel {
     }
 
     public List<String> getConfiguracionBloques() {
-        return configuracionBloques;
+        return configuracion_bloques;
     }
 
     public List<String> getConfiguracionElementos() {
-        return configuracionElementos;
+        return configuracion_elementos;
     }
 }

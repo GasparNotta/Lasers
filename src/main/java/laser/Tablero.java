@@ -18,9 +18,9 @@ public class Tablero {
     }
 
     // Inicializa el tablero con las configuraciones de bloques del nivel
-    private void inicializarCeldas(List<String> configuracionBloques) {
-        for (int i = 0; i < configuracionBloques.size(); i++) {
-            String linea = configuracionBloques.get(i);
+    private void inicializarCeldas(List<String> configuracion_bloques) {
+        for (int i = 0; i < configuracion_bloques.size(); i++) {
+            String linea = configuracion_bloques.get(i);
             for (int j = 0; j < linea.length(); j++) {
                 char caracter = linea.charAt(j);
                 if (caracter == ' ') {
@@ -59,6 +59,21 @@ public class Tablero {
             }
         }
     }
+
+    //Inicializa el tablero con las configuraciones de bloques del nivel
+
+    //Inicializa el tablero con las configuraciones de elementos del nivel
+
+
+
+
+
+
+
+
+
+
+
 
     public Celda getCelda(int fila, int columna) {
         return celdas[fila][columna];

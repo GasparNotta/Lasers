@@ -8,11 +8,11 @@ import laser.Celda;
 import laser.Tablero;
 
 public class VistaDelJuego {
-    private GridPane gridPane;
-    private int tamañoCelda = 40; // Tamaño visual de cada celda en píxeles
+    private GridPane grid_pane;
+    private int tamaño_celda = 40; // Tamaño visual de cada celda en píxeles
 
     public VistaDelJuego() {
-        gridPane = new GridPane();  // Este será el contenedor donde se dibujará el tablero
+        grid_pane = new GridPane();  // Este será el contenedor donde se dibujará el tablero
     }
 
     // Método para crear visualmente el tablero basado en la lógica
@@ -26,7 +26,7 @@ public class VistaDelJuego {
                 Celda celda = tablero.getCelda(i, j);  // Obtener la celda lógica
 
                 // Crear un rectángulo que representa la celda
-                Rectangle rect = new Rectangle(tamañoCelda, tamañoCelda);
+                Rectangle rect = new Rectangle(tamaño_celda, tamaño_celda);
 
                 // Configurar el borde del rectángulo
                 rect.setStroke(Color.BLACK);  // Borde Negro
@@ -65,13 +65,13 @@ public class VistaDelJuego {
                 
 
                 // Añadir el rectángulo al GridPane en la posición correspondiente
-                gridPane.add(rect, j, i);
+                grid_pane.add(rect, j, i);
             }
         }
     }
 
     // Obtener el GridPane que se usará en la escena principal
     public GridPane getGridPane() {
-        return gridPane;
+        return grid_pane;
     }
 }

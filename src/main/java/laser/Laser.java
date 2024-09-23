@@ -1,6 +1,11 @@
 package laser;
 
 public class Laser {
+
+    // Falta terminar de integrar
+
+
+
     private int x;  // Coordenada X
     private int y;  // Coordenada Y
     private int direccion;  // Dirección del rayo láser
