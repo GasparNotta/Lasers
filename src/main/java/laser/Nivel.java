@@ -13,6 +13,7 @@ public class Nivel {
     private List<String> configuracionBloques;  // Guardará la primera parte del archivo (bloques)
     private List<String> configuracionElementos; // Guardará la segunda parte (emisores y objetivos)
 
+    //Constructor
     public Nivel(String nombreArchivo) {
         this.nombreArchivo = nombreArchivo;
         this.configuracionBloques = new ArrayList<>();

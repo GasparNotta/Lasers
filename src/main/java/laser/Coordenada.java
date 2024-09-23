@@ -1,6 +1,9 @@
 package laser;
 
 public class Coordenada {
+    //---------------Revisar TODO SI SE USA----------------
+
+
     private int x;
     private int y;
 

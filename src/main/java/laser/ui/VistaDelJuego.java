@@ -3,6 +3,7 @@ package laser.ui;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import laser.Bloque;
 import laser.Celda;
 import laser.Tablero;
 
@@ -26,33 +27,42 @@ public class VistaDelJuego {
 
                 // Crear un rectángulo que representa la celda
                 Rectangle rect = new Rectangle(tamañoCelda, tamañoCelda);
-            
-                // Configurar el color del rectángulo según el tipo de celda
-                if (celda.tienePiso() && celda.getBloque() != null) {
-                    if (celda.getBloque().tipoDeBloque() == "BloqueFijo") {
-                        
-                        rect.setFill(Color.BLACK);  // Bloques opacos fijos en gris oscuro
-                    } else if (celda.getBloque().tipoDeBloque().equals("BloqueMovil")) {
-                        
-                        rect.setFill(Color.DARKGRAY);  // Bloques opacos móviles en gris
-                    } else if (celda.getBloque().tipoDeBloque().equals("BloqueEspejo")) {
-                        
-                        rect.setFill(Color.LIGHTSKYBLUE);  // Bloques espejo en azul cielo claro
-                    } else if (celda.getBloque().tipoDeBloque().equals("BloqueVidrio")) {
-                        
-                        rect.setFill(Color.LIGHTBLUE);  // Bloques vidrio en azul claro
-                    } else if (celda.getBloque().tipoDeBloque().equals("BloqueCristal")) {
-                        
-                        rect.setFill(Color.LIGHTCYAN);  // Bloques cristal en cyan claro
+
+                // Configurar el borde del rectángulo
+                rect.setStroke(Color.BLACK);  // Borde Negro
+                rect.setStrokeWidth(1);  // Grosor del borde
+
+                if (celda.tienePiso()) {
+                Bloque bloque = celda.getBloque();
+                
+                    if (bloque != null) {
+                        switch (bloque.tipoDeBloque()) {
+                            case "BloqueFijo":
+                                rect.setFill(Color.BLACK);  // Bloques opacos fijos en negro
+                                break;
+                            case "BloqueMovil":
+                                rect.setFill(Color.DARKGRAY);  // Bloques opacos móviles en gris oscuro
+                                break;
+                            case "BloqueEspejo":
+                                rect.setFill(Color.LIGHTSKYBLUE);  // Bloques espejo en azul cielo claro
+                                break;
+                            case "BloqueVidrio":
+                                rect.setFill(Color.LIGHTBLUE);  // Bloques vidrio en azul claro
+                                break;
+                            case "BloqueCristal":
+                                rect.setFill(Color.LIGHTCYAN);  // Bloques cristal en cyan claro
+                                break;
+                            default:
+                                rect.setFill(Color.LIGHTGRAY);  // Cualquier otro bloque
+                                break;
+                        }
                     } else {
-                        
-                        rect.setFill(Color.LIGHTGRAY);  // Celdas con piso en gris claro
+                        rect.setFill(Color.LIGHTGRAY);  // Celdas con piso pero sin bloque
                     }
-                } else if (celda.tienePiso() && celda.getBloque() == null) {
-                    rect.setFill(Color.LIGHTGRAY);  // Celdas con piso en gris claro
-                }else{
-                    rect.setFill(Color.WHITESMOKE);   // Celdas sin piso en gris oscuro
+                } else {
+                    rect.setFill(Color.WHITESMOKE);  // Celdas sin piso
                 }
+                
 
                 // Añadir el rectángulo al GridPane en la posición correspondiente
                 gridPane.add(rect, j, i);

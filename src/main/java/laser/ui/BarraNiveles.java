@@ -8,6 +8,7 @@ import laser.Nivel;
 import laser.Tablero;
 
 public class BarraNiveles {
+    // Acceder a los botones por fx::id
     @FXML
     private Button boton_nivel1;
 
@@ -38,6 +39,7 @@ public class BarraNiveles {
     @FXML
     private Pane juego_pane;
 
+    // Inicializar los botones
     @FXML
     public void initialize() {
         boton_nivel1.setOnAction(e -> mostrarNivel("1"));
@@ -50,6 +52,7 @@ public class BarraNiveles {
         boton_nivel8.setOnAction(e -> mostrarNivel("8"));
     }
 
+    // Método para mostrar un nivel en la interfaz
     private void mostrarNivel(String numero_nivel) {
         try {
             // Leer el nivel
