@@ -1,11 +1,19 @@
 package laser.ui;
 
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+//import javafx.scene.shape.Circle;
 import laser.Bloque;
 import laser.Celda;
 import laser.Tablero;
+
+//Circle puntoRojo = new Circle(3);  // Radio del punto
+//puntoRojo.setFill(Color.RED);
+//StackPane.setAlignment(puntoRojo, javafx.geometry.Pos.TOP_LEFT);
+
+
 
 public class VistaDelJuego {
     private GridPane grid_pane;
@@ -24,17 +32,18 @@ public class VistaDelJuego {
         for (int i = 0; i < filas; i++) {
             for (int j = 0; j < columnas; j++) {
                 Celda celda = tablero.getCelda(i, j);  // Obtener la celda lógica
+                
 
                 // Crear un rectángulo que representa la celda
                 Rectangle rect = new Rectangle(tamaño_celda, tamaño_celda);
+                StackPane stackPane = new StackPane();
 
-                // Configurar el borde del rectángulo
-                rect.setStroke(Color.BLACK);  // Borde Negro
-                rect.setStrokeWidth(1);  // Grosor del borde
 
                 if (celda.tienePiso()) {
                 Bloque bloque = celda.getBloque();
-                
+                    // Configurar el borde del rectángulo
+                    rect.setStroke(Color.BLACK);  // Borde Negro
+                    rect.setStrokeWidth(1);  // Grosor del borde
                     if (bloque != null) {
                         switch (bloque.tipoDeBloque()) {
                             case "BloqueFijo":
@@ -62,10 +71,12 @@ public class VistaDelJuego {
                 } else {
                     rect.setFill(Color.WHITESMOKE);  // Celdas sin piso
                 }
+                stackPane.getChildren().addAll(rect);
+                // Alinear el Circle en la esquina superior izquierda
                 
 
-                // Añadir el rectángulo al GridPane en la posición correspondiente
-                grid_pane.add(rect, j, i);
+                // Añadir el StackPane al GridPane
+                grid_pane.add(stackPane, j, i);
             }
         }
     }

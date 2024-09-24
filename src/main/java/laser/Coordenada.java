@@ -1,37 +1,29 @@
 package laser;
 
 public class Coordenada {
-    //---------------Revisar TODO SI SE USA----------------
-
-
-    private int x;
-    private int y;
+    private final int x;
+    private final int y;
+    private final boolean es_celda;
 
     public Coordenada(int x, int y) {
         this.x = x;
         this.y = y;
+        this.es_celda = (x % 2 == 1 && y % 2 == 1);
     }
- 
-    public int getX() {
+
+    public int obtenerX() {
         return x;
     }
- 
-    public int getY() {
+
+    public int obtenerY() {
         return y;
     }
 
-    @Override
-    public String toString() {
-        return "(" + x + ", " + y + ")";
+    public boolean esCelda() {
+        return es_celda;
     }
 
-    // Método para verificar si la coordenada es impar/impar (para bloques)
-    public boolean esBloque() {
-        return x % 2 != 0 && y % 2 != 0;
-    }
-
-    // Método para verificar si la coordenada es par/impar o impar/par (para emisores/objetivos)
-    public boolean esBorde() {
-        return (x % 2 == 0 && y % 2 != 0) || (x % 2 != 0 && y % 2 == 0);
+    public void imprimir() {
+        System.out.println("Coordenada: (" + x + ", " + y + ")");
     }
 }
