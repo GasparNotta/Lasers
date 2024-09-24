@@ -12,6 +12,7 @@ public class Coordenada {
         this.y = y;
         this.es_celda = (x % 2 == 1 && y % 2 == 1);
         this.es_laser = false;
+        this.es_objetivo = false;
     }
 
     public int obtenerX() {

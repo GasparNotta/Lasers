@@ -10,6 +10,7 @@ public class Tablero {
     private int filas;
     private int columnas;
     private Laser laser;
+    private Objetivo objetivo;
    
 
     public Tablero(Nivel nivel) {
@@ -18,9 +19,9 @@ public class Tablero {
         this.coordenadas = new Coordenada[(filas*2)+1][(columnas*2)+1];
         this.celdas = new Celda[filas][columnas];
         inicializarTablero();
-        mostrarTablero();
         inicializarBloques(nivel.getConfiguracionBloques());
         inicializarElementos(nivel.getConfiguracionElementos());
+        mostrarTablero();
 
 
 
@@ -111,10 +112,20 @@ public class Tablero {
 
     private void mostrarTablero() {
         for (int i = 0; i <= filas*2; i++) {
-            System.out.println();
             for (int j = 0; j <= columnas*2; j++) {
-                coordenadas[i][j].imprimir();
+                if (coordenadas[i][j].esCelda()) {
+                    celdas[i / 2][j / 2].imprimir();
+                } else if (coordenadas[i][j].esLaser()) {
+                    System.out.println("Laser en:");
+                    coordenadas[i][j].imprimir();
+                } else if (coordenadas[i][j].esObjetivo()) {
+                    System.out.println("Objetivo en:");
+                    coordenadas[i][j].imprimir();
+                } else {
+                    coordenadas[i][j].imprimir();
+                }
             }
+            System.out.println();
         }
         
     }
@@ -134,6 +145,10 @@ public class Tablero {
 
     public Coordenada getLaserCordenada() {
         return laser.getCoordenada();
+    }
+
+    public Coordenada getObjetivoCordenada() {
+        return objetivo.getCoordenada();
     }
 
 }

@@ -37,6 +37,10 @@ public class Celda {
     public Coordenada getCoordenada() {
         return coordenada; // Método para acceder a la coordenada
     }
+
+    public void imprimir() {
+        System.out.println("Celda: (" + coordenada.obtenerX() + ", " + coordenada.obtenerY() + ")");
+    }
 }
 
 
