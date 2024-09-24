@@ -1,17 +1,20 @@
 package laser.ui;
 
+import laser.Bloque;
+import laser.Celda;
+import laser.Tablero;
+
+
+
+// Circle puntoRojo = new Circle(3);  // Radio del punto
+// puntoRojo.setFill(Color.RED);
+// StackPane.setAlignment(puntoRojo, javafx.geometry.Pos.CENTER_LEFT);
+
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 //import javafx.scene.shape.Circle;
-import laser.Bloque;
-import laser.Celda;
-import laser.Tablero;
-
-//Circle puntoRojo = new Circle(3);  // Radio del punto
-//puntoRojo.setFill(Color.RED);
-//StackPane.setAlignment(puntoRojo, javafx.geometry.Pos.TOP_LEFT);
 
 
 
@@ -27,6 +30,7 @@ public class VistaDelJuego {
     public void generarTableroVisual(Tablero tablero) {
         int filas = tablero.getFilas();
         int columnas = tablero.getColumnas();
+
 
         // Iterar sobre las celdas del tablero lógico y generar los elementos visuales
         for (int i = 0; i < filas; i++) {
@@ -71,14 +75,20 @@ public class VistaDelJuego {
                 } else {
                     rect.setFill(Color.WHITESMOKE);  // Celdas sin piso
                 }
-                stackPane.getChildren().addAll(rect);
-                // Alinear el Circle en la esquina superior izquierda
                 
+                
+
+                stackPane.getChildren().addAll(rect);
+                
+
+               
+
 
                 // Añadir el StackPane al GridPane
                 grid_pane.add(stackPane, j, i);
             }
         }
+
     }
 
     // Obtener el GridPane que se usará en la escena principal

@@ -1,5 +1,4 @@
 laser/Nivel.class
-laser/Jugador.class
 module-info.class
 laser/Coordenada.class
 laser/tipos_de_bloque/BloqueFijo.class
@@ -11,6 +10,7 @@ laser/Celda.class
 laser/ui/VistaDelJuego.class
 laser/tipos_de_bloque/BloqueEspejo.class
 laser/ui/controles/ControlDelBloque.class
+laser/Objetivo.class
 laser/Tablero.class
 laser/ui/controles/ControlDelJuego.class
 laser/tipos_de_bloque/BloqueMovil.class

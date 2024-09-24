@@ -5,32 +5,25 @@ import laser.tipos_de_bloque.*;
 
 
 public class Tablero {
+    private Coordenada[][] coordenadas;
     private Celda[][] celdas;
     private int filas;
     private int columnas;
-
-    //------
-    private Coordenada[][] coordenadas;
-    //------
+    private Laser laser;
+   
 
     public Tablero(Nivel nivel) {
         this.filas = nivel.getFilas();
         this.columnas = nivel.getColumnas();
-
-
-        //------
-        this.coordenadas = new Coordenada[filas*2][columnas*2];
-        //------
-
-
+        this.coordenadas = new Coordenada[(filas*2)+1][(columnas*2)+1];
         this.celdas = new Celda[filas][columnas];
         inicializarTablero();
+        mostrarTablero();
         inicializarBloques(nivel.getConfiguracionBloques());
         inicializarElementos(nivel.getConfiguracionElementos());
 
 
 
-        mostrarTablero();
     }
 
 
@@ -39,10 +32,8 @@ public class Tablero {
 
 
     private void inicializarTablero() {
-        System.out.println(); 
-        for (int i = 0; i < filas*2; i++) {
-            System.err.println();
-            for (int j = 0; j < columnas*2; j++) {
+        for (int i = 0; i <= filas*2; i++) {
+            for (int j = 0; j <= columnas*2; j++) {
                 
                 coordenadas[i][j] = new Coordenada(i, j);
                 if (coordenadas[i][j].esCelda()) {
@@ -66,8 +57,6 @@ public class Tablero {
                     switch (caracter) {
                         case 'F':
                             celdas[i][j].establecerBloque(new BloqueFijo());
-                            
-                            
                             break;
                         case 'B':
                             celdas[i][j].establecerBloque(new BloqueMovil());
@@ -92,48 +81,45 @@ public class Tablero {
     }      
 
     private void inicializarElementos(List<String> configuracion_elementos) {
-        System.out.println("Inicializando elementos");
-        System.out.println();
-        
         for (String linea : configuracion_elementos) {
-            System.out.println("Procesando línea: " + linea);
-        
             // Dividir la línea en sus componentes
             String[] partes = linea.split(" ");
         
             char tipo = partes[0].charAt(0);  
-            int fila = Integer.parseInt(partes[1]);
-            int columna = Integer.parseInt(partes[2]);
+            int columna = Integer.parseInt(partes[1]);
+            int fila = Integer.parseInt(partes[2]);
         
             switch (tipo) {
                 case 'E':  // Emisor
                     String direccion = partes[3];  // La dirección del emisor (ej: 'SE')
-                    System.out.println("Emisor encontrado en la posición [" + fila + ", " + columna + "] con dirección " + direccion);
+
+                    new Laser(coordenadas[fila][columna],direccion);
+                    coordenadas[fila][columna].establecerLaser();
+
+                    
                     break;
         
-                case 'G':  // Objetivo
-                    System.out.println("Objetivo encontrado en la posición [" + fila + ", " + columna + "]");
-                    //Objetivo objetivo = new Objetivo();  
-                    //celdas[fila][columna].setObjetivo(objetivo);
+                case 'G':  
+                    new Objetivo(coordenadas[fila][columna]);  
+                    coordenadas[fila][columna].establecerObjetivo();
                     break;
         
             }
         }
     }
+        
 
     private void mostrarTablero() {
-        System.out.println("Mostrando tablero");
-        System.out.println();
-        for (int i = 0; i < filas; i++) {
-            for (int j = 0; j < columnas; j++) {
-                Celda celda = celdas[i][j];
-                celda.getCoordenada().imprimir();
-            }
+        for (int i = 0; i <= filas*2; i++) {
             System.out.println();
+            for (int j = 0; j <= columnas*2; j++) {
+                coordenadas[i][j].imprimir();
+            }
         }
+        
     }
-        
-        
+
+
     public Celda getCelda(int fila, int columna) {
         return celdas[fila][columna];
     }
@@ -145,4 +131,9 @@ public class Tablero {
     public int getColumnas() {
         return columnas;
     }
+
+    public Coordenada getLaserCordenada() {
+        return laser.getCoordenada();
+    }
+
 }

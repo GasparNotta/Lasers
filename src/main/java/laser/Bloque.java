@@ -17,5 +17,8 @@ public abstract class Bloque {
     public String tipoDeBloque() {
         return tipo;
     }
+
+
+
 }
 
