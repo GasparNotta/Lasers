@@ -68,7 +68,7 @@ public class BarraNiveles {
 
             // Limpiar el panel antes de añadir el nuevo tablero
             juego_pane.getChildren().clear();
-            juego_pane.getChildren().add(vistaDelJuego.getGridPane());
+            juego_pane.getChildren().add(vistaDelJuego.getRootPane());
 
             // Actualizar la etiqueta del nivel
             label_nivel.setText("Nivel " + numero_nivel);

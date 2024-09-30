@@ -10,6 +10,10 @@ public class Laser {
         this.direccion = direccion;
     }
 
+    public void absorber() {
+        // Lógica de absorción
+    }
+
     public void reflejar() {
         // Lógica de reflexión
     }
@@ -31,6 +35,9 @@ public class Laser {
     }
 
 }
+
+
+
 
 
 

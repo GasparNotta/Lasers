@@ -10,6 +10,6 @@ public class BloqueFijo extends Bloque {
     @Override
     public void interactuarConLaser(Laser laser) {
         // Absorbe rayos láser, no hace nada
-        System.out.println("Bloque Opaco Fijo: El rayo ha sido absorbido.");
+        laser.absorber();
     }
 }

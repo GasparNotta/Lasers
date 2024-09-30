@@ -1,43 +1,46 @@
+
+
+
 package laser.ui;
 
 import laser.Bloque;
 import laser.Celda;
 import laser.Tablero;
 import laser.Juego;
-
-
-
-// Circle puntoRojo = new Circle(3);  // Radio del punto
-// puntoRojo.setFill(Color.RED);
-// StackPane.setAlignment(puntoRojo, javafx.geometry.Pos.CENTER_LEFT);
+import laser.Coordenada;
+import laser.Juego;
 
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-//import javafx.scene.shape.Circle;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 
 
 
 public class VistaDelJuego {
-    private GridPane grid_pane;
+    private GridPane grid_pane;  // Para las celdas del tablero
+    private Pane laser_layer;    // Para dibujar la trayectoria del láser
+    private StackPane root_pane; // Contendrá ambos, el tablero y la capa del láser
     private int tamaño_celda = 40; // Tamaño visual de cada celda en píxeles
 
     public VistaDelJuego() {
-        grid_pane = new GridPane();  // Este será el contenedor donde se dibujará el tablero
+        grid_pane = new GridPane();  // Para dibujar el tablero
+        laser_layer = new Pane();    // Para dibujar la trayectoria del láser
+        root_pane = new StackPane(); // Para superponer ambas capas
+        root_pane.getChildren().addAll(grid_pane, laser_layer); // Añadir capas al StackPane
     }
 
     // Método para crear visualmente el tablero basado en la lógica
     public void generarTableroVisual(Juego juego) {
-
         // Obtener el tablero
         Tablero tablero = juego.getTablero();
-
-        
         int filas = tablero.getFilas();
         int columnas = tablero.getColumnas();
-        
-        juego.jugar();
+
+        juego.actualizarTablero();  // Ejecuta la lógica del juego
 
 
         // Iterar sobre las celdas del tablero lógico y generar los elementos visuales
@@ -89,18 +92,26 @@ public class VistaDelJuego {
                 stackPane.getChildren().addAll(rect);
                 
 
-               
-
-
                 // Añadir el StackPane al GridPane
                 grid_pane.add(stackPane, j, i);
             }
         }
+        // Después de generar el tablero, dibujar la trayectoria del láser
+        dibujarLaser(tablero);
 
+    }
+
+
+    // Método para dibujar la trayectoria del láser
+    public void dibujarLaser(Tablero tablero) {
     }
 
     // Obtener el GridPane que se usará en la escena principal
-    public GridPane getGridPane() {
-        return grid_pane;
+    public StackPane getRootPane() {
+        return root_pane;
     }
 }
+
+
+
+

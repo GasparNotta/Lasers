@@ -4,11 +4,9 @@ public class Juego {
     private Tablero tablero;
     private Laser laser;
     private Objetivo objetivo;
-    private Nivel nivel;
     private Coordenada coordenada_actual;
 
     public Juego(Nivel nivel) {
-        this.nivel = nivel;
         this.tablero = new Tablero(nivel);
         this.laser = tablero.getLaser();
         this.objetivo = tablero.getObjetivo();
@@ -16,6 +14,10 @@ public class Juego {
     }
 
     public void jugar() {
+        actualizarTablero();
+    }
+
+    public void actualizarTablero() {
         while (!coordenada_actual.esBorde()) {  // Continúa hasta que el láser alcance el borde.
             String direccion = laser.getDireccion();
             int coordenada_actual_fila = coordenada_actual.obtenerX();
@@ -128,7 +130,7 @@ public class Juego {
         }
 
         if (coordenada_actual.esBorde()) {
-            System.out.println("El láser alcanzó el borde del tablero. Fin del juego.");
+            System.out.println("El láser alcanzó el borde del tablero.");
         }
     }
 

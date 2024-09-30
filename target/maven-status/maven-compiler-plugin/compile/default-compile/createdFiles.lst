@@ -7,7 +7,6 @@ laser/Laser.class
 laser/Bloque.class
 laser/tipos_de_bloque/BloqueVidrio.class
 laser/Celda.class
-laser/ui/VistaDelJuego.class
 laser/tipos_de_bloque/BloqueEspejo.class
 laser/ui/controles/ControlDelBloque.class
 laser/Objetivo.class
@@ -15,4 +14,3 @@ laser/Tablero.class
 laser/ui/controles/ControlDelJuego.class
 laser/tipos_de_bloque/BloqueMovil.class
 laser/tipos_de_bloque/BloqueCristal.class
-laser/ui/BarraNiveles.class
