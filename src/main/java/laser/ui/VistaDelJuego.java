@@ -1,22 +1,15 @@
-
-
-
 package laser.ui;
 
 import laser.Bloque;
-import laser.Celda;
 import laser.Tablero;
 import laser.Juego;
 import laser.Coordenada;
-import laser.Juego;
 
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
 
 
 
@@ -42,20 +35,20 @@ public class VistaDelJuego {
 
         juego.actualizarTablero();  // Ejecuta la lógica del juego
 
-
         // Iterar sobre las celdas del tablero lógico y generar los elementos visuales
-        for (int i = 0; i < filas; i++) {
-            for (int j = 0; j < columnas; j++) {
-                Celda celda = tablero.getCelda(i, j);  // Obtener la celda lógica
+        for (int i = 0; i <= filas*2; i++) {
+            for (int j = 0; j <= columnas*2; j++) {
+                Coordenada coordenada = tablero.getCoordenada(i, j);
                 
-
+                
                 // Crear un rectángulo que representa la celda
-                Rectangle rect = new Rectangle(tamaño_celda, tamaño_celda);
                 StackPane stackPane = new StackPane();
-
-
-                if (celda.tienePiso()) {
-                Bloque bloque = celda.getBloque();
+                
+                
+                if (coordenada.esCelda()) {
+                    Rectangle rect = new Rectangle(tamaño_celda, tamaño_celda);
+                    System.out.println("Coordenada: " + i + " " + j);
+                    Bloque bloque = coordenada.getBloque();
                     // Configurar el borde del rectángulo
                     rect.setStroke(Color.BLACK);  // Borde Negro
                     rect.setStrokeWidth(1);  // Grosor del borde
@@ -83,13 +76,12 @@ public class VistaDelJuego {
                     } else {
                         rect.setFill(Color.LIGHTGRAY);  // Celdas con piso pero sin bloque
                     }
-                } else {
-                    rect.setFill(Color.WHITESMOKE);  // Celdas sin piso
+                    stackPane.getChildren().addAll(rect);
                 }
                 
                 
 
-                stackPane.getChildren().addAll(rect);
+               
                 
 
                 // Añadir el StackPane al GridPane

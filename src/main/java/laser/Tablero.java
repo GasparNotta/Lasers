@@ -10,7 +10,6 @@ public class Tablero {
     private int filas;
     private int columnas;
     
-    private Celda[][] celdas;
     private Laser laser;
     private Objetivo objetivo;
    
@@ -19,7 +18,6 @@ public class Tablero {
         this.filas = nivel.getFilas();
         this.columnas = nivel.getColumnas();
         this.coordenadas = new Coordenada[(filas*2)+1][(columnas*2)+1];
-        this.celdas = new Celda[filas][columnas];
         inicializarTablero();
         inicializarBloques(nivel.getConfiguracionBloques());
         inicializarElementos(nivel.getConfiguracionElementos());
@@ -37,9 +35,6 @@ public class Tablero {
         for (int fila = 0; fila <= filas*2; fila++) {
             for (int columna = 0; columna <= columnas*2; columna++) {
                 coordenadas[fila][columna] = new Coordenada(fila, columna);
-                if (coordenadas[fila][columna].esCelda()) {
-                    celdas[fila / 2][columna / 2] = new Celda(coordenadas[fila][columna]);
-                }
                 if (fila == 0 || fila == filas*2 || columna == 0 || columna == columnas*2) {
                     coordenadas[fila][columna].establecerBorde();
                 }
@@ -49,35 +44,32 @@ public class Tablero {
 
     // Inicializa el tablero con las configuraciones de bloques del nivel
     private void inicializarBloques(List<String> configuracion_bloques) {
+
+
+
         for (int i = 0; i < configuracion_bloques.size(); i++) {
             String linea = configuracion_bloques.get(i);
             for (int j = 0; j < linea.length(); j++) {
                 char caracter = linea.charAt(j);
+                
                 if (caracter != ' ') {
-                    
-                    celdas[i][j].establecerPiso();
-                    
+                    coordenadas[i*2+1][j*2+1].establecerCelda();
                     // Agregar bloque según el carácter
                     switch (caracter) {
                         case 'F':
-                            celdas[i][j].establecerBloque(new BloqueFijo());
-                            coordenadas[i*2+1][j*2+1].establecerBloque();
+                            coordenadas[i*2+1][j*2+1].establecerBloque(new BloqueFijo());;
                             break;
                         case 'B':
-                            celdas[i][j].establecerBloque(new BloqueMovil());
-                            coordenadas[i*2+1][j*2+1].establecerBloque();
+                            coordenadas[i*2+1][j*2+1].establecerBloque(new BloqueMovil());
                             break;
                         case 'R':
-                            celdas[i][j].establecerBloque(new BloqueEspejo());
-                            coordenadas[i*2+1][j*2+1].establecerBloque();
+                            coordenadas[i*2+1][j*2+1].establecerBloque(new BloqueEspejo());
                             break;
                         case 'G':
-                            celdas[i][j].establecerBloque(new BloqueVidrio());
-                            coordenadas[i*2+1][j*2+1].establecerBloque();
+                            coordenadas[i*2+1][j*2+1].establecerBloque(new BloqueVidrio());
                             break;
                         case 'C':
-                            celdas[i][j].establecerBloque(new BloqueCristal());
-                            coordenadas[i*2+1][j*2+1].establecerBloque();
+                            coordenadas[i*2+1][j*2+1].establecerBloque(new BloqueCristal());
                             break;
                     }
                 }
@@ -120,7 +112,8 @@ public class Tablero {
         for (int i = 0; i <= filas*2; i++) {
             for (int j = 0; j <= columnas*2; j++) {
                 if (coordenadas[i][j].esCelda()) {
-                    celdas[i / 2][j / 2].imprimir();
+                    System.out.println("Celda en:");
+                    coordenadas[i][j].imprimir();
                 } else if (coordenadas[i][j].esLaser()) {
                     System.out.println("Laser en:");
                     coordenadas[i][j].imprimir();
@@ -140,11 +133,6 @@ public class Tablero {
             System.out.println();
         }
         
-    }
-
-
-    public Celda getCelda(int fila, int columna) {
-        return celdas[fila][columna];
     }
 
     public Coordenada getCoordenada(int fila, int columna) {

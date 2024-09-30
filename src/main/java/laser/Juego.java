@@ -30,7 +30,7 @@ public class Juego {
                 case "SW":
                     if (coordenada_actual_fila % 2 == 0) {
                         Coordenada coordenada = tablero.getCoordenada(coordenada_actual_fila + 1, coordenada_actual_columna);
-                        if (!coordenada.tieneBloque()) {
+                        if (coordenada.getBloque() == null) {
                             System.out.println("No hay bloque en las coordenadas: ");
                             coordenada.imprimir();
                         } else {
@@ -39,7 +39,7 @@ public class Juego {
                         }
                     } else {
                         Coordenada coordenada = tablero.getCoordenada(coordenada_actual_fila, coordenada_actual_columna - 1);
-                        if (!coordenada.tieneBloque()) {
+                        if (coordenada.getBloque() == null) {
                             System.out.println("No hay bloque en las coordenadas: ");
                             coordenada.imprimir();
                         } else {
@@ -54,7 +54,7 @@ public class Juego {
                 case "SE":
                     if (coordenada_actual_fila % 2 == 0) {
                         Coordenada coordenada = tablero.getCoordenada(coordenada_actual_fila + 1, coordenada_actual_columna);
-                        if (!coordenada.tieneBloque()) {
+                        if (coordenada.getBloque() == null) {
                             System.out.println("No hay bloque en las coordenadas: ");
                             coordenada.imprimir();
                         } else {
@@ -63,7 +63,7 @@ public class Juego {
                         }
                     } else {
                         Coordenada coordenada = tablero.getCoordenada(coordenada_actual_fila, coordenada_actual_columna + 1);
-                        if (!coordenada.tieneBloque()) {
+                        if (coordenada.getBloque() == null) {
                             System.out.println("No hay bloque en las coordenadas: ");
                             coordenada.imprimir();
                         } else {
@@ -78,7 +78,7 @@ public class Juego {
                 case "NW":
                     if (coordenada_actual_fila % 2 == 0) {
                         Coordenada coordenada = tablero.getCoordenada(coordenada_actual_fila - 1, coordenada_actual_columna);
-                        if (!coordenada.tieneBloque()) {
+                        if (coordenada.getBloque() == null) {
                             System.out.println("No hay bloque en las coordenadas: ");
                             coordenada.imprimir();
                         } else {
@@ -87,7 +87,7 @@ public class Juego {
                         }
                     } else {
                         Coordenada coordenada = tablero.getCoordenada(coordenada_actual_fila, coordenada_actual_columna - 1);
-                        if (!coordenada.tieneBloque()) {
+                        if (coordenada.getBloque() == null) {
                             System.out.println("No hay bloque en las coordenadas: ");
                             coordenada.imprimir();
                         } else {
@@ -102,7 +102,7 @@ public class Juego {
                 case "NE":
                     if (coordenada_actual_fila % 2 == 0) {
                         Coordenada coordenada = tablero.getCoordenada(coordenada_actual_fila - 1, coordenada_actual_columna);
-                        if (!coordenada.tieneBloque()) {
+                        if (coordenada.getBloque() == null) {
                             System.out.println("No hay bloque en las coordenadas: ");
                             coordenada.imprimir();
                         } else {
@@ -111,7 +111,7 @@ public class Juego {
                         }
                     } else {
                         Coordenada coordenada = tablero.getCoordenada(coordenada_actual_fila, coordenada_actual_columna + 1);
-                        if (!coordenada.tieneBloque()) {
+                        if (coordenada.getBloque() == null) {
                             System.out.println("No hay bloque en las coordenadas: ");
                             coordenada.imprimir();
                         } else {

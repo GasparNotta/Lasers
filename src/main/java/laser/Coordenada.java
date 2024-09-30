@@ -3,22 +3,22 @@ package laser;
 public class Coordenada {
     private final int x;
     private final int y;
-    private final boolean es_celda;
+    private boolean es_celda;
     private boolean es_borde;
     private boolean es_laser;
     private boolean es_objetivo;
     private boolean pasa_laser;
-    private boolean tiene_bloque;
+    private Bloque bloque;
 
     public Coordenada(int x, int y) {
         this.x = x;
         this.y = y;
-        this.es_celda = (x % 2 == 1 && y % 2 == 1);
+        this.es_celda = false;
         this.es_laser = false;
         this.es_objetivo = false;
         this.pasa_laser = false;
         this.es_borde = false;
-        this.tiene_bloque = false;
+        this.bloque = null;
     }
 
     public int obtenerX() {
@@ -45,20 +45,16 @@ public class Coordenada {
         return es_borde;
     }
 
-    public boolean tieneBloque() {
-        return tiene_bloque;
-    }
-
     public boolean pasaLaser() {
         return pasa_laser;
     }
 
+    public void establecerCelda() {
+        es_celda = true;
+    }
+    
     public void establecerBorde() {
         es_borde = true;
-    }
-
-    public void establecerBloque() {
-        tiene_bloque = true;
     }
 
     public void establecerNoBorde() {
@@ -75,6 +71,15 @@ public class Coordenada {
 
     public void imprimir() {
         System.out.println("Coordenada: (" + x + ", " + y + ")");
+    }
+
+    public void establecerBloque(Bloque bloque) {
+        this.bloque = bloque;
+    }
+
+ 
+    public Bloque getBloque() {
+        return bloque;
     }
 }
 
