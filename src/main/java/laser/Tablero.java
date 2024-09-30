@@ -6,9 +6,11 @@ import laser.tipos_de_bloque.*;
 
 public class Tablero {
     private Coordenada[][] coordenadas;
-    private Celda[][] celdas;
+    
     private int filas;
     private int columnas;
+    
+    private Celda[][] celdas;
     private Laser laser;
     private Objetivo objetivo;
    
@@ -21,10 +23,9 @@ public class Tablero {
         inicializarTablero();
         inicializarBloques(nivel.getConfiguracionBloques());
         inicializarElementos(nivel.getConfiguracionElementos());
+
+        // mostrarTablero();
         mostrarTablero();
-
-
-
     }
 
 
@@ -35,13 +36,15 @@ public class Tablero {
     private void inicializarTablero() {
         for (int i = 0; i <= filas*2; i++) {
             for (int j = 0; j <= columnas*2; j++) {
-                
                 coordenadas[i][j] = new Coordenada(i, j);
                 if (coordenadas[i][j].esCelda()) {
                     celdas[i / 2][j / 2] = new Celda(coordenadas[i][j]);
                 }
-            }
-        }   
+                if (i == 0 || i == filas*2 || j == 0 || j == columnas*2) {
+                    coordenadas[i][j].establecerBorde();
+                }
+            }   
+        }
     }
 
     // Inicializa el tablero con las configuraciones de bloques del nivel
@@ -94,8 +97,9 @@ public class Tablero {
                 case 'E':  // Emisor
                     String direccion = partes[3];  // La dirección del emisor (ej: 'SE')
 
-                    new Laser(coordenadas[fila][columna],direccion);
+                    laser = new Laser(coordenadas[fila][columna],direccion);
                     coordenadas[fila][columna].establecerLaser();
+                    coordenadas[fila][columna].establecerNoBorde();
 
                     
                     break;
@@ -108,6 +112,7 @@ public class Tablero {
             }
         }
     }
+
         
 
     private void mostrarTablero() {
@@ -120,6 +125,12 @@ public class Tablero {
                     coordenadas[i][j].imprimir();
                 } else if (coordenadas[i][j].esObjetivo()) {
                     System.out.println("Objetivo en:");
+                    coordenadas[i][j].imprimir();
+                } else if(coordenadas[i][j].pasaLaser()){
+                    System.out.println("Pasa laser en:");
+                    coordenadas[i][j].imprimir();
+                } else if(coordenadas[i][j].esBorde()){
+                    System.out.println("Borde en:");
                     coordenadas[i][j].imprimir();
                 } else {
                     coordenadas[i][j].imprimir();
@@ -135,6 +146,10 @@ public class Tablero {
         return celdas[fila][columna];
     }
 
+    public Coordenada getCoordenada(int fila, int columna) {
+        return coordenadas[fila][columna];
+    }
+
     public int getFilas() {
         return filas;
     }
@@ -143,8 +158,16 @@ public class Tablero {
         return columnas;
     }
 
-    public Coordenada getLaserCordenada() {
-        return laser.getCoordenada();
+    public Laser getLaser() {
+        return laser;
+    }
+
+    public Objetivo getObjetivo() {
+        return objetivo;
+    }
+
+    public Coordenada getLaserCordenadaInicial() {
+        return laser.getCoordenadaInicial();
     }
 
     public Coordenada getObjetivoCordenada() {

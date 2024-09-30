@@ -3,6 +3,7 @@ package laser.ui;
 import laser.Bloque;
 import laser.Celda;
 import laser.Tablero;
+import laser.Juego;
 
 
 
@@ -27,9 +28,16 @@ public class VistaDelJuego {
     }
 
     // Método para crear visualmente el tablero basado en la lógica
-    public void generarTableroVisual(Tablero tablero) {
+    public void generarTableroVisual(Juego juego) {
+
+        // Obtener el tablero
+        Tablero tablero = juego.getTablero();
+
+        
         int filas = tablero.getFilas();
         int columnas = tablero.getColumnas();
+        
+        juego.jugar();
 
 
         // Iterar sobre las celdas del tablero lógico y generar los elementos visuales

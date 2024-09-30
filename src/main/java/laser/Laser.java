@@ -3,14 +3,13 @@ package laser;
 public class Laser {
 
     private String direccion;  // Dirección del rayo láser
-    private final Coordenada coordenada;  // Coordenada del láser
+    private final Coordenada coordenada_inicial;  // Coordenada del láser
     
-    public Laser(Coordenada coordenada, String direccion) {
-        this.coordenada = coordenada;
+    public Laser(Coordenada coordenada_inicial, String direccion) {
+        this.coordenada_inicial = coordenada_inicial;
         this.direccion = direccion;
     }
 
-    
     public void reflejar() {
         // Lógica de reflexión
     }
@@ -23,8 +22,8 @@ public class Laser {
         // Lógica de refracción
     }
 
-    public Coordenada getCoordenada() {
-        return coordenada;
+    public Coordenada getCoordenadaInicial() {
+        return coordenada_inicial;
     }
 
     public String getDireccion() {
