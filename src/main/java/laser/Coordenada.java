@@ -8,6 +8,7 @@ public class Coordenada {
     private boolean es_laser;
     private boolean es_objetivo;
     private boolean pasa_laser;
+    private boolean tiene_bloque;
 
     public Coordenada(int x, int y) {
         this.x = x;
@@ -17,6 +18,7 @@ public class Coordenada {
         this.es_objetivo = false;
         this.pasa_laser = false;
         this.es_borde = false;
+        this.tiene_bloque = false;
     }
 
     public int obtenerX() {
@@ -43,12 +45,20 @@ public class Coordenada {
         return es_borde;
     }
 
+    public boolean tieneBloque() {
+        return tiene_bloque;
+    }
+
     public boolean pasaLaser() {
         return pasa_laser;
     }
 
     public void establecerBorde() {
         es_borde = true;
+    }
+
+    public void establecerBloque() {
+        tiene_bloque = true;
     }
 
     public void establecerNoBorde() {

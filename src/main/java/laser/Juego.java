@@ -16,33 +16,119 @@ public class Juego {
     }
 
     public void jugar() {
-        while(coordenada_actual.esBorde() == false) {
+        while (!coordenada_actual.esBorde()) {  // Continúa hasta que el láser alcance el borde.
             String direccion = laser.getDireccion();
-            int cordenada_actual_x = coordenada_actual.obtenerX();
-            int cordenada_actual_y = coordenada_actual.obtenerY();
+            int coordenada_actual_fila = coordenada_actual.obtenerX();
+            int coordenada_actual_columna = coordenada_actual.obtenerY();
 
-                System.out.println("Ahora estoy en:");
-                System.out.println(cordenada_actual_x + " " + cordenada_actual_y);
-                switch (direccion) {
-                    case "SW":
-                        coordenada_actual = tablero.getCoordenada(cordenada_actual_x - 1, cordenada_actual_y + 1);
-                        coordenada_actual.pasaLaser();  
-                        break; 
-                    case "SE":
-                        coordenada_actual = tablero.getCoordenada(cordenada_actual_x + 1, cordenada_actual_y + 1);
-                        coordenada_actual.pasaLaser();
-                        break; 
-                    case "NW":
-                        coordenada_actual = tablero.getCoordenada(cordenada_actual_x - 1, cordenada_actual_y - 1);
-                        coordenada_actual.pasaLaser();
-                        break; 
-                    case "NE":
-                        coordenada_actual = tablero.getCoordenada(cordenada_actual_x + 1, cordenada_actual_y - 1);
-                        coordenada_actual.pasaLaser();
-                        break; 
-                }
-            
-                
+            System.out.println("Ahora estoy en:");
+            System.out.println(coordenada_actual_fila + " " + coordenada_actual_columna);
+
+            switch (direccion) {
+                case "SW":
+                    if (coordenada_actual_fila % 2 == 0) {
+                        Coordenada coordenada = tablero.getCoordenada(coordenada_actual_fila + 1, coordenada_actual_columna);
+                        if (!coordenada.tieneBloque()) {
+                            System.out.println("No hay bloque en las coordenadas: ");
+                            coordenada.imprimir();
+                        } else {
+                            System.out.println("Hay bloque en las coordenadas: ");
+                            coordenada.imprimir();
+                        }
+                    } else {
+                        Coordenada coordenada = tablero.getCoordenada(coordenada_actual_fila, coordenada_actual_columna - 1);
+                        if (!coordenada.tieneBloque()) {
+                            System.out.println("No hay bloque en las coordenadas: ");
+                            coordenada.imprimir();
+                        } else {
+                            System.out.println("Hay bloque en las coordenadas: ");
+                            coordenada.imprimir();
+                        }
+                    }
+                    coordenada_actual = tablero.getCoordenada(coordenada_actual_fila + 1, coordenada_actual_columna - 1);
+                    coordenada_actual.pasaLaser();
+                    break;
+
+                case "SE":
+                    if (coordenada_actual_fila % 2 == 0) {
+                        Coordenada coordenada = tablero.getCoordenada(coordenada_actual_fila + 1, coordenada_actual_columna);
+                        if (!coordenada.tieneBloque()) {
+                            System.out.println("No hay bloque en las coordenadas: ");
+                            coordenada.imprimir();
+                        } else {
+                            System.out.println("Hay bloque en las coordenadas: ");
+                            coordenada.imprimir();
+                        }
+                    } else {
+                        Coordenada coordenada = tablero.getCoordenada(coordenada_actual_fila, coordenada_actual_columna + 1);
+                        if (!coordenada.tieneBloque()) {
+                            System.out.println("No hay bloque en las coordenadas: ");
+                            coordenada.imprimir();
+                        } else {
+                            System.out.println("Hay bloque en las coordenadas: ");
+                            coordenada.imprimir();
+                        }
+                    }
+                    coordenada_actual = tablero.getCoordenada(coordenada_actual_fila + 1, coordenada_actual_columna + 1);
+                    coordenada_actual.pasaLaser();
+                    break;
+
+                case "NW":
+                    if (coordenada_actual_fila % 2 == 0) {
+                        Coordenada coordenada = tablero.getCoordenada(coordenada_actual_fila - 1, coordenada_actual_columna);
+                        if (!coordenada.tieneBloque()) {
+                            System.out.println("No hay bloque en las coordenadas: ");
+                            coordenada.imprimir();
+                        } else {
+                            System.out.println("Hay bloque en las coordenadas: ");
+                            coordenada.imprimir();
+                        }
+                    } else {
+                        Coordenada coordenada = tablero.getCoordenada(coordenada_actual_fila, coordenada_actual_columna - 1);
+                        if (!coordenada.tieneBloque()) {
+                            System.out.println("No hay bloque en las coordenadas: ");
+                            coordenada.imprimir();
+                        } else {
+                            System.out.println("Hay bloque en las coordenadas: ");
+                            coordenada.imprimir();
+                        }
+                    }
+                    coordenada_actual = tablero.getCoordenada(coordenada_actual_fila - 1, coordenada_actual_columna - 1);
+                    coordenada_actual.pasaLaser();
+                    break;
+
+                case "NE":
+                    if (coordenada_actual_fila % 2 == 0) {
+                        Coordenada coordenada = tablero.getCoordenada(coordenada_actual_fila - 1, coordenada_actual_columna);
+                        if (!coordenada.tieneBloque()) {
+                            System.out.println("No hay bloque en las coordenadas: ");
+                            coordenada.imprimir();
+                        } else {
+                            System.out.println("Hay bloque en las coordenadas: ");
+                            coordenada.imprimir();
+                        }
+                    } else {
+                        Coordenada coordenada = tablero.getCoordenada(coordenada_actual_fila, coordenada_actual_columna + 1);
+                        if (!coordenada.tieneBloque()) {
+                            System.out.println("No hay bloque en las coordenadas: ");
+                            coordenada.imprimir();
+                        } else {
+                            System.out.println("Hay bloque en las coordenadas: ");
+                            coordenada.imprimir();
+                        }
+                    }
+                    coordenada_actual = tablero.getCoordenada(coordenada_actual_fila - 1, coordenada_actual_columna + 1);
+                    coordenada_actual.pasaLaser();
+                    break;
+
+                default:
+                    System.out.println("Dirección desconocida.");
+                    break;
+            }
+        }
+
+        if (coordenada_actual.esBorde()) {
+            System.out.println("El láser alcanzó el borde del tablero. Fin del juego.");
         }
     }
 
@@ -57,5 +143,4 @@ public class Juego {
     public Objetivo getObjetivo() {
         return objetivo;
     }
-    
 }

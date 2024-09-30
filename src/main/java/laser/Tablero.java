@@ -34,14 +34,14 @@ public class Tablero {
 
 
     private void inicializarTablero() {
-        for (int i = 0; i <= filas*2; i++) {
-            for (int j = 0; j <= columnas*2; j++) {
-                coordenadas[i][j] = new Coordenada(i, j);
-                if (coordenadas[i][j].esCelda()) {
-                    celdas[i / 2][j / 2] = new Celda(coordenadas[i][j]);
+        for (int fila = 0; fila <= filas*2; fila++) {
+            for (int columna = 0; columna <= columnas*2; columna++) {
+                coordenadas[fila][columna] = new Coordenada(fila, columna);
+                if (coordenadas[fila][columna].esCelda()) {
+                    celdas[fila / 2][columna / 2] = new Celda(coordenadas[fila][columna]);
                 }
-                if (i == 0 || i == filas*2 || j == 0 || j == columnas*2) {
-                    coordenadas[i][j].establecerBorde();
+                if (fila == 0 || fila == filas*2 || columna == 0 || columna == columnas*2) {
+                    coordenadas[fila][columna].establecerBorde();
                 }
             }   
         }
@@ -61,22 +61,23 @@ public class Tablero {
                     switch (caracter) {
                         case 'F':
                             celdas[i][j].establecerBloque(new BloqueFijo());
+                            coordenadas[i*2+1][j*2+1].establecerBloque();
                             break;
                         case 'B':
                             celdas[i][j].establecerBloque(new BloqueMovil());
-                            
+                            coordenadas[i*2+1][j*2+1].establecerBloque();
                             break;
                         case 'R':
                             celdas[i][j].establecerBloque(new BloqueEspejo());
-                            
+                            coordenadas[i*2+1][j*2+1].establecerBloque();
                             break;
                         case 'G':
                             celdas[i][j].establecerBloque(new BloqueVidrio());
-                            
+                            coordenadas[i*2+1][j*2+1].establecerBloque();
                             break;
                         case 'C':
                             celdas[i][j].establecerBloque(new BloqueCristal());
-                            
+                            coordenadas[i*2+1][j*2+1].establecerBloque();
                             break;
                     }
                 }
