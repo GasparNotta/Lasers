@@ -3,21 +3,21 @@ package laser;
 public class Coordenada {
     private final int x;
     private final int y;
-    private boolean es_celda;
-    private boolean es_borde;
-    private boolean es_laser;
-    private boolean es_objetivo;
-    private boolean pasa_laser;
+
+    private boolean esCelda;
+    private boolean esBorde;
+    private boolean esLaser;
+    private boolean esObjetivo;
+    
     private Bloque bloque;
 
     public Coordenada(int x, int y) {
         this.x = x;
         this.y = y;
-        this.es_celda = false;
-        this.es_laser = false;
-        this.es_objetivo = false;
-        this.pasa_laser = false;
-        this.es_borde = false;
+        this.esCelda = false;
+        this.esLaser = false;
+        this.esObjetivo = false;
+        this.esBorde = false;
         this.bloque = null;
     }
 
@@ -30,58 +30,49 @@ public class Coordenada {
     }
 
     public boolean esCelda() {
-        return es_celda;
+        return esCelda;
     }
 
     public boolean esLaser() {
-        return es_laser;
+        return esLaser;
     }
 
     public boolean esObjetivo() {
-        return es_objetivo;
+        return esObjetivo;
     }
 
     public boolean esBorde() {
-        return es_borde;
+        return esBorde;
     }
 
-    public boolean pasaLaser() {
-        return pasa_laser;
+    public Bloque getBloque() {
+        return bloque;
     }
+
+
+
 
     public void establecerCelda() {
-        es_celda = true;
-    }
-    
-    public void establecerBorde() {
-        es_borde = true;
+        esCelda = true;
     }
 
-    public void establecerNoBorde() {
-        es_borde = false;
-    }   
+    public void establecerBorde(boolean esBorde) {
+        this.esBorde = esBorde; // Permite establecer si es o no borde
+    }
 
     public void establecerLaser() {
-        es_laser = true;
+        esLaser = true;
     }
 
     public void establecerObjetivo() {
-        es_objetivo = true;
-    }
-
-    public void imprimir() {
-        System.out.println("Coordenada: (" + x + ", " + y + ")");
+        esObjetivo = true;
     }
 
     public void establecerBloque(Bloque bloque) {
         this.bloque = bloque;
     }
 
- 
-    public Bloque getBloque() {
-        return bloque;
+    public String imprimir() {
+        return "Coordenada: (" + x + ", " + y + ")";
     }
 }
-
-
-

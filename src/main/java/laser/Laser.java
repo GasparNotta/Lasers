@@ -10,6 +10,10 @@ public class Laser {
         this.direccion = direccion;
     }
 
+    public void emitir() {
+        // Lógica de emisión
+    }
+
     public void absorber() {
         // Lógica de absorción
     }
@@ -32,6 +36,10 @@ public class Laser {
 
     public String getDireccion() {
         return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
 }

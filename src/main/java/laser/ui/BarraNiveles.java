@@ -54,13 +54,12 @@ public class BarraNiveles {
 
     // Método para mostrar un nivel en la interfaz
     private void mostrarNivel(String numero_nivel) {
-        try {
-            // Leer el nivel
-            Nivel nivel = new Nivel("src/main/resources/levels/level" + numero_nivel + ".dat");
-            nivel.leerArchivo();
+        
+            
 
             // Crear el tablero lógico
-            Juego juego = new Juego(nivel);
+            Juego juego = new Juego();
+            juego.cargarNivel(numero_nivel);
             
             // Crear la vista del juego y generar el tablero visual
             VistaDelJuego vistaDelJuego = new VistaDelJuego();
@@ -72,9 +71,6 @@ public class BarraNiveles {
 
             // Actualizar la etiqueta del nivel
             label_nivel.setText("Nivel " + numero_nivel);
-        } catch (Exception e) {
-            e.printStackTrace(); // Maneja la excepción según sea necesario
-            label_nivel.setText("Error al cargar el nivel " + numero_nivel);
-        }
+        
     }
 }
