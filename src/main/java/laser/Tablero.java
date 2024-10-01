@@ -15,24 +15,19 @@ public class Tablero {
    
 
     public Tablero(Nivel nivel) {
-        this.filas = nivel.getFilas();
-        this.columnas = nivel.getColumnas();
-        this.coordenadas = new Coordenada[(filas*2)+1][(columnas*2)+1];
+        this.filas = nivel.getFilas()*2;
+        this.columnas = nivel.getColumnas()*2;
+        this.coordenadas = new Coordenada[(filas)+1][(columnas)+1];
         inicializarTablero();
         inicializarBloques(nivel.getConfiguracionBloques());
         inicializarElementos(nivel.getConfiguracionElementos());
     }
 
-
-
-
-
-
     private void inicializarTablero() {
-        for (int fila = 0; fila <= filas*2; fila++) {
-            for (int columna = 0; columna <= columnas*2; columna++) {
+        for (int fila = 0; fila <= filas; fila++) {
+            for (int columna = 0; columna <= columnas; columna++) {
                 coordenadas[fila][columna] = new Coordenada(fila, columna);
-                if (fila == 0 || fila == filas*2 || columna == 0 || columna == columnas*2) {
+                if (fila == 0 || fila == filas || columna == 0 || columna == columnas) {
                     coordenadas[fila][columna].establecerBorde(true);
                 }
             }   
@@ -45,7 +40,6 @@ public class Tablero {
             String linea = configuracion_bloques.get(i);
             for (int j = 0; j < linea.length(); j++) {
                 char caracter = linea.charAt(j);
-                
                 if (caracter != ' ') {
                     coordenadas[i*2+1][j*2+1].establecerCelda();
                     // Agregar bloque según el carácter
@@ -78,7 +72,6 @@ public class Tablero {
             char tipo = partes[0].charAt(0);  
             int columna = Integer.parseInt(partes[1]);
             int fila = Integer.parseInt(partes[2]);
-        
             switch (tipo) {
                 case 'E':  // Emisor
                     String direccion = partes[3];  // La dirección del emisor (ej: 'SE')

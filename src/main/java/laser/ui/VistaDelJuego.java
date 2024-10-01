@@ -7,44 +7,57 @@ import laser.Coordenada;
 
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
-
-
 public class VistaDelJuego {
-    private GridPane grid_pane;  // Para las celdas del tablero
     private StackPane root_pane; // Contendrá ambos, el tablero y la capa del láser
+
+    private GridPane grid_pane_celdas;  // Para las celdas del tablero
+    private Pane pane_elementos = new Pane();  // Para el láser
     private int tamaño_celda = 40; // Tamaño visual de cada celda en píxeles
+    private int tamaño_borde = 1; // Tamaño visual del borde en píxeles
+    private int radio_elemento = 5; // Radio visual del láser en píxeles
 
     public VistaDelJuego() {
-        grid_pane = new GridPane();  // Para dibujar el tablero
         root_pane = new StackPane(); // Para superponer ambas capas
-        root_pane.getChildren().addAll(grid_pane); // Añadir capas al StackPane
+
+        grid_pane_celdas = new GridPane();  // Para dibujar el tablero
+        pane_elementos = new GridPane();  // Para dibujar el láser
+        
+
+        root_pane.getChildren().addAll(grid_pane_celdas, pane_elementos);
     }
+
+
+
+
+
 
     // Método para crear visualmente el tablero basado en la lógica
     public void generarTableroVisual(Juego juego) {
+        juego.jugar();  // Ejecuta la lógica del juego
+
         // Obtener el tablero
         Tablero tablero = juego.getTablero();
         int filas = tablero.getFilas();
         int columnas = tablero.getColumnas();
 
-        juego.jugar();;  // Ejecuta la lógica del juego
-
+        // Limpiar el GridPane y el Path del láser antes de dibujar
+        grid_pane_celdas.getChildren().clear(); // Limpiar celdas visuales anteriores
+        pane_elementos.getChildren().clear(); // Limpiar láser visual anterior
+        
         // Iterar sobre las celdas del tablero lógico y generar los elementos visuales
-        for (int i = 0; i <= filas*2; i++) {
-            for (int j = 0; j <= columnas*2; j++) {
+        for (int i = 0; i <= filas; i++) {  // Cambiar a i < filas
+            for (int j = 0; j <= columnas; j++) {  // Cambiar a j < columnas
                 Coordenada coordenada = tablero.getCoordenada(i, j);
-                
-                // Crear un rectángulo que representa la celda
-                StackPane stackPane = new StackPane();
                 
                 if (coordenada.esCelda()) {
                     Rectangle rect = new Rectangle(tamaño_celda, tamaño_celda);
                     rect.setStroke(Color.BLACK);  // Borde Negro
-                    rect.setStrokeWidth(1);  // Grosor del borde
+                    rect.setStrokeWidth(tamaño_borde);  // Grosor del borde
                     rect.setFill(Color.LIGHTGRAY);  // Celdas vacías
                     
                     Bloque bloque = coordenada.getBloque();
@@ -67,34 +80,33 @@ public class VistaDelJuego {
                                 break;
                         }
                     }
-                    stackPane.getChildren().addAll(rect);
+                    grid_pane_celdas.add(rect,j,i);
                 }
-                
-                
-                // Verificar si esta coordenada contiene el láser
-                if (coordenada.esLaser()) {
-                    // Dibujar un círculo rojo en el centro
-                    Circle circ = new Circle(5);
-                    circ.setFill(Color.RED);
-                    stackPane.getChildren().add(circ);
-                }
-               
-                
 
-                // Añadir el StackPane al GridPane
-                grid_pane.add(stackPane, j, i);
+                if(coordenada.esLaser()){
+                    int posicion_x = ((tamaño_celda*j/2) - (radio_elemento) + (tamaño_borde*j/2));
+                    int posicion_y = ((tamaño_celda*i/2) - (radio_elemento) + (tamaño_borde*i/2));
+                    Circle circ = new Circle(radio_elemento);
+                    circ.translateXProperty().set(posicion_x);
+                    circ.translateYProperty().set(posicion_y);
+                    circ.setFill(Color.RED);
+                    
+                    pane_elementos.getChildren().addAll(circ);
+                } else if (coordenada.esObjetivo()) {
+                    int posicion_x = ((tamaño_celda*j/2) - (radio_elemento) + (tamaño_borde*j/2));
+                    int posicion_y = ((tamaño_celda*i/2) - (radio_elemento) + (tamaño_borde*i/2));
+                    Circle circ = new Circle(radio_elemento);
+                    circ.translateXProperty().set(posicion_x);
+                    circ.translateYProperty().set(posicion_y);
+                    circ.setFill(Color.BLUE);
+                    
+                    pane_elementos.getChildren().addAll(circ);
+                }
             }
         }
-
     }
-
-
-    // Obtener el GridPane que se usará en la escena principal
+    // Obtener el StackPane que se usará en la escena principal
     public StackPane getRootPane() {
         return root_pane;
     }
 }
-
-
-
-

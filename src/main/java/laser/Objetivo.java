@@ -13,8 +13,8 @@ public class Objetivo {
         return coordenada;
     }
 
-    public void setAlcanzado() {
-        alcanzado = true;
+    public void setAlcanzado(boolean alcanzado) {
+        this.alcanzado = alcanzado;
     }
 
     public boolean getAlcanzado() {

@@ -9,22 +9,19 @@ public class Juego {
     private Coordenada coordenada_actual;
 
     public Juego() {
-        this.nivel_completado = false;
-
-        this.tablero = null;
-        this.laser = null;
-        this.objetivo = null;
-        coordenada_actual = null;
+        nivel_completado = false;
     }
 
     public void jugar() {
         laser = tablero.getLaser();
         coordenada_actual = laser.getCoordenadaInicial();
         objetivo = tablero.getObjetivo();
+
         System.out.println("------------------Nuevo Nivel------------------");
         actualizarTablero();
         System.out.println("El laser empieza en:" + laser.getCoordenadaInicial().obtenerX() + ' ' + laser.getCoordenadaInicial().obtenerY());
         System.out.println("El objetivo está en:" + objetivo.getCoordenada().obtenerX() + ' ' + objetivo.getCoordenada().obtenerY());
+
 
         if (objetivo.getAlcanzado()) {
             System.out.println("¡Nivel completado!");
@@ -47,7 +44,9 @@ public class Juego {
     }
 
     public void actualizarTablero() {
-        while (!coordenada_actual.esBorde()) {  // Continúa hasta que el láser alcance el borde.
+        objetivo.setAlcanzado(false);
+        boolean detener_trazado = false;
+        while (detener_trazado==false) {
             String direccion = laser.getDireccion();
             int coordenada_actual_fila = coordenada_actual.obtenerX();
             int coordenada_actual_columna = coordenada_actual.obtenerY();
@@ -55,6 +54,16 @@ public class Juego {
             
             System.out.println("Ahora estoy en:");
             System.out.println(coordenada_actual_fila + " " + coordenada_actual_columna);
+
+            if (coordenada_actual.esObjetivo()) {
+                objetivo.setAlcanzado(true);
+            }
+            
+            if(coordenada_actual.esBorde()){
+                System.out.println("El láser alcanzó el borde del tablero.");
+                detener_trazado = true;
+                break;
+            }
 
             switch (direccion) {
                 case "SW":
@@ -69,6 +78,8 @@ public class Juego {
                             System.out.println(coordenada.getBloque().tipoDeBloque());
                             coordenada.imprimir();
                             System.out.println();
+
+                            coordenada.getBloque().interactuarConLaser(laser);
                         }
                     } else {
                         Coordenada coordenada = tablero.getCoordenada(coordenada_actual_fila, coordenada_actual_columna - 1);
@@ -81,6 +92,8 @@ public class Juego {
                             System.out.println(coordenada.getBloque().tipoDeBloque()); 
                             coordenada.imprimir();
                             System.out.println();
+
+                            coordenada.getBloque().interactuarConLaser(laser);
                         }
                     }
                     coordenada_actual = tablero.getCoordenada(coordenada_actual_fila + 1, coordenada_actual_columna - 1);
@@ -99,6 +112,8 @@ public class Juego {
                             System.out.println(coordenada.getBloque().tipoDeBloque()); 
                             coordenada.imprimir();
                             System.out.println();
+
+                            coordenada.getBloque().interactuarConLaser(laser);
                         }
                     } else {
                         Coordenada coordenada = tablero.getCoordenada(coordenada_actual_fila, coordenada_actual_columna + 1);
@@ -111,6 +126,8 @@ public class Juego {
                             System.out.println(coordenada.getBloque().tipoDeBloque()); 
                             coordenada.imprimir();
                             System.out.println();
+
+                            coordenada.getBloque().interactuarConLaser(laser);
                         }
                     }
                     coordenada_actual = tablero.getCoordenada(coordenada_actual_fila + 1, coordenada_actual_columna + 1);
@@ -129,6 +146,8 @@ public class Juego {
                             System.out.println(coordenada.getBloque().tipoDeBloque()); 
                             coordenada.imprimir();
                             System.out.println();
+
+                            coordenada.getBloque().interactuarConLaser(laser);
                         }
                     } else {
                         Coordenada coordenada = tablero.getCoordenada(coordenada_actual_fila, coordenada_actual_columna - 1);
@@ -141,6 +160,8 @@ public class Juego {
                             System.out.println(coordenada.getBloque().tipoDeBloque()); 
                             coordenada.imprimir();
                             System.out.println();
+
+                            coordenada.getBloque().interactuarConLaser(laser);
                         }
                     }
                     coordenada_actual = tablero.getCoordenada(coordenada_actual_fila - 1, coordenada_actual_columna - 1);
@@ -159,6 +180,8 @@ public class Juego {
                             System.out.println(coordenada.getBloque().tipoDeBloque()); 
                             coordenada.imprimir();
                             System.out.println();
+
+                            coordenada.getBloque().interactuarConLaser(laser);
                         }
                     } else {
                         Coordenada coordenada = tablero.getCoordenada(coordenada_actual_fila, coordenada_actual_columna + 1);
@@ -171,6 +194,8 @@ public class Juego {
                             System.out.println(coordenada.getBloque().tipoDeBloque()); 
                             coordenada.imprimir();
                             System.out.println();
+
+                            coordenada.getBloque().interactuarConLaser(laser);
                         }
                     }
                     coordenada_actual = tablero.getCoordenada(coordenada_actual_fila - 1, coordenada_actual_columna + 1);
@@ -178,16 +203,12 @@ public class Juego {
                     break;
 
                 default:
-                    System.out.println("Dirección desconocida.");
+                    System.out.println("El laser chocó con un bloque que no refleja.");
+                    detener_trazado = true;
                     break;
             }
         }
-
-        if (coordenada_actual.esObjetivo()) {
-            objetivo.setAlcanzado();
-        } else{
-            System.out.println("El láser alcanzó el borde del tablero.");
-        }
+        
     }
 
     public Tablero getTablero() {

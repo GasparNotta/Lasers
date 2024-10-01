@@ -15,7 +15,7 @@ public class Laser {
     }
 
     public void absorber() {
-        // Lógica de absorción
+        setDireccion(" ");
     }
 
     public void reflejar() {
