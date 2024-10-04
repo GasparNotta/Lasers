@@ -15,7 +15,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Line;
 
-public class VistaDelJuego {
+public class VistaTablero {
     private StackPane root_pane; // Contendrá ambos, el tablero y la capa del láser
 
     private GridPane grid_pane_celdas;  // Para las celdas del tablero
@@ -25,7 +25,7 @@ public class VistaDelJuego {
     private int tamaño_borde = 1; // Tamaño visual del borde en píxeles
     private int radio_elemento = 5; // Radio visual del láser en píxeles
 
-    public VistaDelJuego() {
+    public VistaTablero() {
         root_pane = new StackPane(); // Para superponer ambas capas
 
         grid_pane_celdas = new GridPane();  // Para dibujar el tablero

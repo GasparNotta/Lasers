@@ -57,7 +57,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>laser.ui.App</mainClass>
+                    <mainClass>laser.ui.VistaJuego</mainClass>
                 </configuration>
             </plugin>
         </plugins>

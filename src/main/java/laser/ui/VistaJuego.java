@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 /**
  * JavaFX App
  */
-public class App extends Application {
+public class VistaJuego extends Application {
 
     @Override
     public void start(Stage stage) {

@@ -72,6 +72,10 @@ public class Coordenada {
         this.bloque = bloque;
     }
 
+    public void eliminarBloque() {
+        this.bloque = null;
+    }
+
     public String imprimir() {
         return "Coordenada: (" + x + ", " + y + ")";
     }

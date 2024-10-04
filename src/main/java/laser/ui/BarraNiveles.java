@@ -2,6 +2,7 @@ package laser.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import laser.Juego;
@@ -54,22 +55,19 @@ public class BarraNiveles {
 
     // Método para mostrar un nivel en la interfaz
     private void mostrarNivel(String numero_nivel) {
-        
             
-
             // Crear el tablero lógico
             Juego juego = new Juego();
             juego.cargarNivel(numero_nivel);
+
             
             // Crear la vista del juego y generar el tablero visual
-            VistaDelJuego vistaDelJuego = new VistaDelJuego();
-            vistaDelJuego.generarTableroVisual(juego);
-
+            VistaTablero vistaTablero = new VistaTablero();
+            vistaTablero.generarTableroVisual(juego);
             
-
             // Limpiar el panel antes de añadir el nuevo tablero
             juego_pane.getChildren().clear();
-            juego_pane.getChildren().add(vistaDelJuego.getRootPane());
+            juego_pane.getChildren().add(vistaTablero.getRootPane());
 
             // Actualizar la etiqueta del nivel
             label_nivel.setText("Nivel " + numero_nivel);
