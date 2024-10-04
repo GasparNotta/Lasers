@@ -8,7 +8,7 @@ public class BloqueMovil extends Bloque {
     }
 
     @Override
-    public void interactuarConLaser(Laser laser) {
+    public void interactuarConLaser(Laser laser, String posicionImpacto) {
         // Absorbe rayos láser, no hace nada
         laser.absorber();
         }

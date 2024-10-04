@@ -8,9 +8,9 @@ public class BloqueEspejo extends Bloque {
     }
 
     @Override
-    public void interactuarConLaser(Laser laser) {
+    public void interactuarConLaser(Laser laser, String posicionImpacto ) {
         // Refleja los rayos láser
-        laser.reflejar();
+        laser.reflejar(posicionImpacto);
         System.out.println("Bloque Espejo: El rayo ha sido reflejado.");
     }
 }

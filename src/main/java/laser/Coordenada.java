@@ -8,8 +8,8 @@ public class Coordenada {
     private boolean esBorde;
     private boolean esLaser;
     private boolean esObjetivo;
-    
     private Bloque bloque;
+    
 
     public Coordenada(int x, int y) {
         this.x = x;

@@ -1,5 +1,7 @@
 package laser.ui;
 
+import java.util.ArrayList;
+
 import laser.Bloque;
 import laser.Tablero;
 import laser.Juego;
@@ -11,12 +13,14 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Line;
 
 public class VistaDelJuego {
     private StackPane root_pane; // Contendrá ambos, el tablero y la capa del láser
 
     private GridPane grid_pane_celdas;  // Para las celdas del tablero
     private Pane pane_elementos = new Pane();  // Para el láser
+    private Pane pane_trazado = new Pane();  // Para el trazado del láser
     private int tamaño_celda = 40; // Tamaño visual de cada celda en píxeles
     private int tamaño_borde = 1; // Tamaño visual del borde en píxeles
     private int radio_elemento = 5; // Radio visual del láser en píxeles
@@ -25,17 +29,13 @@ public class VistaDelJuego {
         root_pane = new StackPane(); // Para superponer ambas capas
 
         grid_pane_celdas = new GridPane();  // Para dibujar el tablero
+        grid_pane_celdas.setId("grid_pane_celdas");
         pane_elementos = new GridPane();  // Para dibujar el láser
-        
+        pane_trazado = new Pane();  // Para dibujar el trazado del láser
 
-        root_pane.getChildren().addAll(grid_pane_celdas, pane_elementos);
+        root_pane.getChildren().addAll(grid_pane_celdas, pane_elementos, pane_trazado);  // Agregar ambas capas al StackPane
     }
-
-
-
-
-
-
+    
     // Método para crear visualmente el tablero basado en la lógica
     public void generarTableroVisual(Juego juego) {
         juego.jugar();  // Ejecuta la lógica del juego
@@ -103,8 +103,52 @@ public class VistaDelJuego {
                     pane_elementos.getChildren().addAll(circ);
                 }
             }
+
+        }
+
+        ArrayList<String> recorrido = juego.getRecorridoLaser(); // Obtener el recorrido del láser
+        for (int i = 0; i < recorrido.size(); i++) {
+            String[] partes = recorrido.get(i).split(" ");  // Usar get() en lugar de corchetes
+            int fila = Integer.parseInt(partes[0]);
+            int columna = Integer.parseInt(partes[1]);
+            String direccion = partes[2];
+
+
+            Line linea = new Line();
+            linea.setStrokeWidth(3);
+            linea.setStroke(Color.RED);
+
+            // Las coordenadas iniciales de la línea en función de la celda
+            linea.setStartX(tamaño_celda * columna / 2);
+            linea.setStartY(tamaño_celda * fila / 2);
+
+            // Ajustar las coordenadas finales de la línea según la dirección
+            switch (direccion) {
+                case "NE":  // Noreste
+                    linea.setEndX(linea.getStartX() + (tamaño_celda * Math.cos(Math.PI / 4) ));  // 45 grados
+                    linea.setEndY(linea.getStartY() - (tamaño_celda * Math.sin(Math.PI / 4) ));
+                    break;
+                case "SE":  // Sureste
+                    linea.setEndX(linea.getStartX() + (tamaño_celda * Math.cos(Math.PI / 4)));  // 45 grados
+                    linea.setEndY(linea.getStartY() + (tamaño_celda * Math.sin(Math.PI / 4)));
+                    break;
+                case "SW":  // Suroeste
+                    linea.setEndX(linea.getStartX() - (tamaño_celda * Math.cos(Math.PI / 4)));  // 45 grados
+                    linea.setEndY(linea.getStartY() + (tamaño_celda * Math.sin(Math.PI / 4)));
+                    break;
+                case "NW":  // Noroeste
+                    linea.setEndX(linea.getStartX() - (tamaño_celda * Math.cos(Math.PI / 4)));  // 45 grados
+                    linea.setEndY(linea.getStartY() - (tamaño_celda * Math.sin(Math.PI / 4)));
+                    break;
+                default:
+                    System.out.println("Dirección inválida");
+                    break;
+            }
+            pane_trazado.getChildren().add(linea);
         }
     }
+
+
     // Obtener el StackPane que se usará en la escena principal
     public StackPane getRootPane() {
         return root_pane;

@@ -8,7 +8,7 @@ public class BloqueCristal extends Bloque {
     }
 
     @Override
-    public void interactuarConLaser(Laser laser) {
+    public void interactuarConLaser(Laser laser,String posicionImpacto) {
         // Refracta el rayo, continuando en línea recta
         laser.refractar();
         System.out.println("Bloque de Cristal: El rayo se ha refractado.");

@@ -5,7 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import laser.Juego;
-import laser.Nivel;
+import laser.ui.controles.*;
 
 public class BarraNiveles {
     // Acceder a los botones por fx::id
@@ -64,6 +64,8 @@ public class BarraNiveles {
             // Crear la vista del juego y generar el tablero visual
             VistaDelJuego vistaDelJuego = new VistaDelJuego();
             vistaDelJuego.generarTableroVisual(juego);
+
+            
 
             // Limpiar el panel antes de añadir el nuevo tablero
             juego_pane.getChildren().clear();
