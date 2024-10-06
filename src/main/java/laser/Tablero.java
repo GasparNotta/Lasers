@@ -1,5 +1,6 @@
 package laser;
 
+import java.util.ArrayList;
 import java.util.List;
 import laser.tipos_de_bloque.*;
 
@@ -10,14 +11,16 @@ public class Tablero {
     private int filas;
     private int columnas;
     
-    private Laser laser;
-    private Objetivo objetivo;
+    private ArrayList<Laser> lasers;
+    private ArrayList<Objetivo> objetivos;
    
 
     public Tablero(Nivel nivel) {
         this.filas = nivel.getFilas()*2;
         this.columnas = nivel.getColumnas()*2;
         this.coordenadas = new Coordenada[(filas)+1][(columnas)+1];
+        this.lasers = new ArrayList<Laser>();
+        this.objetivos = new ArrayList<Objetivo>();
         inicializarTablero();
         inicializarBloques(nivel.getConfiguracionBloques());
         inicializarElementos(nivel.getConfiguracionElementos());
@@ -75,13 +78,13 @@ public class Tablero {
             switch (tipo) {
                 case 'E':  // Emisor
                     String direccion = partes[3];  // La dirección del emisor (ej: 'SE')
-                    laser = new Laser(coordenadas[fila][columna],direccion);
+                    lasers.add(new Laser(coordenadas[fila][columna],direccion));
                     coordenadas[fila][columna].establecerLaser();
                     coordenadas[fila][columna].establecerBorde(false);
                     break;
         
                 case 'G':  
-                    objetivo = new Objetivo(coordenadas[fila][columna]);  
+                    objetivos.add(new Objetivo(coordenadas[fila][columna]));  
                     coordenadas[fila][columna].establecerObjetivo();
                     break;
         
@@ -109,20 +112,12 @@ public class Tablero {
         return columnas;
     }
 
-    public Laser getLaser() {
-        return laser;
+    public ArrayList<Laser> getLasers() {
+        return lasers;
     }
 
-    public Objetivo getObjetivo() {
-        return objetivo;
-    }
-
-    public Coordenada getLaserCordenadaInicial() {
-        return laser.getCoordenadaInicial();
-    }
-
-    public Coordenada getObjetivoCordenada() {
-        return objetivo.getCoordenada();
+    public ArrayList<Objetivo> getObjetivos() {
+        return objetivos;
     }
 
     public void imprimirTablero(){

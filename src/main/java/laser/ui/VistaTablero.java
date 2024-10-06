@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import laser.Bloque;
 import laser.Tablero;
 import laser.Juego;
+import laser.Laser;
 import laser.Coordenada;
 
 import javafx.scene.layout.GridPane;
@@ -105,46 +106,51 @@ public class VistaTablero {
             }
 
         }
-
-        ArrayList<String> recorrido = juego.getRecorridoLaser(); // Obtener el recorrido del láser
-        for (int i = 0; i < recorrido.size(); i++) {
-            String[] partes = recorrido.get(i).split(" ");  // Usar get() en lugar de corchetes
-            int fila = Integer.parseInt(partes[0]);
-            int columna = Integer.parseInt(partes[1]);
-            String direccion = partes[2];
+        
 
 
-            Line linea = new Line();
-            linea.setStrokeWidth(3);
-            linea.setStroke(Color.RED);
+        ArrayList<Laser> lasers = juego.getLasers();
+        for (Laser laser : lasers) { // Obtener el recorrido del láser
+            ArrayList<String> recorrido = laser.getRecorridoLaser();
+            for (int i = 0; i < recorrido.size(); i++) {
+                String[] partes = recorrido.get(i).split(" ");  // Usar get() en lugar de corchetes
+                int fila = Integer.parseInt(partes[0]);
+                int columna = Integer.parseInt(partes[1]);
+                String direccion = partes[2];
 
-            // Las coordenadas iniciales de la línea en función de la celda
-            linea.setStartX(tamaño_celda * columna / 2);
-            linea.setStartY(tamaño_celda * fila / 2);
 
-            // Ajustar las coordenadas finales de la línea según la dirección
-            switch (direccion) {
-                case "NE":  // Noreste
-                    linea.setEndX(linea.getStartX() + (tamaño_celda * Math.cos(Math.PI / 4) ));  // 45 grados
-                    linea.setEndY(linea.getStartY() - (tamaño_celda * Math.sin(Math.PI / 4) ));
-                    break;
-                case "SE":  // Sureste
-                    linea.setEndX(linea.getStartX() + (tamaño_celda * Math.cos(Math.PI / 4)));  // 45 grados
-                    linea.setEndY(linea.getStartY() + (tamaño_celda * Math.sin(Math.PI / 4)));
-                    break;
-                case "SW":  // Suroeste
-                    linea.setEndX(linea.getStartX() - (tamaño_celda * Math.cos(Math.PI / 4)));  // 45 grados
-                    linea.setEndY(linea.getStartY() + (tamaño_celda * Math.sin(Math.PI / 4)));
-                    break;
-                case "NW":  // Noroeste
-                    linea.setEndX(linea.getStartX() - (tamaño_celda * Math.cos(Math.PI / 4)));  // 45 grados
-                    linea.setEndY(linea.getStartY() - (tamaño_celda * Math.sin(Math.PI / 4)));
-                    break;
-                default:
-                    System.out.println("Dirección inválida");
-                    break;
+                Line linea = new Line();
+                linea.setStrokeWidth(3);
+                linea.setStroke(Color.RED);
+
+                // Las coordenadas iniciales de la línea en función de la celda
+                linea.setStartX(tamaño_celda * columna / 2);
+                linea.setStartY(tamaño_celda * fila / 2);
+
+                // Ajustar las coordenadas finales de la línea según la dirección
+                switch (direccion) {
+                    case "NE":  // Noreste
+                        linea.setEndX(linea.getStartX() + (tamaño_celda * Math.cos(Math.PI / 4) ));  // 45 grados
+                        linea.setEndY(linea.getStartY() - (tamaño_celda * Math.sin(Math.PI / 4) ));
+                        break;
+                    case "SE":  // Sureste
+                        linea.setEndX(linea.getStartX() + (tamaño_celda * Math.cos(Math.PI / 4)));  // 45 grados
+                        linea.setEndY(linea.getStartY() + (tamaño_celda * Math.sin(Math.PI / 4)));
+                        break;
+                    case "SW":  // Suroeste
+                        linea.setEndX(linea.getStartX() - (tamaño_celda * Math.cos(Math.PI / 4)));  // 45 grados
+                        linea.setEndY(linea.getStartY() + (tamaño_celda * Math.sin(Math.PI / 4)));
+                        break;
+                    case "NW":  // Noroeste
+                        linea.setEndX(linea.getStartX() - (tamaño_celda * Math.cos(Math.PI / 4)));  // 45 grados
+                        linea.setEndY(linea.getStartY() - (tamaño_celda * Math.sin(Math.PI / 4)));
+                        break;
+                    default:
+                        System.out.println("Dirección inválida");
+                        break;
+                }
+                pane_trazado.getChildren().add(linea);
             }
-            pane_trazado.getChildren().add(linea);
         }
     }
 

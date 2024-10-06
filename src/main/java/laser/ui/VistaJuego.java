@@ -20,6 +20,7 @@ public class VistaJuego extends Application {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Ventana.fxml"));
             Parent root = loader.load();
 
+
             // Configurar la escena y el escenario
             Scene scene = new Scene(root);
 

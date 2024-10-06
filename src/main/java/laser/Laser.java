@@ -1,13 +1,18 @@
 package laser;
 
+import java.util.ArrayList;
+
 public class Laser {
 
-    private String direccion;  // Dirección del rayo láser
+    private final String direccion_inicial;  // Dirección del rayo láser al iniciar el trazado
+    private String direccion;  // Dirección del rayo láser (puede cambiar a la hora de realizar el trazado)
     private final Coordenada coordenada_inicial;  // Coordenada del láser
+    private ArrayList<String> recorrido_laser; // Lista de coordenadas por las que pasa el láser
     
-    public Laser(Coordenada coordenada_inicial, String direccion) {
+    public Laser(Coordenada coordenada_inicial, String direccion_inicial) {
         this.coordenada_inicial = coordenada_inicial;
-        this.direccion = direccion;
+        this.direccion_inicial = direccion_inicial;
+        this.direccion = direccion_inicial;
     }
 
     public void absorber() {
@@ -66,6 +71,9 @@ public class Laser {
         return coordenada_inicial;
     }
 
+    public String getDireccionInicial() {
+        return direccion_inicial;
+    }
     public String getDireccion() {
         return direccion;
     }
@@ -74,6 +82,19 @@ public class Laser {
         this.direccion = direccion;
     }
 
+
+
+    public void deleteRecorridoLaser() {
+        recorrido_laser = new ArrayList<>();
+    }
+    
+    public ArrayList<String> getRecorridoLaser() {
+        return recorrido_laser;
+    }
+
+    public void agregarCoordenadaRecorrido(String coordenadas_y_direccion) {
+        recorrido_laser.add(coordenadas_y_direccion);
+    }
 }
 
 

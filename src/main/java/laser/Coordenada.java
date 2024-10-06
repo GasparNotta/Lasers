@@ -76,6 +76,7 @@ public class Coordenada {
         this.bloque = null;
     }
 
+
     public String imprimir() {
         return "Coordenada: (" + x + ", " + y + ")";
     }

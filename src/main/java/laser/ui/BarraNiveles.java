@@ -2,13 +2,11 @@ package laser.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import laser.Juego;
-import laser.ui.controles.*;
 
-public class BarraNiveles {
+public class BarraNiveles{
     // Acceder a los botones por fx::id
     @FXML
     private Button boton_nivel1;
