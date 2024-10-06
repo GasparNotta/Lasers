@@ -11,6 +11,5 @@ public class BloqueEspejo extends Bloque {
     public void interactuarConLaser(Laser laser, String posicionImpacto ) {
         // Refleja los rayos láser
         laser.reflejar(posicionImpacto);
-        System.out.println("Bloque Espejo: El rayo ha sido reflejado.");
     }
 }

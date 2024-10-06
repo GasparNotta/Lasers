@@ -93,11 +93,8 @@ public class Tablero {
     }
 
     public void cambiarBloque(Coordenada coordenada_actual, Coordenada coordenada_nueva) {
-        System.out.println(coordenada_actual.imprimir());
-        System.out.println(coordenada_nueva.imprimir());
         coordenada_nueva.establecerBloque(coordenada_actual.getBloque());
         coordenada_actual.eliminarBloque();
-        System.out.println(coordenada_actual.getBloque());
     }
 
     public Coordenada getCoordenada(int fila, int columna) {
@@ -118,6 +115,15 @@ public class Tablero {
 
     public ArrayList<Objetivo> getObjetivos() {
         return objetivos;
+    }
+
+    public Objetivo getObjetivo(int fila, int columna) {
+        for (Objetivo objetivo : objetivos) {
+            if (objetivo.getCoordenada().obtenerX() == fila && objetivo.getCoordenada().obtenerY() == columna) {
+                return objetivo;
+            }
+        }
+        return null;
     }
 
     public void imprimirTablero(){

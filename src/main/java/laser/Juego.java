@@ -43,43 +43,6 @@ public class Juego {
         tablero.imprimirTablero();
         actualizarTrazado();
         verificarVictoria();
-
-
-
-        
-        
-
-        /* 
-        tablero.imprimirTablero();
-        actualizarTrazado();
-        verificarVictoria();
-
-        System.out.println("------------------Cambiando bloque------------------");
-        tablero.cambiarBloque(tablero.getCoordenada(5, 3), tablero.getCoordenada(5, 5));
-        tablero.imprimirTablero();
-        actualizarTrazado();
-        verificarVictoria();
-
-        System.out.println("------------------Cambiando bloque------------------");
-        tablero.cambiarBloque(tablero.getCoordenada(1, 5), tablero.getCoordenada(7, 1));
-        tablero.imprimirTablero();
-        actualizarTrazado();
-        verificarVictoria();
-
-        System.out.println("------------------Cambiando bloque------------------");
-        tablero.cambiarBloque(tablero.getCoordenada(11, 3), tablero.getCoordenada(11, 5));
-        tablero.imprimirTablero();
-        actualizarTrazado();
-        verificarVictoria();
-
-        System.out.println("------------------Cambiando bloque------------------");
-        tablero.cambiarBloque(tablero.getCoordenada(5, 7), tablero.getCoordenada(7, 7));
-        tablero.imprimirTablero();
-        actualizarTrazado();
-        verificarVictoria();
-        */
-
-        System.out.println("El nivel fue completado: " + nivel_completado);
     }
 
     public void actualizarTrazado() {
@@ -88,28 +51,25 @@ public class Juego {
         }
         for (Laser laser : lasers) {
             
-        
             laser.setDireccion(laser.getDireccionInicial());
             
             laser.deleteRecorridoLaser();
             
             boolean detener_trazado = false;
             Coordenada coordenada_actual = laser.getCoordenadaInicial();
-
+            
             while (!detener_trazado) {
                 String direccion = laser.getDireccion();
                 int coordenada_actual_fila = coordenada_actual.obtenerX();
                 int coordenada_actual_columna = coordenada_actual.obtenerY();
                 String posicionImpacto = "ninguna";  // Inicializamos el impacto como 'ninguno'
 
-                System.out.println("Ahora estoy en:");
-                System.out.println(coordenada_actual_fila + " " + coordenada_actual_columna + " " + direccion);
 
                 // Comprobar si alcanzó el objetivo
                 if (coordenada_actual.esObjetivo()) {
                     System.out.println("El láser alcanzó el objetivo.");
-                    detener_trazado = true;
-                    break;
+                    tablero.getObjetivo(coordenada_actual_fila, coordenada_actual_columna).setAlcanzado(true);
+                    
                 }
 
                 // Comprobar si alcanzó el borde del tablero
@@ -125,15 +85,17 @@ public class Juego {
                     detener_trazado = true;
                     break;
                 }
+
+                System.out.println("Coordenada actual: " + coordenada_actual_fila + " " + coordenada_actual_columna + " " + direccion);
                 
-                
+               
                 switch (direccion) {
                     case "SW":
                         if (coordenada_actual_fila % 2 == 0) {
                             Coordenada coordenada = tablero.getCoordenada(coordenada_actual_fila + 1, coordenada_actual_columna);
                             if (coordenada.getBloque() != null) {
-                                System.out.println("Bloque encontrado. " + posicionImpacto);
                                 posicionImpacto = "debajo";  // Impacta desde arriba
+                                System.out.println("Bloque encontrado. " + posicionImpacto);
                                 coordenada.getBloque().interactuarConLaser(laser, posicionImpacto);
                                 break;
                             }
@@ -212,6 +174,7 @@ public class Juego {
                         }
                         laser.agregarCoordenadaRecorrido(coordenada_actual_fila + " " + coordenada_actual_columna + " " + direccion);                        coordenada_actual = tablero.getCoordenada(coordenada_actual_fila - 1, coordenada_actual_columna + 1);
                         break;
+                    
                 }
             }
         }
@@ -235,4 +198,19 @@ public class Juego {
         return lasers;
     }
 
+    public void cambiarBloque(int fila1, int columna1, int fila2, int columna2) {
+        Bloque bloque = tablero.getCoordenada(fila1, columna1).getBloque();
+        if (bloque == null) {
+            return;
+        } else if (bloque.tipoDeBloque().equals("BloqueFijo")) {
+            return;
+        } else if(tablero.getCoordenada(fila2, columna2).getBloque() != null){
+            return;
+        }
+        tablero.cambiarBloque(tablero.getCoordenada(fila1, columna1), tablero.getCoordenada(fila2, columna2));
+    }
+
+    public boolean nivelCompletado() {
+        return nivel_completado;
+    }
 }

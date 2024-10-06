@@ -34,6 +34,9 @@ public class VistaTablero {
         pane_elementos = new GridPane();  // Para dibujar el láser
         pane_trazado = new Pane();  // Para dibujar el trazado del láser
 
+        pane_elementos.setMouseTransparent(true); // Los clics pasarán a los nodos debajo
+        pane_trazado.setMouseTransparent(true); // Los clics pasarán a los nodos debajo
+
         root_pane.getChildren().addAll(grid_pane_celdas, pane_elementos, pane_trazado);  // Agregar ambas capas al StackPane
     }
     
@@ -49,6 +52,7 @@ public class VistaTablero {
         // Limpiar el GridPane y el Path del láser antes de dibujar
         grid_pane_celdas.getChildren().clear(); // Limpiar celdas visuales anteriores
         pane_elementos.getChildren().clear(); // Limpiar láser visual anterior
+        pane_trazado.getChildren().clear(); // Limpiar trazado visual anterior
         
         // Iterar sobre las celdas del tablero lógico y generar los elementos visuales
         for (int i = 0; i <= filas; i++) {  // Cambiar a i < filas
@@ -99,8 +103,11 @@ public class VistaTablero {
                     Circle circ = new Circle(radio_elemento);
                     circ.translateXProperty().set(posicion_x);
                     circ.translateYProperty().set(posicion_y);
+                    if(tablero.getObjetivo(i, j).getAlcanzado()){
+                        circ.setFill(Color.GREEN);
+                    } else {
                     circ.setFill(Color.BLUE);
-                    
+                    }
                     pane_elementos.getChildren().addAll(circ);
                 }
             }

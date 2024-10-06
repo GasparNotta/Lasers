@@ -1,15 +1,15 @@
 /home/gaspi/Desktop/Uni/PdP/Ejercicios/Lasers/src/main/java/laser/tipos_de_bloque/BloqueEspejo.java
+/home/gaspi/Desktop/Uni/PdP/Ejercicios/Lasers/src/main/java/laser/ui/Controlador.java
 /home/gaspi/Desktop/Uni/PdP/Ejercicios/Lasers/src/main/java/laser/tipos_de_bloque/BloqueFijo.java
 /home/gaspi/Desktop/Uni/PdP/Ejercicios/Lasers/src/main/java/laser/Nivel.java
 /home/gaspi/Desktop/Uni/PdP/Ejercicios/Lasers/src/main/java/laser/Bloque.java
 /home/gaspi/Desktop/Uni/PdP/Ejercicios/Lasers/src/main/java/laser/tipos_de_bloque/BloqueMovil.java
 /home/gaspi/Desktop/Uni/PdP/Ejercicios/Lasers/src/main/java/laser/tipos_de_bloque/BloqueVidrio.java
-/home/gaspi/Desktop/Uni/PdP/Ejercicios/Lasers/src/main/java/laser/ui/BarraNiveles.java
+/home/gaspi/Desktop/Uni/PdP/Ejercicios/Lasers/src/main/java/laser/ui/controles/ControlDelJuego.java
 /home/gaspi/Desktop/Uni/PdP/Ejercicios/Lasers/src/main/java/laser/Juego.java
 /home/gaspi/Desktop/Uni/PdP/Ejercicios/Lasers/src/main/java/module-info.java
 /home/gaspi/Desktop/Uni/PdP/Ejercicios/Lasers/src/main/java/laser/Laser.java
 /home/gaspi/Desktop/Uni/PdP/Ejercicios/Lasers/src/main/java/laser/ui/VistaTablero.java
-/home/gaspi/Desktop/Uni/PdP/Ejercicios/Lasers/src/main/java/laser/ui/controles/ControlDelBloque.java
 /home/gaspi/Desktop/Uni/PdP/Ejercicios/Lasers/src/main/java/laser/Coordenada.java
 /home/gaspi/Desktop/Uni/PdP/Ejercicios/Lasers/src/main/java/laser/Objetivo.java
 /home/gaspi/Desktop/Uni/PdP/Ejercicios/Lasers/src/main/java/laser/ui/VistaJuego.java

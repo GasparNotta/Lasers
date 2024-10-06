@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="laser.ui.BarraNiveles">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="laser.ui.Controlador">
    <children>
       <Pane layoutX="105.0" prefHeight="400.0" prefWidth="495.0">
          <children>
@@ -32,8 +32,6 @@
             <Button fx:id="boton_nivel4" layoutX="10.0" layoutY="69.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="113.0" style="-fx-background-radius: 0;" text="Nivel 4" />
             <Button fx:id="boton_nivel5" layoutX="10.0" layoutY="147.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="113.0" style="-fx-background-radius: 0;" text="Nivel 5" />
             <Button fx:id="boton_nivel6" layoutX="10.0" layoutY="88.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="113.0" style="-fx-background-radius: 0;" text="Nivel 6" />
-            <Button fx:id="boton_nivel7" layoutX="10.0" layoutY="114.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="113.0" style="-fx-background-radius: 0;" text="Nivel 7" />
-            <Button fx:id="boton_nivel8" layoutX="10.0" layoutY="140.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="113.0" style="-fx-background-radius: 0;" text="Nivel 8" />
          </children>
       </VBox>
    </children>
