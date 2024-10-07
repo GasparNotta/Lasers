@@ -4,11 +4,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import laser.ui.controles.ControlDelJuego;
-import javafx.scene.layout.GridPane;
-
 
 public class Controlador {
-
     ControlDelJuego controlDelJuego = new ControlDelJuego();
 
     // Botones de los niveles
@@ -38,17 +35,13 @@ public class Controlador {
     @FXML
     private Pane juego_pane;
 
-    @FXML 
-    private GridPane grid_pane_celdas; 
-    
-
     @FXML
     public void initialize() {
         boton_nivel1.setOnAction(e -> {
             String numero_nivel = "1";
 
             // Llamada al método jugar de ControlDelJuego
-            controlDelJuego.jugar(numero_nivel ,juego_pane);
+            controlDelJuego.iniciarJuego(numero_nivel ,juego_pane);
 
             label_nivel.setText("Nivel " + numero_nivel);
         });
@@ -57,7 +50,7 @@ public class Controlador {
             String numero_nivel = "2";
 
             // Llamada al método jugar de ControlDelJuego
-            controlDelJuego.jugar(numero_nivel ,juego_pane);
+            controlDelJuego.iniciarJuego(numero_nivel ,juego_pane);
 
             label_nivel.setText("Nivel " + numero_nivel);
         });
@@ -66,7 +59,7 @@ public class Controlador {
             String numero_nivel = "3";
 
             // Llamada al método jugar de ControlDelJuego
-            controlDelJuego.jugar(numero_nivel ,juego_pane);
+            controlDelJuego.iniciarJuego(numero_nivel ,juego_pane);
 
             label_nivel.setText("Nivel " + numero_nivel);
         });
@@ -74,7 +67,7 @@ public class Controlador {
             String numero_nivel = "4";
 
             // Llamada al método jugar de ControlDelJuego
-            controlDelJuego.jugar(numero_nivel ,juego_pane);
+            controlDelJuego.iniciarJuego(numero_nivel ,juego_pane);
 
             label_nivel.setText("Nivel " + numero_nivel);
         });
@@ -82,7 +75,7 @@ public class Controlador {
             String numero_nivel = "5";
 
             // Llamada al método jugar de ControlDelJuego
-            controlDelJuego.jugar(numero_nivel ,juego_pane);
+            controlDelJuego.iniciarJuego(numero_nivel ,juego_pane);
 
             label_nivel.setText("Nivel " + numero_nivel);
         });
@@ -90,7 +83,7 @@ public class Controlador {
             String numero_nivel = "6";
 
             // Llamada al método jugar de ControlDelJuego
-            controlDelJuego.jugar(numero_nivel ,juego_pane);
+            controlDelJuego.iniciarJuego(numero_nivel ,juego_pane);
 
             label_nivel.setText("Nivel " + numero_nivel);
         });

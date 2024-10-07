@@ -4,12 +4,11 @@ import laser.Bloque;
 
 public class BloqueMovil extends Bloque {
     public BloqueMovil() {
-        super("BloqueMovil"); // Tipo de bloque
+        super("BloqueMovil");
     }
 
     @Override
     public void interactuarConLaser(Laser laser, String posicionImpacto) {
-        // Absorbe rayos láser, no hace nada
         laser.absorber();
         }
 }

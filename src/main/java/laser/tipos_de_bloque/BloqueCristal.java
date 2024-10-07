@@ -4,13 +4,11 @@ import laser.Bloque;
 
 public class BloqueCristal extends Bloque {
     public BloqueCristal() {
-        super("BloqueCristal"); // Tipo de bloque
+        super("BloqueCristal");
     }
 
     @Override
     public void interactuarConLaser(Laser laser,String posicionImpacto) {
-        // Refracta el rayo, continuando en línea recta
         laser.refractar( posicionImpacto );
-        System.out.println("Bloque de Cristal: El rayo se ha refractado.");
     }
 }

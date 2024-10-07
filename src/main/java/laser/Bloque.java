@@ -1,7 +1,7 @@
 package laser;
 
 public abstract class Bloque {
-    private String tipo; // Atributo para identificar el tipo de bloque
+    private String tipo; 
 
     // Constructor
     public Bloque(String tipo) {
@@ -11,7 +11,6 @@ public abstract class Bloque {
     // Método para recibir un rayo láser. Debe ser implementado por las subclases 
     public abstract void interactuarConLaser(Laser laser, String posicionImpacto);
 
-    // Método para obtener el tipo de bloque
     public String tipoDeBloque() {
         return tipo;
     }

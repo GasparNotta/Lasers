@@ -24,15 +24,13 @@ public class Nivel {
     public void leerArchivo() throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(nombre_archivo));
         String linea;
-        boolean leyendo_bloques = true;  // Bandera para separar la primera y segunda sección
+        boolean leyendo_bloques = true;
 
         while ((linea = reader.readLine()) != null) {
-            
             if (linea.trim().isEmpty()) { 
                 leyendo_bloques = false; 
                 continue;
             }
-
             if (leyendo_bloques) {
                 configuracion_bloques.add(linea);
             } else {
@@ -48,15 +46,10 @@ public class Nivel {
         // Ajustar la longitud de las líneas si alguna quedo de otro formato(se considera sin piso)
         for (int i = 0; i < configuracion_bloques.size(); i++) {
             String linea_actual = configuracion_bloques.get(i);
-        
             if (linea_actual.length() != columnas) {
-                
-                // Rellenar la línea hasta que tenga la longitud adecuada
                 while (linea_actual.length() < columnas) {
-                    linea_actual += " ";  // O el carácter que desees
+                    linea_actual += " ";  
                 }
-        
-                // Actualizar la línea en configuracionBloques
                 configuracion_bloques.set(i, linea_actual);
             }
         }

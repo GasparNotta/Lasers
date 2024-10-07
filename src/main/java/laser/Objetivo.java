@@ -1,7 +1,7 @@
 package laser;
 
 public class Objetivo {
-    private final Coordenada coordenada;  // Coordenada del láser
+    private final Coordenada coordenada;  // Coordenada del objetivo
     private boolean alcanzado;  // Indica si el objetivo fue alcanzado
     
     public Objetivo(Coordenada coordenada) {
@@ -13,14 +13,11 @@ public class Objetivo {
         return coordenada;
     }
 
-    public void setAlcanzado(boolean alcanzado) {
-        this.alcanzado = alcanzado;
-    }
-
     public boolean getAlcanzado() {
         return alcanzado;
     }
 
-
-
+    public void setAlcanzado(boolean alcanzado) {
+        this.alcanzado = alcanzado;
+    }
 }

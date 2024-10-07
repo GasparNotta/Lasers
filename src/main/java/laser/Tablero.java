@@ -6,15 +6,15 @@ import laser.tipos_de_bloque.*;
 
 
 public class Tablero {
-    private Coordenada[][] coordenadas;
-    
     private int filas;
     private int columnas;
-    
+    // Listas de lasers y objetivos
     private ArrayList<Laser> lasers;
     private ArrayList<Objetivo> objetivos;
+    // Matriz de coordenadas que representan el tablero
+    private Coordenada[][] coordenadas;
    
-
+    // Constructor de la clase Tablero
     public Tablero(Nivel nivel) {
         this.filas = nivel.getFilas()*2;
         this.columnas = nivel.getColumnas()*2;
@@ -26,6 +26,7 @@ public class Tablero {
         inicializarElementos(nivel.getConfiguracionElementos());
     }
 
+    // Inicializa el tablero con las coordenadas y los bordes
     private void inicializarTablero() {
         for (int fila = 0; fila <= filas; fila++) {
             for (int columna = 0; columna <= columnas; columna++) {
@@ -68,6 +69,7 @@ public class Tablero {
         }
     }      
 
+    // Inicializa el tablero con las configuraciones de elementos del nivel
     private void inicializarElementos(List<String> configuracion_elementos) {
         for (String linea : configuracion_elementos) {
             // Dividir la línea en sus componentes
@@ -91,13 +93,10 @@ public class Tablero {
         }
     }
 
+    // Metodo para cambiar la posicion de un bloque
     public void cambiarBloque(Coordenada coordenada_actual, Coordenada coordenada_nueva) {
         coordenada_nueva.establecerBloque(coordenada_actual.getBloque());
         coordenada_actual.eliminarBloque();
-    }
-
-    public Coordenada getCoordenada(int fila, int columna) {
-        return coordenadas[fila][columna];
     }
 
     public int getFilas() {
@@ -108,6 +107,10 @@ public class Tablero {
         return columnas;
     }
 
+    public Coordenada getCoordenada(int fila, int columna) {
+        return coordenadas[fila][columna];
+    }
+
     public ArrayList<Laser> getLasers() {
         return lasers;
     }
@@ -115,7 +118,7 @@ public class Tablero {
     public ArrayList<Objetivo> getObjetivos() {
         return objetivos;
     }
-
+    
     public Objetivo getObjetivo(int fila, int columna) {
         for (Objetivo objetivo : objetivos) {
             if (objetivo.getCoordenada().obtenerX() == fila && objetivo.getCoordenada().obtenerY() == columna) {
@@ -125,6 +128,15 @@ public class Tablero {
         return null;
     }
 
+
+
+
+
+
+
+
+
+    //---------------------------ELIMINAR---------------------------
     public void imprimirTablero(){
         for (int fila = 0; fila <= filas; fila++) {
             for (int columna = 0; columna <= columnas; columna++) {

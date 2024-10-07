@@ -12,21 +12,16 @@ import javafx.stage.Stage;
  * JavaFX App
  */
 public class VistaJuego extends Application {
-
     @Override
     public void start(Stage stage) {
         try {
             // Cargar el archivo FXML
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Ventana.fxml"));
             Parent root = loader.load();
-
-
             // Configurar la escena y el escenario
             Scene scene = new Scene(root);
-
             //Titulo de la ventana
-            stage.setTitle("Mi Aplicación JavaFX");
-
+            stage.setTitle("Lasers Gaspar Notta");
             //Mostrar la ventana
             stage.setScene(scene);
             stage.show();

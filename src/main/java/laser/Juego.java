@@ -28,26 +28,11 @@ public class Juego {
     public void jugar() {
         lasers = tablero.getLasers();
         objetivos = tablero.getObjetivos();
-
-        System.out.println("------------------Nuevo Nivel------------------");
-        for (Laser laser : lasers){
-            System.out.println("Laser en: " + laser.getCoordenadaInicial().obtenerX() + ' ' + laser.getCoordenadaInicial().obtenerY());
-            
-        }
-        for (Objetivo objetivo : objetivos){
-            System.out.println("El objetivo está en:" + objetivo.getCoordenada().obtenerX() + ' ' + objetivo.getCoordenada().obtenerY());
-        }
-
-
-        
-        tablero.imprimirTablero();
         actualizarTrazado();
         verificarVictoria();
     }
 
     public void actualizarTrazado() {
-
-
         for (Objetivo objetivo : objetivos) {
             objetivo.setAlcanzado(false);
         }

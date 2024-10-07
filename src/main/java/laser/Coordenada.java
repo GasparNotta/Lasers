@@ -10,7 +10,7 @@ public class Coordenada {
     private boolean esObjetivo;
     private Bloque bloque;
     
-
+    // Constructor
     public Coordenada(int x, int y) {
         this.x = x;
         this.y = y;
@@ -49,15 +49,12 @@ public class Coordenada {
         return bloque;
     }
 
-
-
-
     public void establecerCelda() {
         esCelda = true;
     }
 
     public void establecerBorde(boolean esBorde) {
-        this.esBorde = esBorde; // Permite establecer si es o no borde
+        this.esBorde = esBorde; 
     }
 
     public void establecerLaser() {
@@ -76,7 +73,7 @@ public class Coordenada {
         this.bloque = null;
     }
 
-
+    // ---------------------------ELIMINAR---------------------------
     public String imprimir() {
         return "Coordenada: (" + x + ", " + y + ")";
     }

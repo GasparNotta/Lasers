@@ -4,12 +4,11 @@ import laser.Bloque;
 
 public class BloqueEspejo extends Bloque {
     public BloqueEspejo() {
-        super("BloqueEspejo"); // Tipo de bloque
+        super("BloqueEspejo");
     }
 
     @Override
     public void interactuarConLaser(Laser laser, String posicionImpacto ) {
-        // Refleja los rayos láser
         laser.reflejar(posicionImpacto);
     }
 }
