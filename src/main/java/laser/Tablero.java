@@ -134,48 +134,6 @@ public class Tablero {
         }
         return null;
     }
-
-
-
-
-
-
-
-
-
-    //---------------------------ELIMINAR---------------------------
-    public void imprimirTablero(){
-        for (int fila = 0; fila <= filas; fila++) {
-            for (int columna = 0; columna <= columnas; columna++) {
-                if (coordenadas[fila][columna].esLaser()) {
-                    System.out.print("L ");
-                } else if (coordenadas[fila][columna].esObjetivo()) {
-                    System.out.print("O ");
-                } else if (coordenadas[fila][columna].esBorde()) {
-                    System.out.print("/ ");
-                } else if (coordenadas[fila][columna].esCelda()) {
-                    Bloque bloque = coordenadas[fila][columna].getBloque();
-                    if (bloque == null) {
-                        System.out.print("C ");
-                    } else if(bloque.tipoDeBloque().equals("BloqueFijo")){
-                        System.out.print("F ");
-                    } else if(bloque.tipoDeBloque().equals("BloqueMovil")){
-                        System.out.print("B ");
-                    } else if(bloque.tipoDeBloque().equals("BloqueEspejo")){
-                        System.out.print("R ");
-                    } else if(bloque.tipoDeBloque().equals("BloqueVidrio")){
-                        System.out.print("G ");
-                    } else if(bloque.tipoDeBloque().equals("BloqueCristal")){
-                        System.out.print("C ");
-                    }
-                } else {
-                    System.out.print("  ");
-                }
-            }
-            System.out.println();
-        }
-    }
-    
 }
 
 

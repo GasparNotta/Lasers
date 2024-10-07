@@ -40,9 +40,8 @@ public class Laser {
         }
     }
 
-    public void difractar() {
-        // -------------------------------------------FALTA PROGRAMAR-------------------------------------------
-        setDireccion(" ");
+    public void difractar(String posicionImpacto) {
+        reflejar(posicionImpacto);
     }
 
     public void refractar(String posicionImpacto) {

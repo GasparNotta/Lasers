@@ -5,27 +5,24 @@ public class Juego {
     private Tablero tablero;
     private boolean nivel_completado;
 
-    private ArrayList<Laser> lasers;
+    private ArrayList<Laser> lasers_del_tablero;
     private ArrayList<Objetivo> objetivos;
+    private ArrayList<Laser> lasers_totales = new ArrayList<Laser>();
 
     public Juego(String numero_nivel) {
         nivel_completado = false;
         cargarNivel(numero_nivel);
-        lasers = tablero.getLasers();
+        lasers_del_tablero = tablero.getLasers();
         objetivos = tablero.getObjetivos();
-        
     }
 
     public void cargarNivel(String numero_nivel) {
         try {
-            // Leer el nivel
             Nivel nivel = new Nivel("src/main/resources/levels/level" + numero_nivel + ".dat");
             nivel.leerArchivo();
-
             tablero = new Tablero(nivel);
-
         } catch (Exception e) {
-            e.printStackTrace(); // Maneja la excepción según sea necesario
+            e.printStackTrace();
         }
     }
 
@@ -38,141 +35,139 @@ public class Juego {
         for (Objetivo objetivo : objetivos) {
             objetivo.setAlcanzado(false);
         }
-        for (Laser laser : lasers) {
-            
+        lasers_totales.clear();
+        lasers_totales.addAll(lasers_del_tablero);
+
+        for(int i = 0; i < lasers_totales.size(); i++) {
+            Laser laser = lasers_totales.get(i);
             laser.setDireccion(laser.getDireccionInicial());
             laser.deleteRecorridoLaser();
-            laser.getCoordenadaInicial().establecerBorde(false);
-
             boolean detener_trazado = false;
             Coordenada coordenada_actual = laser.getCoordenadaInicial();
             String direccion_anterior = " ";
+            boolean era_borde = false;
+            int iteracciones = 0;
             
+            if (laser.getCoordenadaInicial().esBorde()){
+                era_borde = true;
+                laser.getCoordenadaInicial().establecerBorde(false);
+            }
+
+            // Calcular el trazado de cada laser
             while (!detener_trazado) {
                 String direccion = laser.getDireccion();
                 int coordenada_actual_fila = coordenada_actual.obtenerX();
                 int coordenada_actual_columna = coordenada_actual.obtenerY();
                 String posicionImpacto = "ninguna";  // Inicializamos el impacto como 'ninguno'
-
-
+                Coordenada coordenada_siguiente = null;
+                iteracciones++;
+                
                 // Comprobar si alcanzó el objetivo
                 if (coordenada_actual.esObjetivo()) {
-                    System.out.println("El láser alcanzó el objetivo.");
                     tablero.getObjetivo(coordenada_actual_fila, coordenada_actual_columna).setAlcanzado(true);
                     
                 }
-
                 // Comprobar si alcanzó el borde del tablero
                 if (coordenada_actual.esBorde() ) {
-                    System.out.println("El láser alcanzó el borde del tablero.");
                     detener_trazado = true;
                     break;
                 }
-
                 // Comprobar si el láser fue absorbido
                 if (direccion.equals(" ")) {
-                    System.out.println("El láser fue absorbido.");
                     detener_trazado = true;
                     break;
                 }
-
-                if (coordenada_actual == laser.getCoordenadaInicial()){
+                // Comprobar donde empieza el laser era borde
+                if (era_borde){
                     coordenada_actual.establecerBorde(true);
+                    era_borde = false;
                 }
-
-                System.out.println("Coordenada actual: " + coordenada_actual_fila + " " + coordenada_actual_columna + " " + direccion);
                 
-               
+                // Calcular la siguiente coordenada
                 switch (direccion) {
                     case "SW":
+                        // Calcular la siguiente coordenada
+                        coordenada_siguiente = tablero.getCoordenada(coordenada_actual_fila + 1, coordenada_actual_columna - 1);
+                        // Comprobar si la fila es par
                         if (coordenada_actual_fila % 2 == 0) {
-                            Coordenada coordenada = tablero.getCoordenada(coordenada_actual_fila + 1, coordenada_actual_columna);
-                            if (coordenada.getBloque() != null) {
-                                posicionImpacto = "debajo";  // Impacta desde arriba
-                                System.out.println("Bloque encontrado. " + posicionImpacto);
-                                coordenada.getBloque().interactuarConLaser(laser, posicionImpacto);
+                            // Calcular la coordenada del posible bloque mas cercano
+                            Coordenada coordenada_con_piso = tablero.getCoordenada(coordenada_actual_fila + 1, coordenada_actual_columna);
+                            // Establecer la posicion del impacto del laser con el bloque
+                            posicionImpacto = "debajo";
+                            // Comprobar si el laser impacta con un bloque y esta funcion maneje el impacto si lo hay
+                            if(manejarImpactoEnBloque(coordenada_con_piso, coordenada_actual, coordenada_siguiente, laser, direccion, posicionImpacto, direccion_anterior, iteracciones)){
                                 break;
                             }
                         } else {
-                            Coordenada coordenada = tablero.getCoordenada(coordenada_actual_fila, coordenada_actual_columna - 1);
-                            if (coordenada.getBloque() != null) {
-                                posicionImpacto = "costado_izquierda";  // Impacta desde el lado
-                                System.out.println("Bloque encontrado. " + posicionImpacto);
-                                coordenada.getBloque().interactuarConLaser(laser, posicionImpacto);
+                            Coordenada coordenada_con_piso = tablero.getCoordenada(coordenada_actual_fila, coordenada_actual_columna - 1);
+                            posicionImpacto = "costado_izquierda";
+                            if(manejarImpactoEnBloque(coordenada_con_piso, coordenada_actual, coordenada_siguiente, laser, direccion, posicionImpacto, direccion_anterior, iteracciones)){
                                 break;
                             }
                         }
+                        // En el caso que no hay bloque, sigue en la misma direccion y se agrega la coordenada al recorrido
                         laser.agregarCoordenadaRecorrido(coordenada_actual_fila + " " + coordenada_actual_columna + " " + direccion);
-                        coordenada_actual = tablero.getCoordenada(coordenada_actual_fila + 1, coordenada_actual_columna - 1);
+                        coordenada_actual = coordenada_siguiente;
                         break;
 
                     case "SE":
+                        coordenada_siguiente = tablero.getCoordenada(coordenada_actual_fila + 1, coordenada_actual_columna + 1);
                         if (coordenada_actual_fila % 2 == 0) {
-                            Coordenada coordenada = tablero.getCoordenada(coordenada_actual_fila + 1, coordenada_actual_columna);
-                            if (coordenada.getBloque() != null) {
-                                posicionImpacto = "debajo";  // Impacta desde arriba
-                                System.out.println("Bloque encontrado. " + posicionImpacto);
-                                coordenada.getBloque().interactuarConLaser(laser, posicionImpacto);
+                            Coordenada coordenada_con_piso = tablero.getCoordenada(coordenada_actual_fila + 1, coordenada_actual_columna);
+                            posicionImpacto = "debajo";
+                            if(manejarImpactoEnBloque(coordenada_con_piso, coordenada_actual, coordenada_siguiente, laser, direccion, posicionImpacto, direccion_anterior, iteracciones)){
                                 break;
                             }
                         } else {
-                            Coordenada coordenada = tablero.getCoordenada(coordenada_actual_fila, coordenada_actual_columna + 1);
-                            if (coordenada.getBloque() != null) {
-                                posicionImpacto = "costado_derecha";  // Impacta desde el lado
-                                System.out.println("Bloque encontrado. " + posicionImpacto);
-                                coordenada.getBloque().interactuarConLaser(laser, posicionImpacto);
+                            Coordenada coordenada_con_piso = tablero.getCoordenada(coordenada_actual_fila, coordenada_actual_columna + 1);
+                            posicionImpacto = "costado_derecha";
+                            if(manejarImpactoEnBloque(coordenada_con_piso, coordenada_actual, coordenada_siguiente, laser, direccion, posicionImpacto, direccion_anterior, iteracciones)){
                                 break;
                             }
                         }
                         laser.agregarCoordenadaRecorrido(coordenada_actual_fila + " " + coordenada_actual_columna + " " + direccion);                        
-                        coordenada_actual = tablero.getCoordenada(coordenada_actual_fila + 1, coordenada_actual_columna + 1);
+                        coordenada_actual = coordenada_siguiente;
                         break;
 
                     case "NW":
+                        coordenada_siguiente = tablero.getCoordenada(coordenada_actual_fila - 1, coordenada_actual_columna - 1);
                         if (coordenada_actual_fila % 2 == 0) {
-                            Coordenada coordenada = tablero.getCoordenada(coordenada_actual_fila - 1, coordenada_actual_columna);
-                            if (coordenada.getBloque() != null) {
-                                posicionImpacto = "arriba";  // Impacta desde abajo
-                                System.out.println("Bloque encontrado. " + posicionImpacto);
-                                coordenada.getBloque().interactuarConLaser(laser, posicionImpacto);
+                            Coordenada coordenada_con_piso = tablero.getCoordenada(coordenada_actual_fila - 1, coordenada_actual_columna);
+                            posicionImpacto = "arriba";
+                            if(manejarImpactoEnBloque(coordenada_con_piso, coordenada_actual, coordenada_siguiente, laser, direccion, posicionImpacto, direccion_anterior, iteracciones)){
                                 break;
-                            }
+                            }   
                         } else {
-                            Coordenada coordenada = tablero.getCoordenada(coordenada_actual_fila, coordenada_actual_columna - 1);
-                            if (coordenada.getBloque() != null) {
-                                posicionImpacto = "costado_izquierda";  // Impacta desde el lado
-                                System.out.println("Bloque encontrado. " + posicionImpacto);
-                                coordenada.getBloque().interactuarConLaser(laser, posicionImpacto);
+                            Coordenada coordenada_con_piso = tablero.getCoordenada(coordenada_actual_fila, coordenada_actual_columna - 1);
+                            posicionImpacto = "costado_izquierda";
+                            if(manejarImpactoEnBloque(coordenada_con_piso, coordenada_actual, coordenada_siguiente, laser, direccion, posicionImpacto, direccion_anterior, iteracciones)){
                                 break;
-                            }
+                            }    
                         }
                         laser.agregarCoordenadaRecorrido(coordenada_actual_fila + " " + coordenada_actual_columna + " " + direccion);                       
-                        coordenada_actual = tablero.getCoordenada(coordenada_actual_fila - 1, coordenada_actual_columna - 1);
+                        coordenada_actual = coordenada_siguiente;
                         break;
 
                     case "NE":
+                        coordenada_siguiente = tablero.getCoordenada(coordenada_actual_fila - 1, coordenada_actual_columna + 1);
                         if (coordenada_actual_fila % 2 == 0) {
-                            Coordenada coordenada = tablero.getCoordenada(coordenada_actual_fila - 1, coordenada_actual_columna);
-                            if (coordenada.getBloque() != null) {
-                                posicionImpacto = "arriba";  // Impacta desde abajo
-                                System.out.println("Bloque encontrado. " + posicionImpacto);
-                                coordenada.getBloque().interactuarConLaser(laser, posicionImpacto);
+                            Coordenada coordenada_con_piso = tablero.getCoordenada(coordenada_actual_fila - 1, coordenada_actual_columna);
+                            posicionImpacto = "arriba";
+                            if(manejarImpactoEnBloque(coordenada_con_piso, coordenada_actual, coordenada_siguiente, laser, direccion, posicionImpacto, direccion_anterior, iteracciones)){
                                 break;
                             }
                         } else {
-                            Coordenada coordenada = tablero.getCoordenada(coordenada_actual_fila, coordenada_actual_columna + 1);
-                            if (coordenada.getBloque() != null) {
-                                posicionImpacto = "costado_derecha";  // Impacta desde el lado
-                                System.out.println("Bloque encontrado. " + posicionImpacto);
-                                coordenada.getBloque().interactuarConLaser(laser, posicionImpacto);
+                            Coordenada coordenada_con_piso = tablero.getCoordenada(coordenada_actual_fila, coordenada_actual_columna + 1);
+                            posicionImpacto = "costado_derecha";
+                            if(manejarImpactoEnBloque(coordenada_con_piso, coordenada_actual, coordenada_siguiente, laser, direccion, posicionImpacto, direccion_anterior, iteracciones)){
                                 break;
                             }
                         }
                         laser.agregarCoordenadaRecorrido(coordenada_actual_fila + " " + coordenada_actual_columna + " " + direccion);                        
-                        coordenada_actual = tablero.getCoordenada(coordenada_actual_fila - 1, coordenada_actual_columna + 1);
+                        coordenada_actual = coordenada_siguiente;
                         break;
                     
-                    // Nuevas posibilidades para el bloqueCristal
+                    // Posibilidades exclusivas para el bloqueCristal
                     case "N":
                         laser.agregarCoordenadaRecorrido(coordenada_actual_fila + " " + coordenada_actual_columna + " " + direccion);  
                         coordenada_actual = tablero.getCoordenada(coordenada_actual_fila - 2, coordenada_actual_columna );
@@ -194,13 +189,13 @@ public class Juego {
                         laser.setDireccion(direccion_anterior);
                         break;
                     }
-
                     direccion_anterior = direccion;
+                     
             } 
         }
     }
 
-    public void verificarVictoria(){
+    private void verificarVictoria(){
         for (Objetivo objetivo : objetivos){
             if (!objetivo.isAlcanzado()){
                 nivel_completado = false;
@@ -210,12 +205,25 @@ public class Juego {
         nivel_completado = true;
     }
 
-    public Tablero getTablero() {
-        return tablero;
+    private boolean manejarImpactoEnBloque(Coordenada coordenada_con_piso, Coordenada coordenada_actual, Coordenada coordenada_siguiente, Laser laser, String direccion, String posicionImpacto, String direccion_anterior, int iteracciones){
+        if (coordenada_con_piso.getBloque() != null) {
+            if(iteracciones == 1){
+                laser.setDireccion(" ");
+            }
+            if(coordenada_con_piso.getBloque().tipoDeBloque() == "BloqueVidrio"){
+                agregarLazerDifractado(coordenada_siguiente, direccion);
+                laser.agregarCoordenadaRecorrido(coordenada_actual.obtenerX() + " " + coordenada_actual.obtenerY()  + " " + direccion);   
+            }
+            coordenada_con_piso.getBloque().interactuarConLaser(laser, posicionImpacto);
+            return true;
+        }
+        return false;
     }
 
-    public ArrayList<Laser> getLasers() {
-        return lasers;
+    private void agregarLazerDifractado(Coordenada coordenada, String direccion){
+        if(!coordenada.esBorde()){
+            lasers_totales.add(new Laser(coordenada, direccion));
+        }
     }
 
     public void cambiarBloque(int fila1, int columna1, int fila2, int columna2) {
@@ -232,5 +240,13 @@ public class Juego {
 
     public boolean nivelCompletado() {
         return nivel_completado;
+    }
+
+    public Tablero getTablero() {
+        return tablero;
+    }
+
+    public ArrayList<Laser> getLasers() {
+        return lasers_totales;
     }
 }

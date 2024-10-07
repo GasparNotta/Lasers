@@ -9,7 +9,6 @@ public class BloqueVidrio extends Bloque {
 
     @Override
     public void interactuarConLaser(Laser laser,String posicionImpacto) {
-        laser.difractar();
-        System.out.println("Bloque de Vidrio: El rayo se ha difractado.");
+        laser.difractar(posicionImpacto);
     }
 }
