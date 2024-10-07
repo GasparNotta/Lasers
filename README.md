@@ -3,7 +3,7 @@ Trabajo Practico 1, Paradigmas de la programacion, Facultad de Ingenieria de la 
     
 Como jugar: 
 Lasers es un juego de estilo puzzle, que se desarrolla por turnos hasta que el jugador encuentra la solución del problema moviendo bloques. En cada turno, el jugador puede mover un Bloque (que no sea fijo) a cualquier celda que esté libre.
-El nivel es completado cuando todos los Objetivos son alcanzados por al menos un rayo laser.
+El nivel es completado cuando todos los Objetivos (circulos azules) son alcanzados por al menos un rayo laser.
     
 Tipos de bloques:
 Bloque opaco fijo: Absorbe rayos laser. No se puede mover.
