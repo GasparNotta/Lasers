@@ -24,7 +24,7 @@ public class Laser {
             case "SE":
                 if (posicionImpacto.equals("debajo")) {  // Si golpea en el borde inferior del bloque
                     setDireccion("NE");
-                } else if (posicionImpacto.equals("costado")) {  // Si golpea en el costado derecho del bloque
+                } else if (posicionImpacto.equals("costado_derecha")) {  // Si golpea en el costado derecho del bloque
                     setDireccion("SW");
                 }
                 break;
@@ -32,7 +32,7 @@ public class Laser {
             case "SW":
                 if (posicionImpacto.equals("debajo")) {  // Si golpea en el borde inferior del bloque
                     setDireccion("NW");
-                } else if (posicionImpacto.equals("costado")) {  // Si golpea en el costado izquierdo del bloque
+                } else if (posicionImpacto.equals("costado_izquierda")) {  // Si golpea en el costado izquierdo del bloque
                     setDireccion("SE");
                 }
                 break;
@@ -40,7 +40,7 @@ public class Laser {
             case "NE":
                 if (posicionImpacto.equals("arriba")) {  // Si golpea en el borde superior del bloque
                     setDireccion("SE");
-                } else if (posicionImpacto.equals("costado")) {  // Si golpea en el costado derecho del bloque
+                } else if (posicionImpacto.equals("costado_derecha")) {  // Si golpea en el costado derecho del bloque
                     setDireccion("NW");
                 }
                 break;
@@ -48,7 +48,7 @@ public class Laser {
             case "NW":
                 if (posicionImpacto.equals("arriba")) {  // Si golpea en el borde superior del bloque
                     setDireccion("SW");
-                } else if (posicionImpacto.equals("costado")) {  // Si golpea en el costado izquierdo del bloque
+                } else if (posicionImpacto.equals("costado_izquierda")) {  // Si golpea en el costado izquierdo del bloque
                     setDireccion("NE");
                 }
                 break;
@@ -63,8 +63,24 @@ public class Laser {
         setDireccion(" ");
     }
 
-    public void refractar() {
-        setDireccion(" ");
+    public void refractar(String posicionImpacto) {
+        switch (posicionImpacto) {
+            case "arriba":
+                setDireccion("N");
+                break;
+            case "debajo":
+                setDireccion("S");
+                break;
+            case "costado_izquierda":
+                setDireccion("W");
+                break;
+            case "costado_derecha":
+                setDireccion("E");
+                break;
+            default:
+                System.out.println("Posición de impacto desconocida, no se puede refractar.");
+                break;
+        }
     }
 
     public Coordenada getCoordenadaInicial() {

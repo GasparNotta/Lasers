@@ -80,7 +80,6 @@ public class Tablero {
                     String direccion = partes[3];  // La dirección del emisor (ej: 'SE')
                     lasers.add(new Laser(coordenadas[fila][columna],direccion));
                     coordenadas[fila][columna].establecerLaser();
-                    coordenadas[fila][columna].establecerBorde(false);
                     break;
         
                 case 'G':  
