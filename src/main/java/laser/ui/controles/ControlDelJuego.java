@@ -11,21 +11,21 @@ import laser.Juego;
 public class ControlDelJuego {
     private Rectangle primerRectanguloSeleccionado = null;
     private Pane juego_pane;
+    private Juego juego;
 
     // Instancias de las clases Juego y VistaTablero
-    Juego juego = new Juego();
     VistaTablero vistaTablero = new VistaTablero();
     VistaBloqueSeleccionado vistaBloqueSeleccionado = new VistaBloqueSeleccionado();
     
     public void iniciarJuego(String numero_nivel, Pane juego_pane) {
         this.juego_pane = juego_pane;
-        juego.cargarNivel(numero_nivel);
+        juego = new Juego(numero_nivel);
         juego_pane.setStyle("-fx-background-color: transparent;");
         actualizarTablero();
     }
 
     private void actualizarTablero () {
-        juego.jugar();
+        juego.actualizar();
         vistaTablero.generarJuegoVisual(juego);
         // Limpiar el panel antes de añadir el nuevo tablero
         juego_pane.getChildren().clear();

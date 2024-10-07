@@ -13,7 +13,7 @@ public class Objetivo {
         return coordenada;
     }
 
-    public boolean getAlcanzado() {
+    public boolean isAlcanzado() {
         return alcanzado;
     }
 

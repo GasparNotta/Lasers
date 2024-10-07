@@ -73,13 +73,13 @@ public class VistaTablero {
                                 rect.setFill(Color.DARKGRAY);  // Bloques móviles en gris oscuro
                                 break;
                             case "BloqueEspejo":
-                                rect.setFill(Color.LIGHTSKYBLUE);  // Bloques espejo en azul cielo claro
+                                rect.setFill(Color.DARKCYAN);  // Bloques espejo en azul cielo claro
                                 break;
                             case "BloqueVidrio":
-                                rect.setFill(Color.LIGHTBLUE);  // Bloques vidrio en azul claro
+                                rect.setFill(Color.LIGHTCYAN);  // Bloques vidrio en azul claro
                                 break;
                             case "BloqueCristal":
-                                rect.setFill(Color.LIGHTCYAN);  // Bloques cristal en cyan claro
+                                rect.setFill(Color.LIGHTSEAGREEN);  // Bloques cristal en cyan claro
                                 break;
                         }
                     }
@@ -102,7 +102,7 @@ public class VistaTablero {
                     Circle circ = new Circle(radio_elemento);
                     circ.translateXProperty().set(posicion_x);
                     circ.translateYProperty().set(posicion_y);
-                    if(tablero.getObjetivo(fila, columna).getAlcanzado()){
+                    if(tablero.getObjetivo(fila, columna).isAlcanzado()){
                         circ.setFill(Color.GREEN); // Objetivo alcanzado en verde
                     } else {
                     circ.setFill(Color.BLUE); // Objetivo no alcanzado en azul

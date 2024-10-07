@@ -8,8 +8,12 @@ public class Juego {
     private ArrayList<Laser> lasers;
     private ArrayList<Objetivo> objetivos;
 
-    public Juego() {
+    public Juego(String numero_nivel) {
         nivel_completado = false;
+        cargarNivel(numero_nivel);
+        lasers = tablero.getLasers();
+        objetivos = tablero.getObjetivos();
+        
     }
 
     public void cargarNivel(String numero_nivel) {
@@ -25,9 +29,7 @@ public class Juego {
         }
     }
 
-    public void jugar() {
-        lasers = tablero.getLasers();
-        objetivos = tablero.getObjetivos();
+    public void actualizar() {
         actualizarTrazado();
         verificarVictoria();
     }
@@ -200,7 +202,7 @@ public class Juego {
 
     public void verificarVictoria(){
         for (Objetivo objetivo : objetivos){
-            if (!objetivo.getAlcanzado()){
+            if (!objetivo.isAlcanzado()){
                 nivel_completado = false;
                 return;
             }

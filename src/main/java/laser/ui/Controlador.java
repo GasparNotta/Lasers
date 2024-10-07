@@ -39,52 +39,34 @@ public class Controlador {
     public void initialize() {
         boton_nivel1.setOnAction(e -> {
             String numero_nivel = "1";
-
-            // Llamada al método jugar de ControlDelJuego
             controlDelJuego.iniciarJuego(numero_nivel ,juego_pane);
-
             label_nivel.setText("Nivel " + numero_nivel);
         });
 
         boton_nivel2.setOnAction(e -> {
             String numero_nivel = "2";
-
-            // Llamada al método jugar de ControlDelJuego
             controlDelJuego.iniciarJuego(numero_nivel ,juego_pane);
-
             label_nivel.setText("Nivel " + numero_nivel);
         });
 
         boton_nivel3.setOnAction(e -> {
             String numero_nivel = "3";
-
-            // Llamada al método jugar de ControlDelJuego
             controlDelJuego.iniciarJuego(numero_nivel ,juego_pane);
-
             label_nivel.setText("Nivel " + numero_nivel);
         });
         boton_nivel4.setOnAction(e -> {
             String numero_nivel = "4";
-
-            // Llamada al método jugar de ControlDelJuego
             controlDelJuego.iniciarJuego(numero_nivel ,juego_pane);
-
             label_nivel.setText("Nivel " + numero_nivel);
         });
         boton_nivel5.setOnAction(e -> {
             String numero_nivel = "5";
-
-            // Llamada al método jugar de ControlDelJuego
             controlDelJuego.iniciarJuego(numero_nivel ,juego_pane);
-
             label_nivel.setText("Nivel " + numero_nivel);
         });
         boton_nivel6.setOnAction(e -> {
             String numero_nivel = "6";
-
-            // Llamada al método jugar de ControlDelJuego
             controlDelJuego.iniciarJuego(numero_nivel ,juego_pane);
-
             label_nivel.setText("Nivel " + numero_nivel);
         });
     }

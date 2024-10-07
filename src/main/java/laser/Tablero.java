@@ -45,29 +45,36 @@ public class Tablero {
             for (int j = 0; j < linea.length(); j++) {
                 char caracter = linea.charAt(j);
                 if (caracter != ' ') {
-                    coordenadas[i*2+1][j*2+1].establecerCelda();
-                    // Agregar bloque según el carácter
-                    switch (caracter) {
-                        case 'F':
-                            coordenadas[i*2+1][j*2+1].establecerBloque(new BloqueFijo());;
-                            break;
-                        case 'B':
-                            coordenadas[i*2+1][j*2+1].establecerBloque(new BloqueMovil());
-                            break;
-                        case 'R':
-                            coordenadas[i*2+1][j*2+1].establecerBloque(new BloqueEspejo());
-                            break;
-                        case 'G':
-                            coordenadas[i*2+1][j*2+1].establecerBloque(new BloqueVidrio());
-                            break;
-                        case 'C':
-                            coordenadas[i*2+1][j*2+1].establecerBloque(new BloqueCristal());
-                            break;
-                    }
+                    int filaTablero = i * 2 + 1;
+                    int columnaTablero = j * 2 + 1;
+                    coordenadas[filaTablero][columnaTablero].establecerCelda();
+                    agregarBloque(filaTablero, columnaTablero, caracter);
                 }
+                
             }
         }
-    }      
+    }    
+    
+    // Agrega un bloque a la coordenada indicada
+    private void agregarBloque(int fila, int columna, char tipo) {
+        switch (tipo) {
+            case 'F':
+                coordenadas[fila][columna].establecerBloque(new BloqueFijo());
+                break;
+            case 'B':
+                coordenadas[fila][columna].establecerBloque(new BloqueMovil());
+                break;
+            case 'R':
+                coordenadas[fila][columna].establecerBloque(new BloqueEspejo());
+                break;
+            case 'G':
+                coordenadas[fila][columna].establecerBloque(new BloqueVidrio());
+                break;
+            case 'C':
+                coordenadas[fila][columna].establecerBloque(new BloqueCristal());
+                break;
+        }
+    }
 
     // Inicializa el tablero con las configuraciones de elementos del nivel
     private void inicializarElementos(List<String> configuracion_elementos) {
@@ -168,8 +175,8 @@ public class Tablero {
             System.out.println();
         }
     }
-
-
+    
 }
+
 
 
