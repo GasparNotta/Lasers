@@ -7,9 +7,10 @@ module laser.ui {
     requires transitive javafx.graphics;
 
 
+    exports controller;
+    exports view;
+    exports model;
 
-    opens laser.ui to javafx.fxml;
-
-    exports laser.ui;
-    exports laser;
+    opens controller to javafx.fxml;
+    opens view to javafx.fxml;
 }
