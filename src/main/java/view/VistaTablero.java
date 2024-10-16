@@ -8,7 +8,6 @@ import model.Juego;
 import model.Laser;
 import model.Coordenada;
 
-
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.Pane;

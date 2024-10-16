@@ -3,12 +3,12 @@ package model;
 import java.util.ArrayList;
 
 public class Laser {
-    private final String direccion_inicial;  // Dirección del rayo láser al iniciar el trazado
-    private String direccion;  // Dirección del rayo láser (puede cambiar a la hora de realizar el trazado)
+    private final TipoDireccion direccion_inicial;  // Dirección del rayo láser al iniciar el trazado
+    private TipoDireccion direccion;  // Dirección del rayo láser (puede cambiar a la hora de realizar el trazado)
     private final Coordenada coordenada_inicial;  // Coordenada del láser
     private ArrayList<String> recorrido_laser; // Lista de coordenadas por las que pasa el láser
     
-    public Laser(Coordenada coordenada_inicial, String direccion_inicial) {
+    public Laser(Coordenada coordenada_inicial, TipoDireccion direccion_inicial) {
         this.coordenada_inicial = coordenada_inicial;
         this.direccion_inicial = direccion_inicial;
         this.direccion = direccion_inicial;
@@ -16,28 +16,30 @@ public class Laser {
     }
 
     public void absorber() {
-        setDireccion(" ");
+        setDireccion(TipoDireccion.SIN_DIRECCION);
     }
 
     public void reflejar(TipoImpacto impacto) {
         switch (direccion) {
-            case "SE":
-                if (impacto == TipoImpacto.DEBAJO) { setDireccion("NE");} 
-                else if (impacto == TipoImpacto.COSTADO_DERECHA) { setDireccion("SW");}
+            case SE:
+                if (impacto == TipoImpacto.DEBAJO) { setDireccion(TipoDireccion.NE);} 
+                else if (impacto == TipoImpacto.COSTADO_DERECHA) { setDireccion(TipoDireccion.SW);}
                 break;
-            case "SW":
-                if (impacto == TipoImpacto.DEBAJO) { setDireccion("NW");} 
-                else if (impacto == TipoImpacto.COSTADO_IZQUIERDA) {setDireccion("SE");}
+            case SW:
+                if (impacto == TipoImpacto.DEBAJO) { setDireccion(TipoDireccion.NW);} 
+                else if (impacto == TipoImpacto.COSTADO_IZQUIERDA) {setDireccion(TipoDireccion.SE);}
                 break;
-            case "NE":
-                if (impacto == TipoImpacto.ARRIBA) { setDireccion("SE");} 
-                else if (impacto == TipoImpacto.COSTADO_DERECHA) { setDireccion("NW");}
+            case NE:
+                if (impacto == TipoImpacto.ARRIBA) { setDireccion(TipoDireccion.SE);} 
+                else if (impacto == TipoImpacto.COSTADO_DERECHA) { setDireccion(TipoDireccion.NW);}
                 break;
-            case "NW":
-                if (impacto == TipoImpacto.ARRIBA) {setDireccion("SW");} 
-                else if (impacto == TipoImpacto.COSTADO_IZQUIERDA) { setDireccion("NE");}
+            case NW:
+                if (impacto == TipoImpacto.ARRIBA) {setDireccion(TipoDireccion.SW);} 
+                else if (impacto == TipoImpacto.COSTADO_IZQUIERDA) { setDireccion(TipoDireccion.NE);}
                 break;
+            case N:break; case S:break; case E:break; case W:break; case SIN_DIRECCION:break;
         }
+        
     }
 
     public void difractar(TipoImpacto posicionImpacto) {
@@ -47,23 +49,23 @@ public class Laser {
     public void refractar(TipoImpacto posicionImpacto) {
         switch (posicionImpacto) {
             case ARRIBA:
-                setDireccion("N");
+                setDireccion(TipoDireccion.N);
                 break;
             case DEBAJO:
-                setDireccion("S");
+                setDireccion(TipoDireccion.S);
                 break;
             case COSTADO_IZQUIERDA:
-                setDireccion("W");
+                setDireccion(TipoDireccion.W);
                 break;
             case COSTADO_DERECHA:
-                setDireccion("E");
+                setDireccion(TipoDireccion.E);
                 break;
             case NINGUNO:
                 break;
         }
     }
 
-    public void setDireccion(String direccion) {
+    public void setDireccion(TipoDireccion direccion) {
         this.direccion = direccion;
     }
 
@@ -71,10 +73,10 @@ public class Laser {
         return coordenada_inicial;
     }
 
-    public String getDireccionInicial() {
+    public TipoDireccion getDireccionInicial() {
         return direccion_inicial;
     }
-    public String getDireccion() {
+    public TipoDireccion getDireccion() {
         return direccion;
     }
 

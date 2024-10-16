@@ -86,7 +86,21 @@ public class Tablero {
             int fila = Integer.parseInt(partes[2]);
             switch (tipo) {
                 case 'E':  // Emisor
-                    String direccion = partes[3];  // La dirección del emisor (ej: 'SE')
+                    String direccion_String = partes[3];  // La dirección del emisor (ej: 'SE')
+                    TipoDireccion direccion;
+                    
+                    if (direccion_String.equals("NE")) {
+                        direccion = TipoDireccion.NE;
+                    } else if (direccion_String.equals("NW")) {
+                        direccion = TipoDireccion.NW;
+                    } else if (direccion_String.equals("SE")) {
+                        direccion = TipoDireccion.SE;
+                    } else if (direccion_String.equals("SW")) {
+                        direccion = TipoDireccion.SW;
+                    } else {
+                        direccion = TipoDireccion.SIN_DIRECCION;
+                    }
+
                     lasers.add(new Laser(coordenadas[fila][columna],direccion));
                     coordenadas[fila][columna].establecerLaser();
                     break;
