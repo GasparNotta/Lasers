@@ -8,13 +8,16 @@ public abstract class Bloque {
         this.tipo = tipo;
     }
 
-    // Método para recibir un rayo láser. Debe ser implementado por las subclases 
-    public abstract void interactuarConLaser(Laser laser, TipoImpacto Impacto);
+    // Método abstracto para recibir un rayo láser con un solo parámetro
+    public abstract void interactuarConLaser(Laser laser);
+    
+    // Método abstracto para recibir un rayo láser con dos parámetros
+    public abstract void interactuarConLaser(Laser laser, TipoImpacto impacto);
+
 
     public TipoBloque tipoDeBloque() {
         return tipo;
     }
-
 
 }
 

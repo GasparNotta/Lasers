@@ -10,7 +10,13 @@ public class BloqueEspejo extends Bloque {
     }
 
     @Override
-    public void interactuarConLaser(Laser laser, TipoImpacto impacto ) {
+    public void interactuarConLaser(Laser laser) {
+        // Implementación vacía o lanzar excepción si no es aplicable
+        throw new UnsupportedOperationException("BloqueEspejo no puede interactuar con el láser de esta manera.");
+    }
+
+    @Override
+    public void interactuarConLaser(Laser laser, TipoImpacto impacto) {
         laser.reflejar(impacto);
     }
 }

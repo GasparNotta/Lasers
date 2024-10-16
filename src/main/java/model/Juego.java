@@ -214,7 +214,11 @@ public class Juego {
                 agregarLazerDifractado(coordenada_siguiente, direccion);
                 laser.agregarCoordenadaRecorrido(coordenada_actual.obtenerX() + " " + coordenada_actual.obtenerY()  + " " + direccion);   
             }
-            coordenada_con_piso.getBloque().interactuarConLaser(laser, impacto);
+            if(coordenada_con_piso.getBloque().tipoDeBloque() == TipoBloque.FIJO || coordenada_con_piso.getBloque().tipoDeBloque() == TipoBloque.MOVIL){
+                coordenada_con_piso.getBloque().interactuarConLaser(laser);
+            } else{
+                coordenada_con_piso.getBloque().interactuarConLaser(laser, impacto);
+            }
             return true;
         }
         return false;
