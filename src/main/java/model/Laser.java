@@ -21,25 +21,12 @@ public class Laser {
 
     public void reflejar(TipoImpacto impacto) {
         switch (direccion) {
-            case SE:
-                if (impacto == TipoImpacto.DEBAJO) { setDireccion(TipoDireccion.NE);} 
-                else if (impacto == TipoImpacto.COSTADO_DERECHA) { setDireccion(TipoDireccion.SW);}
-                break;
-            case SW:
-                if (impacto == TipoImpacto.DEBAJO) { setDireccion(TipoDireccion.NW);} 
-                else if (impacto == TipoImpacto.COSTADO_IZQUIERDA) {setDireccion(TipoDireccion.SE);}
-                break;
-            case NE:
-                if (impacto == TipoImpacto.ARRIBA) { setDireccion(TipoDireccion.SE);} 
-                else if (impacto == TipoImpacto.COSTADO_DERECHA) { setDireccion(TipoDireccion.NW);}
-                break;
-            case NW:
-                if (impacto == TipoImpacto.ARRIBA) {setDireccion(TipoDireccion.SW);} 
-                else if (impacto == TipoImpacto.COSTADO_IZQUIERDA) { setDireccion(TipoDireccion.NE);}
-                break;
-            case N:break; case S:break; case E:break; case W:break; case SIN_DIRECCION:break;
+            case SE: setDireccion(impacto == TipoImpacto.DEBAJO ? TipoDireccion.NE : TipoDireccion.SW); break;
+            case SW: setDireccion(impacto == TipoImpacto.DEBAJO ? TipoDireccion.NW : TipoDireccion.SE); break;
+            case NE: setDireccion(impacto == TipoImpacto.ARRIBA ? TipoDireccion.SE : TipoDireccion.NW); break;
+            case NW: setDireccion(impacto == TipoImpacto.ARRIBA ? TipoDireccion.SW : TipoDireccion.NE); break;
+            case N: case S: case E: case W: case SIN_DIRECCION: break;
         }
-        
     }
 
     public void difractar(TipoImpacto posicionImpacto) {
@@ -48,20 +35,11 @@ public class Laser {
 
     public void refractar(TipoImpacto posicionImpacto) {
         switch (posicionImpacto) {
-            case ARRIBA:
-                setDireccion(TipoDireccion.N);
-                break;
-            case DEBAJO:
-                setDireccion(TipoDireccion.S);
-                break;
-            case COSTADO_IZQUIERDA:
-                setDireccion(TipoDireccion.W);
-                break;
-            case COSTADO_DERECHA:
-                setDireccion(TipoDireccion.E);
-                break;
-            case NINGUNO:
-                break;
+            case ARRIBA: setDireccion(TipoDireccion.N); break;
+            case DEBAJO: setDireccion(TipoDireccion.S); break;
+            case COSTADO_IZQUIERDA: setDireccion(TipoDireccion.W); break;
+            case COSTADO_DERECHA: setDireccion(TipoDireccion.E); break;
+            case NINGUNO: break;
         }
     }
 

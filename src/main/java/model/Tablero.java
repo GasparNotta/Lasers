@@ -57,61 +57,47 @@ public class Tablero {
     
     // Agrega un bloque a la coordenada indicada
     private void agregarBloque(int fila, int columna, char tipo) {
-        switch (tipo) {
-            case 'F':
-                coordenadas[fila][columna].establecerBloque(new BloqueFijo());
-                break;
-            case 'B':
-                coordenadas[fila][columna].establecerBloque(new BloqueMovil());
-                break;
-            case 'R':
-                coordenadas[fila][columna].establecerBloque(new BloqueEspejo());
-                break;
-            case 'G':
-                coordenadas[fila][columna].establecerBloque(new BloqueVidrio());
-                break;
-            case 'C':
-                coordenadas[fila][columna].establecerBloque(new BloqueCristal());
-                break;
-        }
+        coordenadas[fila][columna].establecerBloque(
+        tipo == 'F' ? new BloqueFijo() :
+        tipo == 'B' ? new BloqueMovil() :
+        tipo == 'R' ? new BloqueEspejo() :
+        tipo == 'G' ? new BloqueVidrio() :
+        tipo == 'C' ? new BloqueCristal() :
+        null // o algún valor predeterminado
+        );
     }
 
     // Inicializa el tablero con las configuraciones de elementos del nivel
     private void inicializarElementos(List<String> configuracion_elementos) {
         for (String linea : configuracion_elementos) {
-            // Dividir la línea en sus componentes
             String[] partes = linea.split(" ");
-            char tipo = partes[0].charAt(0);  
+            char tipo = partes[0].charAt(0);
             int columna = Integer.parseInt(partes[1]);
             int fila = Integer.parseInt(partes[2]);
-            switch (tipo) {
-                case 'E':  // Emisor
-                    String direccion_String = partes[3];  // La dirección del emisor (ej: 'SE')
-                    TipoDireccion direccion;
-                    
-                    if (direccion_String.equals("NE")) {
-                        direccion = TipoDireccion.NE;
-                    } else if (direccion_String.equals("NW")) {
-                        direccion = TipoDireccion.NW;
-                    } else if (direccion_String.equals("SE")) {
-                        direccion = TipoDireccion.SE;
-                    } else if (direccion_String.equals("SW")) {
-                        direccion = TipoDireccion.SW;
-                    } else {
-                        direccion = TipoDireccion.SIN_DIRECCION;
-                    }
 
-                    lasers.add(new Laser(coordenadas[fila][columna],direccion));
+            switch (tipo) {
+                case 'E':
+                    TipoDireccion direccion = obtenerDireccion(partes[3]);
+                    lasers.add(new Laser(coordenadas[fila][columna], direccion));
                     coordenadas[fila][columna].establecerLaser();
                     break;
-        
-                case 'G':  
-                    objetivos.add(new Objetivo(coordenadas[fila][columna]));  
+
+                case 'G':
+                    objetivos.add(new Objetivo(coordenadas[fila][columna]));
                     coordenadas[fila][columna].establecerObjetivo();
                     break;
-        
             }
         }
+    }
+
+    private TipoDireccion obtenerDireccion(String direccion_String) {
+        return switch (direccion_String) {
+            case "NE" -> TipoDireccion.NE;
+            case "NW" -> TipoDireccion.NW;
+            case "SE" -> TipoDireccion.SE;
+            case "SW" -> TipoDireccion.SW;
+            default -> TipoDireccion.SIN_DIRECCION;
+        };
     }
 
     // Metodo para cambiar la posicion de un bloque

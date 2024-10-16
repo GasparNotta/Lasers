@@ -32,9 +32,7 @@ public class Juego {
     }
 
     public void actualizarTrazado() {
-        for (Objetivo objetivo : objetivos) {
-            objetivo.setAlcanzado(false);
-        }
+        for (Objetivo objetivo : objetivos) { objetivo.setAlcanzado(false); }
         lasers_totales.clear();
         lasers_totales.addAll(lasers_del_tablero);
 
@@ -56,14 +54,6 @@ public class Juego {
             // Calcular el trazado de cada laser
             while (!detener_trazado) {
                 TipoDireccion direccion = laser.getDireccion();
-
-
-
-                System.out.println("Direccion: " + laser.getDireccion().toString());
-
-
-
-                
                 int coordenada_actual_fila = coordenada_actual.obtenerX();
                 int coordenada_actual_columna = coordenada_actual.obtenerY();
                 TipoImpacto impacto = TipoImpacto.NINGUNO;  // Inicializamos el impacto como 'ninguno'
@@ -71,15 +61,9 @@ public class Juego {
                 iteracciones++;
                 
                 // Comprobar si alcanzó el objetivo
-                if (coordenada_actual.esObjetivo()) {
-                    tablero.getObjetivo(coordenada_actual_fila, coordenada_actual_columna).setAlcanzado(true);
-                    
-                }
+                if (coordenada_actual.esObjetivo()) {tablero.getObjetivo(coordenada_actual_fila, coordenada_actual_columna).setAlcanzado(true);}
                 // Comprobar si alcanzó el borde del tablero
-                if (coordenada_actual.esBorde() ) {
-                    detener_trazado = true;
-                    break;
-                }
+                if (coordenada_actual.esBorde() ) {detener_trazado = true;break;}
                 // Comprobar donde empieza el laser era borde
                 if (era_borde){
                     coordenada_actual.establecerBorde(true);
@@ -202,20 +186,13 @@ public class Juego {
     }
 
     private void verificarVictoria(){
-        for (Objetivo objetivo : objetivos){
-            if (!objetivo.isAlcanzado()){
-                nivel_completado = false;
-                return;
-            }
-        }
-        nivel_completado = true;
+        nivel_completado = objetivos.stream().allMatch(Objetivo::isAlcanzado);
     }
 
     private boolean manejarImpactoEnBloque(Coordenada coordenada_con_piso, Coordenada coordenada_actual, Coordenada coordenada_siguiente, Laser laser, TipoDireccion direccion, TipoImpacto impacto, TipoDireccion direccion_anterior, int iteracciones){
         if (coordenada_con_piso.getBloque() != null) {
-            if(iteracciones == 1){
-                laser.setDireccion(TipoDireccion.SIN_DIRECCION);
-            }
+            if(iteracciones == 1){laser.setDireccion(TipoDireccion.SIN_DIRECCION);}
+
             if(coordenada_con_piso.getBloque().tipoDeBloque() == TipoBloque.VIDRIO){
                 agregarLazerDifractado(coordenada_siguiente, direccion);
                 laser.agregarCoordenadaRecorrido(coordenada_actual.obtenerX() + " " + coordenada_actual.obtenerY()  + " " + direccion);   
@@ -231,18 +208,13 @@ public class Juego {
     }
 
     private void agregarLazerDifractado(Coordenada coordenada, TipoDireccion direccion){
-        if(!coordenada.esBorde()){
-            lasers_totales.add(new Laser(coordenada, direccion));
-        }
-    }
+        if (coordenada.esBorde()) return;
+        lasers_totales.add(new Laser(coordenada, direccion));
+    }   
 
     public void cambiarBloque(int fila1, int columna1, int fila2, int columna2) {
         Bloque bloque = tablero.getCoordenada(fila1, columna1).getBloque();
-        if (bloque == null) {
-            return;
-        } else if (bloque.tipoDeBloque()== TipoBloque.FIJO) {
-            return;
-        } else if(tablero.getCoordenada(fila2, columna2).getBloque() != null){
+        if (bloque == null || bloque.tipoDeBloque() == TipoBloque.FIJO || tablero.getCoordenada(fila2, columna2).getBloque() != null) {
             return;
         }
         tablero.cambiarBloque(tablero.getCoordenada(fila1, columna1), tablero.getCoordenada(fila2, columna2));

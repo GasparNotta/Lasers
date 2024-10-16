@@ -24,33 +24,20 @@ public class Nivel {
         try (BufferedReader reader = new BufferedReader(new FileReader(nombre_archivo))) {
             String linea;
             boolean leyendo_bloques = true;
-
             while ((linea = reader.readLine()) != null) {
-                if (linea.trim().isEmpty()) { 
-                    leyendo_bloques = false; 
+                if (linea.trim().isEmpty()) {
+                    leyendo_bloques = false;
                     continue;
                 }
-                if (leyendo_bloques) {
-                    configuracion_bloques.add(linea);
-                } else {
-                    configuracion_elementos.add(linea);
-                }
+                (leyendo_bloques ? configuracion_bloques : configuracion_elementos).add(linea);
             }
-            reader.close();
-            // Procesar filas y columnas
-            this.filas = configuracion_bloques.size(); 
-            this.columnas = configuracion_bloques.get(0).length();
-            // Ajustar la longitud de las líneas si alguna quedo de otro formato(se considera sin piso)
-            for (int i = 0; i < configuracion_bloques.size(); i++) {
-                String linea_actual = configuracion_bloques.get(i);
-                if (linea_actual.length() != columnas) {
-                    while (linea_actual.length() < columnas) {
-                        linea_actual += " ";  
-                    }
-                    configuracion_bloques.set(i, linea_actual);
-                }
-            }
-        }   
+        }
+        // Procesar filas y columnas
+        this.filas = configuracion_bloques.size();
+        this.columnas = configuracion_bloques.get(0).length();
+    
+        // Ajustar la longitud de las líneas si alguna quedo de otro formato
+        configuracion_bloques.replaceAll(linea -> linea.length() < columnas ? linea + " ".repeat(columnas - linea.length()) : linea);
     }
 
     public int getFilas() {

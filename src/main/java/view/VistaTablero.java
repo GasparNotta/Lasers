@@ -45,8 +45,7 @@ public class VistaTablero {
     // Generar el tablero y los elementos visuales
     public void generarTableroVisual(Juego juego) {
         Tablero tablero = juego.getTablero();
-        int filas = tablero.getFilas();
-        int columnas = tablero.getColumnas();
+        int filas = tablero.getFilas(), columnas = tablero.getColumnas();
 
         // Limpiar el tablero visual anterior
         grid_pane_celdas.getChildren().clear();
@@ -60,57 +59,34 @@ public class VistaTablero {
                 // Crear las celdas visuales
                 if (coordenada.esCelda()) {
                     Rectangle rect = new Rectangle(tamaño_celda, tamaño_celda);
-                    rect.setStroke(Color.BLACK);  // Borde Negro
-                    rect.setStrokeWidth(tamaño_borde);  // Grosor del borde
-                    rect.setFill(Color.LIGHTGRAY);  // Celdas vacías
+                    rect.setStroke(Color.BLACK);
+                    rect.setStrokeWidth(tamaño_borde);
+                    rect.setFill(Color.LIGHTGRAY);
                     Bloque bloque = coordenada.getBloque();
                     if (bloque != null) {
-                        switch (bloque.tipoDeBloque()) {
-                            case FIJO:
-                                rect.setFill(Color.BLACK);  // Bloques fijos en negro
-                                break;
-                            case MOVIL:
-                                rect.setFill(Color.DARKGRAY);  // Bloques móviles en gris oscuro
-                                break;
-                            case ESPEJO:
-                                rect.setFill(Color.DARKCYAN);  // Bloques espejo en azul cielo claro
-                                break;
-                            case VIDRIO:
-                                rect.setFill(Color.LIGHTCYAN);  // Bloques vidrio en azul claro
-                                break;
-                            case CRISTAL:
-                                rect.setFill(Color.LIGHTSEAGREEN);  // Bloques cristal en cyan claro
-                                break;
-                        }
+                        rect.setFill(switch (bloque.tipoDeBloque()) {
+                            case FIJO -> Color.BLACK;
+                            case MOVIL -> Color.DARKGRAY;
+                            case ESPEJO -> Color.DARKCYAN;
+                            case VIDRIO -> Color.LIGHTCYAN;
+                            case CRISTAL -> Color.LIGHTSEAGREEN;
+                            default -> Color.LIGHTGRAY;
+                        });
                     }
-                    grid_pane_celdas.add(rect,columna,fila);
+                    grid_pane_celdas.add(rect, columna, fila);
                 }
 
                 // Crear los elementos visuales
-                if(coordenada.esLaser()){
-                    int posicion_x = ((tamaño_celda*columna/2) - (radio_elemento) + (tamaño_borde*columna/2));
-                    int posicion_y = ((tamaño_celda*fila/2) - (radio_elemento) + (tamaño_borde*fila/2));
+                if (coordenada.esLaser() || coordenada.esObjetivo()) {
+                    int posicion_x = (tamaño_celda * columna / 2) - (radio_elemento) + (tamaño_borde * columna / 2);
+                    int posicion_y = (tamaño_celda * fila / 2) - (radio_elemento) + (tamaño_borde * fila / 2);
                     Circle circ = new Circle(radio_elemento);
                     circ.translateXProperty().set(posicion_x);
                     circ.translateYProperty().set(posicion_y);
-                    circ.setFill(Color.RED); // Láser en rojo
-                    
-                    pane_elementos.getChildren().addAll(circ);
-                } else if (coordenada.esObjetivo()) {
-                    int posicion_x = ((tamaño_celda*columna/2) - (radio_elemento) + (tamaño_borde*columna/2));
-                    int posicion_y = ((tamaño_celda*fila/2) - (radio_elemento) + (tamaño_borde*fila/2));
-                    Circle circ = new Circle(radio_elemento);
-                    circ.translateXProperty().set(posicion_x);
-                    circ.translateYProperty().set(posicion_y);
-                    if(tablero.getObjetivo(fila, columna).isAlcanzado()){
-                        circ.setFill(Color.GREEN); // Objetivo alcanzado en verde
-                    } else {
-                    circ.setFill(Color.BLUE); // Objetivo no alcanzado en azul
-                    }
-                    pane_elementos.getChildren().addAll(circ);
+                    circ.setFill(coordenada.esLaser() ? Color.RED : (tablero.getObjetivo(fila, columna).isAlcanzado() ? Color.GREEN : Color.BLUE));
+                    pane_elementos.getChildren().add(circ);
                 }
             }
-
         }
     }
 
