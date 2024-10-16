@@ -1,3 +1,4 @@
+/home/gaspi/Desktop/Uni/PdP/Ejercicios/Lasers/src/main/java/model/TipoBloque.java
 /home/gaspi/Desktop/Uni/PdP/Ejercicios/Lasers/src/main/java/model/tipos_de_bloque/BloqueEspejo.java
 /home/gaspi/Desktop/Uni/PdP/Ejercicios/Lasers/src/main/java/model/Bloque.java
 /home/gaspi/Desktop/Uni/PdP/Ejercicios/Lasers/src/main/java/model/tipos_de_bloque/BloqueVidrio.java
@@ -12,6 +13,7 @@
 /home/gaspi/Desktop/Uni/PdP/Ejercicios/Lasers/src/main/java/model/tipos_de_bloque/BloqueMovil.java
 /home/gaspi/Desktop/Uni/PdP/Ejercicios/Lasers/src/main/java/model/Coordenada.java
 /home/gaspi/Desktop/Uni/PdP/Ejercicios/Lasers/src/main/java/controller/Controlador.java
+/home/gaspi/Desktop/Uni/PdP/Ejercicios/Lasers/src/main/java/model/TipoImpacto.java
 /home/gaspi/Desktop/Uni/PdP/Ejercicios/Lasers/src/main/java/model/Tablero.java
 /home/gaspi/Desktop/Uni/PdP/Ejercicios/Lasers/src/main/java/model/Objetivo.java
 /home/gaspi/Desktop/Uni/PdP/Ejercicios/Lasers/src/main/java/view/VistaTablero.java

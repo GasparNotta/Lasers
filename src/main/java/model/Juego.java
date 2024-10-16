@@ -58,7 +58,7 @@ public class Juego {
                 String direccion = laser.getDireccion();
                 int coordenada_actual_fila = coordenada_actual.obtenerX();
                 int coordenada_actual_columna = coordenada_actual.obtenerY();
-                String posicionImpacto = "ninguna";  // Inicializamos el impacto como 'ninguno'
+                TipoImpacto impacto = TipoImpacto.NINGUNO;  // Inicializamos el impacto como 'ninguno'
                 Coordenada coordenada_siguiente = null;
                 iteracciones++;
                 
@@ -93,15 +93,15 @@ public class Juego {
                             // Calcular la coordenada del posible bloque mas cercano
                             Coordenada coordenada_con_piso = tablero.getCoordenada(coordenada_actual_fila + 1, coordenada_actual_columna);
                             // Establecer la posicion del impacto del laser con el bloque
-                            posicionImpacto = "debajo";
+                            impacto = TipoImpacto.DEBAJO;
                             // Comprobar si el laser impacta con un bloque y esta funcion maneje el impacto si lo hay
-                            if(manejarImpactoEnBloque(coordenada_con_piso, coordenada_actual, coordenada_siguiente, laser, direccion, posicionImpacto, direccion_anterior, iteracciones)){
+                            if(manejarImpactoEnBloque(coordenada_con_piso, coordenada_actual, coordenada_siguiente, laser, direccion, impacto, direccion_anterior, iteracciones)){
                                 break;
                             }
                         } else {
                             Coordenada coordenada_con_piso = tablero.getCoordenada(coordenada_actual_fila, coordenada_actual_columna - 1);
-                            posicionImpacto = "costado_izquierda";
-                            if(manejarImpactoEnBloque(coordenada_con_piso, coordenada_actual, coordenada_siguiente, laser, direccion, posicionImpacto, direccion_anterior, iteracciones)){
+                            impacto = TipoImpacto.COSTADO_IZQUIERDA;
+                            if(manejarImpactoEnBloque(coordenada_con_piso, coordenada_actual, coordenada_siguiente, laser, direccion, impacto, direccion_anterior, iteracciones)){
                                 break;
                             }
                         }
@@ -114,14 +114,14 @@ public class Juego {
                         coordenada_siguiente = tablero.getCoordenada(coordenada_actual_fila + 1, coordenada_actual_columna + 1);
                         if (coordenada_actual_fila % 2 == 0) {
                             Coordenada coordenada_con_piso = tablero.getCoordenada(coordenada_actual_fila + 1, coordenada_actual_columna);
-                            posicionImpacto = "debajo";
-                            if(manejarImpactoEnBloque(coordenada_con_piso, coordenada_actual, coordenada_siguiente, laser, direccion, posicionImpacto, direccion_anterior, iteracciones)){
+                            impacto = TipoImpacto.DEBAJO;
+                            if(manejarImpactoEnBloque(coordenada_con_piso, coordenada_actual, coordenada_siguiente, laser, direccion, impacto, direccion_anterior, iteracciones)){
                                 break;
                             }
                         } else {
                             Coordenada coordenada_con_piso = tablero.getCoordenada(coordenada_actual_fila, coordenada_actual_columna + 1);
-                            posicionImpacto = "costado_derecha";
-                            if(manejarImpactoEnBloque(coordenada_con_piso, coordenada_actual, coordenada_siguiente, laser, direccion, posicionImpacto, direccion_anterior, iteracciones)){
+                            impacto = TipoImpacto.COSTADO_DERECHA;
+                            if(manejarImpactoEnBloque(coordenada_con_piso, coordenada_actual, coordenada_siguiente, laser, direccion, impacto, direccion_anterior, iteracciones)){
                                 break;
                             }
                         }
@@ -133,14 +133,14 @@ public class Juego {
                         coordenada_siguiente = tablero.getCoordenada(coordenada_actual_fila - 1, coordenada_actual_columna - 1);
                         if (coordenada_actual_fila % 2 == 0) {
                             Coordenada coordenada_con_piso = tablero.getCoordenada(coordenada_actual_fila - 1, coordenada_actual_columna);
-                            posicionImpacto = "arriba";
-                            if(manejarImpactoEnBloque(coordenada_con_piso, coordenada_actual, coordenada_siguiente, laser, direccion, posicionImpacto, direccion_anterior, iteracciones)){
+                            impacto = TipoImpacto.ARRIBA;
+                            if(manejarImpactoEnBloque(coordenada_con_piso, coordenada_actual, coordenada_siguiente, laser, direccion, impacto, direccion_anterior, iteracciones)){
                                 break;
                             }   
                         } else {
                             Coordenada coordenada_con_piso = tablero.getCoordenada(coordenada_actual_fila, coordenada_actual_columna - 1);
-                            posicionImpacto = "costado_izquierda";
-                            if(manejarImpactoEnBloque(coordenada_con_piso, coordenada_actual, coordenada_siguiente, laser, direccion, posicionImpacto, direccion_anterior, iteracciones)){
+                            impacto = TipoImpacto.COSTADO_IZQUIERDA;
+                            if(manejarImpactoEnBloque(coordenada_con_piso, coordenada_actual, coordenada_siguiente, laser, direccion, impacto, direccion_anterior, iteracciones)){
                                 break;
                             }    
                         }
@@ -152,14 +152,14 @@ public class Juego {
                         coordenada_siguiente = tablero.getCoordenada(coordenada_actual_fila - 1, coordenada_actual_columna + 1);
                         if (coordenada_actual_fila % 2 == 0) {
                             Coordenada coordenada_con_piso = tablero.getCoordenada(coordenada_actual_fila - 1, coordenada_actual_columna);
-                            posicionImpacto = "arriba";
-                            if(manejarImpactoEnBloque(coordenada_con_piso, coordenada_actual, coordenada_siguiente, laser, direccion, posicionImpacto, direccion_anterior, iteracciones)){
+                            impacto = TipoImpacto.ARRIBA;
+                            if(manejarImpactoEnBloque(coordenada_con_piso, coordenada_actual, coordenada_siguiente, laser, direccion, impacto, direccion_anterior, iteracciones)){
                                 break;
                             }
                         } else {
                             Coordenada coordenada_con_piso = tablero.getCoordenada(coordenada_actual_fila, coordenada_actual_columna + 1);
-                            posicionImpacto = "costado_derecha";
-                            if(manejarImpactoEnBloque(coordenada_con_piso, coordenada_actual, coordenada_siguiente, laser, direccion, posicionImpacto, direccion_anterior, iteracciones)){
+                            impacto = TipoImpacto.COSTADO_DERECHA;
+                            if(manejarImpactoEnBloque(coordenada_con_piso, coordenada_actual, coordenada_siguiente, laser, direccion, impacto, direccion_anterior, iteracciones)){
                                 break;
                             }
                         }
@@ -205,16 +205,16 @@ public class Juego {
         nivel_completado = true;
     }
 
-    private boolean manejarImpactoEnBloque(Coordenada coordenada_con_piso, Coordenada coordenada_actual, Coordenada coordenada_siguiente, Laser laser, String direccion, String posicionImpacto, String direccion_anterior, int iteracciones){
+    private boolean manejarImpactoEnBloque(Coordenada coordenada_con_piso, Coordenada coordenada_actual, Coordenada coordenada_siguiente, Laser laser, String direccion, TipoImpacto impacto, String direccion_anterior, int iteracciones){
         if (coordenada_con_piso.getBloque() != null) {
             if(iteracciones == 1){
                 laser.setDireccion(" ");
             }
-            if(coordenada_con_piso.getBloque().tipoDeBloque() == "BloqueVidrio"){
+            if(coordenada_con_piso.getBloque().tipoDeBloque() == TipoBloque.VIDRIO){
                 agregarLazerDifractado(coordenada_siguiente, direccion);
                 laser.agregarCoordenadaRecorrido(coordenada_actual.obtenerX() + " " + coordenada_actual.obtenerY()  + " " + direccion);   
             }
-            coordenada_con_piso.getBloque().interactuarConLaser(laser, posicionImpacto);
+            coordenada_con_piso.getBloque().interactuarConLaser(laser, impacto);
             return true;
         }
         return false;
@@ -230,7 +230,7 @@ public class Juego {
         Bloque bloque = tablero.getCoordenada(fila1, columna1).getBloque();
         if (bloque == null) {
             return;
-        } else if (bloque.tipoDeBloque().equals("BloqueFijo")) {
+        } else if (bloque.tipoDeBloque()== TipoBloque.FIJO) {
             return;
         } else if(tablero.getCoordenada(fila2, columna2).getBloque() != null){
             return;

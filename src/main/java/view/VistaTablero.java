@@ -8,6 +8,7 @@ import model.Juego;
 import model.Laser;
 import model.Coordenada;
 
+
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.Pane;
@@ -66,19 +67,19 @@ public class VistaTablero {
                     Bloque bloque = coordenada.getBloque();
                     if (bloque != null) {
                         switch (bloque.tipoDeBloque()) {
-                            case "BloqueFijo":
+                            case FIJO:
                                 rect.setFill(Color.BLACK);  // Bloques fijos en negro
                                 break;
-                            case "BloqueMovil":
+                            case MOVIL:
                                 rect.setFill(Color.DARKGRAY);  // Bloques móviles en gris oscuro
                                 break;
-                            case "BloqueEspejo":
+                            case ESPEJO:
                                 rect.setFill(Color.DARKCYAN);  // Bloques espejo en azul cielo claro
                                 break;
-                            case "BloqueVidrio":
+                            case VIDRIO:
                                 rect.setFill(Color.LIGHTCYAN);  // Bloques vidrio en azul claro
                                 break;
-                            case "BloqueCristal":
+                            case CRISTAL:
                                 rect.setFill(Color.LIGHTSEAGREEN);  // Bloques cristal en cyan claro
                                 break;
                         }

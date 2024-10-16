@@ -19,44 +19,46 @@ public class Laser {
         setDireccion(" ");
     }
 
-    public void reflejar(String posicionImpacto) {
+    public void reflejar(TipoImpacto impacto) {
         switch (direccion) {
             case "SE":
-                if (posicionImpacto.equals("debajo")) { setDireccion("NE");} 
-                else if (posicionImpacto.equals("costado_derecha")) { setDireccion("SW");}
+                if (impacto == TipoImpacto.DEBAJO) { setDireccion("NE");} 
+                else if (impacto == TipoImpacto.COSTADO_DERECHA) { setDireccion("SW");}
                 break;
             case "SW":
-                if (posicionImpacto.equals("debajo")) { setDireccion("NW");} 
-                else if (posicionImpacto.equals("costado_izquierda")) {setDireccion("SE");}
+                if (impacto == TipoImpacto.DEBAJO) { setDireccion("NW");} 
+                else if (impacto == TipoImpacto.COSTADO_IZQUIERDA) {setDireccion("SE");}
                 break;
             case "NE":
-                if (posicionImpacto.equals("arriba")) { setDireccion("SE");} 
-                else if (posicionImpacto.equals("costado_derecha")) { setDireccion("NW");}
+                if (impacto == TipoImpacto.ARRIBA) { setDireccion("SE");} 
+                else if (impacto == TipoImpacto.COSTADO_DERECHA) { setDireccion("NW");}
                 break;
             case "NW":
-                if (posicionImpacto.equals("arriba")) {setDireccion("SW");} 
-                else if (posicionImpacto.equals("costado_izquierda")) { setDireccion("NE");}
+                if (impacto == TipoImpacto.ARRIBA) {setDireccion("SW");} 
+                else if (impacto == TipoImpacto.COSTADO_IZQUIERDA) { setDireccion("NE");}
                 break;
         }
     }
 
-    public void difractar(String posicionImpacto) {
+    public void difractar(TipoImpacto posicionImpacto) {
         reflejar(posicionImpacto);
     }
 
-    public void refractar(String posicionImpacto) {
+    public void refractar(TipoImpacto posicionImpacto) {
         switch (posicionImpacto) {
-            case "arriba":
+            case ARRIBA:
                 setDireccion("N");
                 break;
-            case "debajo":
+            case DEBAJO:
                 setDireccion("S");
                 break;
-            case "costado_izquierda":
+            case COSTADO_IZQUIERDA:
                 setDireccion("W");
                 break;
-            case "costado_derecha":
+            case COSTADO_DERECHA:
                 setDireccion("E");
+                break;
+            case NINGUNO:
                 break;
         }
     }
