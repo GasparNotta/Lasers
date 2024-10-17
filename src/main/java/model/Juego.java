@@ -1,4 +1,5 @@
 package model;
+import java.lang.reflect.AccessFlag;
 import java.util.ArrayList;
 
 public class Juego {
@@ -33,8 +34,7 @@ public class Juego {
 
     public void actualizarTrazado() {
         for (Objetivo objetivo : objetivos) { objetivo.setAlcanzado(false); }
-        lasers_totales.clear();
-        lasers_totales.addAll(lasers_del_tablero);
+        prepararLasers();
 
         for(int i = 0; i < lasers_totales.size(); i++) {
             Laser laser = lasers_totales.get(i);
@@ -45,151 +45,137 @@ public class Juego {
             TipoDireccion direccion_anterior = TipoDireccion.SIN_DIRECCION;
             boolean era_borde = false;
             int iteracciones = 0;
-            
-            if (laser.getCoordenadaInicial().esBorde()){
-                era_borde = true;
-                laser.getCoordenadaInicial().establecerBorde(false);
-            }
+            // Verificar si el laser esta en un borde, para poder realizar el trazado y despues volver a establecerlo como borde
+            if (laser.getCoordenadaInicial().esBorde()){era_borde = true; laser.getCoordenadaInicial().establecerBorde(false);}
 
-            // Calcular el trazado de cada laser
             while (!detener_trazado) {
                 TipoDireccion direccion = laser.getDireccion();
-                int coordenada_actual_fila = coordenada_actual.obtenerX();
-                int coordenada_actual_columna = coordenada_actual.obtenerY();
                 TipoImpacto impacto = TipoImpacto.NINGUNO;  // Inicializamos el impacto como 'ninguno'
                 Coordenada coordenada_siguiente = null;
+                Coordenada coordenada_con_piso = null;
                 iteracciones++;
                 
-                // Comprobar si alcanzó el objetivo
-                if (coordenada_actual.esObjetivo()) {tablero.getObjetivo(coordenada_actual_fila, coordenada_actual_columna).setAlcanzado(true);}
-                // Comprobar si alcanzó el borde del tablero
-                if (coordenada_actual.esBorde() ) {detener_trazado = true;break;}
-                // Comprobar donde empieza el laser era borde
-                if (era_borde){
-                    coordenada_actual.establecerBorde(true);
-                    era_borde = false;
-                }
+                if(verificarObjetivosYBordes(laser, coordenada_actual)){detener_trazado = true; break;}
+                if (era_borde){coordenada_actual.establecerBorde(true); era_borde = false;}
+                if (direccion == TipoDireccion.SIN_DIRECCION) {detener_trazado = true; continue;}
+
+                coordenada_siguiente = calcularSiguienteCoordenada(coordenada_actual, direccion);
+                coordenada_con_piso = calcularBloqueMasCercano(coordenada_actual, direccion);
+                impacto = calcularImpactoConBloque(coordenada_actual, direccion);
+
                 
-                // Calcular la siguiente coordenada
-                switch (direccion) {
-                    case SIN_DIRECCION:
-                        detener_trazado = true;
-                        break;
-                    case SW:
-                        // Calcular la siguiente coordenada
-                        coordenada_siguiente = tablero.getCoordenada(coordenada_actual_fila + 1, coordenada_actual_columna - 1);
-                        // Comprobar si la fila es par
-                        if (coordenada_actual_fila % 2 == 0) {
-                            // Calcular la coordenada del posible bloque mas cercano
-                            Coordenada coordenada_con_piso = tablero.getCoordenada(coordenada_actual_fila + 1, coordenada_actual_columna);
-                            // Establecer la posicion del impacto del laser con el bloque
-                            impacto = TipoImpacto.DEBAJO;
-                            // Comprobar si el laser impacta con un bloque y esta funcion maneje el impacto si lo hay
-                            if(manejarImpactoEnBloque(coordenada_con_piso, coordenada_actual, coordenada_siguiente, laser, direccion, impacto, direccion_anterior, iteracciones)){
-                                break;
-                            }
-                        } else {
-                            Coordenada coordenada_con_piso = tablero.getCoordenada(coordenada_actual_fila, coordenada_actual_columna - 1);
-                            impacto = TipoImpacto.COSTADO_IZQUIERDA;
-                            if(manejarImpactoEnBloque(coordenada_con_piso, coordenada_actual, coordenada_siguiente, laser, direccion, impacto, direccion_anterior, iteracciones)){
-                                break;
-                            }
-                        }
-                        // En el caso que no hay bloque, sigue en la misma direccion y se agrega la coordenada al recorrido
-                        laser.agregarCoordenadaRecorrido(coordenada_actual_fila + " " + coordenada_actual_columna + " " + "SW");
-                        coordenada_actual = coordenada_siguiente;
-                        break;
-
-                    case SE:
-                        coordenada_siguiente = tablero.getCoordenada(coordenada_actual_fila + 1, coordenada_actual_columna + 1);
-                        if (coordenada_actual_fila % 2 == 0) {
-                            Coordenada coordenada_con_piso = tablero.getCoordenada(coordenada_actual_fila + 1, coordenada_actual_columna);
-                            impacto = TipoImpacto.DEBAJO;
-                            if(manejarImpactoEnBloque(coordenada_con_piso, coordenada_actual, coordenada_siguiente, laser, direccion, impacto, direccion_anterior, iteracciones)){
-                                break;
-                            }
-                        } else {
-                            Coordenada coordenada_con_piso = tablero.getCoordenada(coordenada_actual_fila, coordenada_actual_columna + 1);
-                            impacto = TipoImpacto.COSTADO_DERECHA;
-                            if(manejarImpactoEnBloque(coordenada_con_piso, coordenada_actual, coordenada_siguiente, laser, direccion, impacto, direccion_anterior, iteracciones)){
-                                break;
-                            }
-                        }
-                        laser.agregarCoordenadaRecorrido(coordenada_actual_fila + " " + coordenada_actual_columna + " " + "SE");                        
-                        coordenada_actual = coordenada_siguiente;
-                        break;
-
-                    case NW:
-                        coordenada_siguiente = tablero.getCoordenada(coordenada_actual_fila - 1, coordenada_actual_columna - 1);
-                        if (coordenada_actual_fila % 2 == 0) {
-                            Coordenada coordenada_con_piso = tablero.getCoordenada(coordenada_actual_fila - 1, coordenada_actual_columna);
-                            impacto = TipoImpacto.ARRIBA;
-                            if(manejarImpactoEnBloque(coordenada_con_piso, coordenada_actual, coordenada_siguiente, laser, direccion, impacto, direccion_anterior, iteracciones)){
-                                break;
-                            }   
-                        } else {
-                            Coordenada coordenada_con_piso = tablero.getCoordenada(coordenada_actual_fila, coordenada_actual_columna - 1);
-                            impacto = TipoImpacto.COSTADO_IZQUIERDA;
-                            if(manejarImpactoEnBloque(coordenada_con_piso, coordenada_actual, coordenada_siguiente, laser, direccion, impacto, direccion_anterior, iteracciones)){
-                                break;
-                            }    
-                        }
-                        laser.agregarCoordenadaRecorrido(coordenada_actual_fila + " " + coordenada_actual_columna + " " + "NW");                       
-                        coordenada_actual = coordenada_siguiente;
-                        break;
-
-                    case NE:
-                        coordenada_siguiente = tablero.getCoordenada(coordenada_actual_fila - 1, coordenada_actual_columna + 1);
-                        if (coordenada_actual_fila % 2 == 0) {
-                            Coordenada coordenada_con_piso = tablero.getCoordenada(coordenada_actual_fila - 1, coordenada_actual_columna);
-                            impacto = TipoImpacto.ARRIBA;
-                            if(manejarImpactoEnBloque(coordenada_con_piso, coordenada_actual, coordenada_siguiente, laser, direccion, impacto, direccion_anterior, iteracciones)){
-                                break;
-                            }
-                        } else {
-                            Coordenada coordenada_con_piso = tablero.getCoordenada(coordenada_actual_fila, coordenada_actual_columna + 1);
-                            impacto = TipoImpacto.COSTADO_DERECHA;
-                            if(manejarImpactoEnBloque(coordenada_con_piso, coordenada_actual, coordenada_siguiente, laser, direccion, impacto, direccion_anterior, iteracciones)){
-                                break;
-                            }
-                        }
-                        laser.agregarCoordenadaRecorrido(coordenada_actual_fila + " " + coordenada_actual_columna + " " + "NE");                        
-                        coordenada_actual = coordenada_siguiente;
-                        break;
-                    
-                    // Posibilidades exclusivas para el bloqueCristal
-                    case N:
-                        laser.agregarCoordenadaRecorrido(coordenada_actual_fila + " " + coordenada_actual_columna + " " + "N");  
-                        coordenada_actual = tablero.getCoordenada(coordenada_actual_fila - 2, coordenada_actual_columna );
-                        laser.setDireccion(direccion_anterior);
-                        break;
-                    case S:
-                        laser.agregarCoordenadaRecorrido(coordenada_actual_fila + " " + coordenada_actual_columna + " " + "S");  
-                        coordenada_actual = tablero.getCoordenada(coordenada_actual_fila + 2, coordenada_actual_columna);
-                        laser.setDireccion(direccion_anterior);
-                        break;
-                    case W:
-                        laser.agregarCoordenadaRecorrido(coordenada_actual_fila + " " + coordenada_actual_columna + " " + "W");  
-                        coordenada_actual = tablero.getCoordenada(coordenada_actual_fila, coordenada_actual_columna - 2);
-                        laser.setDireccion(direccion_anterior);
-                        break;
-                    case E:
-                        laser.agregarCoordenadaRecorrido(coordenada_actual_fila + " " + coordenada_actual_columna + " " + "E");  
-                        coordenada_actual = tablero.getCoordenada(coordenada_actual_fila, coordenada_actual_columna + 2);
-                        laser.setDireccion(direccion_anterior);
-                        break;
-                    }
-                    direccion_anterior = direccion;
-                     
+                if (manejarImpactoEnBloque(coordenada_con_piso, coordenada_actual, coordenada_siguiente, laser, direccion, impacto, direccion_anterior, iteracciones)) { continue;}
+                
+                actualiazarRecorrido(laser, coordenada_actual, direccion);
+                direccion_anterior = direccion;   
+                coordenada_actual = coordenada_siguiente;
             } 
         }
     }
 
-    private void verificarVictoria(){
-        nivel_completado = objetivos.stream().allMatch(Objetivo::isAlcanzado);
+    private void prepararLasers() {
+        lasers_totales.clear();
+        lasers_totales.addAll(lasers_del_tablero);
+    }
+
+    private boolean verificarObjetivosYBordes(Laser laser, Coordenada coordenadaActual) {
+        if (coordenadaActual.esObjetivo()) {tablero.getObjetivo(coordenadaActual.obtenerX(), coordenadaActual.obtenerY()).setAlcanzado(true);}
+        if (coordenadaActual.esBorde()) {return true;}
+        return false;
+    }
+
+    private Coordenada calcularSiguienteCoordenada(Coordenada coordenadaActual, TipoDireccion direccion) {
+        Coordenada coordenadaSiguiente = null;
+        switch (direccion) {
+            case SW:case SE:case NW:case NE: coordenadaSiguiente = manejarMovimientosDiagonales(coordenadaActual, direccion); break;
+            case N:case S:case W:case E: coordenadaSiguiente = manejarMovimientosRectos(coordenadaActual, direccion); break;
+            case SIN_DIRECCION: return null;
+        }
+        return coordenadaSiguiente;
+    }
+
+    private Coordenada manejarMovimientosDiagonales(Coordenada coordenadaActual, TipoDireccion direccion) {
+        int fila = coordenadaActual.obtenerX();
+        int columna = coordenadaActual.obtenerY();
+        Coordenada coordenadaSiguiente = null;
+        switch (direccion) {
+            case SW: coordenadaSiguiente = tablero.getCoordenada(fila + 1, columna - 1); break;
+            case SE: coordenadaSiguiente = tablero.getCoordenada(fila + 1, columna + 1); break;
+            case NW: coordenadaSiguiente = tablero.getCoordenada(fila - 1, columna - 1); break;
+            case NE: coordenadaSiguiente = tablero.getCoordenada(fila - 1, columna + 1); break;
+        }
+        return coordenadaSiguiente;
+    }
+    
+    private Coordenada manejarMovimientosRectos(Coordenada coordenadaActual, TipoDireccion direccion) {
+        Coordenada coordenadaSiguiente = null;
+        switch (direccion) {
+            case N: coordenadaSiguiente = tablero.getCoordenada(coordenadaActual.obtenerX() - 2, coordenadaActual.obtenerY()); break;
+            case S: coordenadaSiguiente = tablero.getCoordenada(coordenadaActual.obtenerX() + 2, coordenadaActual.obtenerY()); break;
+            case W: coordenadaSiguiente = tablero.getCoordenada(coordenadaActual.obtenerX(), coordenadaActual.obtenerY() - 2); break;
+            case E: coordenadaSiguiente = tablero.getCoordenada(coordenadaActual.obtenerX(), coordenadaActual.obtenerY() + 2); break;
+        }
+        return coordenadaSiguiente;
+    }
+
+    private void actualiazarRecorrido(Laser laser, Coordenada coordenada_actual, TipoDireccion direccion){
+        laser.agregarCoordenadaRecorrido(coordenada_actual.obtenerX() + " " + coordenada_actual.obtenerY()  + " " + direccion.toString());
+    }
+
+    private Coordenada calcularBloqueMasCercano(Coordenada coordenada_actual, TipoDireccion direccion){
+        int fila = coordenada_actual.obtenerX();
+        int columna = coordenada_actual.obtenerY();
+        switch (direccion) {
+            case NE:
+                if (fila % 2 == 0) { fila--;}
+                else{columna++;}
+                break;
+            case NW:
+                if (fila % 2 == 0) { fila--;}
+                else{columna--;}
+                break;
+            case SE:
+                if (fila % 2 == 0) { fila++;}
+                else{columna++;}
+                break;
+            case SW:
+                if (fila % 2 == 0) { fila++;}
+                else{columna--;}
+                break;
+        }
+        Coordenada coordenada_con_piso = tablero.getCoordenada(fila, columna);
+        return coordenada_con_piso;
+    }
+
+    private TipoImpacto calcularImpactoConBloque(Coordenada coordenada_actual, TipoDireccion direccion){
+        int fila = coordenada_actual.obtenerX();
+        TipoImpacto impacto = TipoImpacto.NINGUNO;
+        switch (direccion) {
+            case NE:
+                if (fila % 2 == 0) {impacto=TipoImpacto.ARRIBA;}
+                else{impacto=TipoImpacto.COSTADO_DERECHA;}
+                break;
+            case NW:
+                if (fila % 2 == 0) {impacto=TipoImpacto.ARRIBA;}
+                else{impacto=TipoImpacto.COSTADO_IZQUIERDA;}
+                break;
+            case SE:
+                if (fila % 2 == 0) {impacto=TipoImpacto.DEBAJO;}
+                else{impacto=TipoImpacto.COSTADO_DERECHA;}
+                break;
+            case SW:
+                if (fila % 2 == 0) {impacto=TipoImpacto.DEBAJO;}
+                else{impacto=TipoImpacto.COSTADO_IZQUIERDA;}
+                break;
+        }
+        return impacto;
     }
 
     private boolean manejarImpactoEnBloque(Coordenada coordenada_con_piso, Coordenada coordenada_actual, Coordenada coordenada_siguiente, Laser laser, TipoDireccion direccion, TipoImpacto impacto, TipoDireccion direccion_anterior, int iteracciones){
+        if (direccion == TipoDireccion.N || direccion == TipoDireccion.S || direccion == TipoDireccion.W || direccion == TipoDireccion.E) {
+            laser.setDireccion(direccion_anterior);
+        }
+
         if (coordenada_con_piso.getBloque() != null) {
             if(iteracciones == 1){laser.setDireccion(TipoDireccion.SIN_DIRECCION);}
 
@@ -205,6 +191,10 @@ public class Juego {
             return true;
         }
         return false;
+    }
+
+    private void verificarVictoria(){
+        nivel_completado = objetivos.stream().allMatch(Objetivo::isAlcanzado);
     }
 
     private void agregarLazerDifractado(Coordenada coordenada, TipoDireccion direccion){

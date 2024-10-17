@@ -144,9 +144,6 @@ public class VistaTablero {
                         linea.setEndX(linea.getStartX() - tamaño_celda);
                         linea.setEndY(linea.getStartY());
                         break;
-                    default:
-                        System.out.println("Dirección inválida");
-                        break;
                 }
                 pane_trazado.getChildren().add(linea);
             }
